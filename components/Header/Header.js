@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { Text, View, TouchableOpacity, Dimensions, TextInput, Animated, Easing, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { Text, View, TouchableOpacity, Dimensions, TextInput, Animated, Easing, Keyboard, StyleSheet } from 'react-native';
 import Feather from '@expo/vector-icons/Feather';
 
 import { connect } from 'react-redux';
-import {toggleSearchPanel} from '../../actions/index'
+import { toggleSearchPanel } from '../../actions/index'
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -21,10 +21,10 @@ class Header extends React.Component {
             widthSP: new Animated.Value(0),
         }
     }
-    componentWillReceiveProps(props){
-        if(props.searchPanelShown){
+    componentWillReceiveProps(props) {
+        if (props.searchPanelShown) {
             this.openSearchPanel()
-        }else{
+        } else {
             this.hideSearchPanel()
         }
     }
@@ -57,10 +57,12 @@ class Header extends React.Component {
     }
 
     render() {
+        console.log('header props', this.props)
+
 
         let searchWidth = this.state.widthSP.interpolate({
-            inputRange: [0, 1],
-            outputRange: [0, SEARCH_WIDTH]
+            inputRange: [0, 0.3, 1],
+            outputRange: [56, 56, SEARCH_WIDTH]
         });
 
         let searchIconTop = this.state.widthSP.interpolate({
@@ -69,9 +71,24 @@ class Header extends React.Component {
         });
 
         let searchOpacity = this.state.widthSP.interpolate({
-            inputRange: [0, 0.3, 1],
+            inputRange: [0, 0.5, 1],
             outputRange: [0, 0, 1]
         });
+        let searchWrapOpacity = this.state.widthSP.interpolate({
+            inputRange: [0,  1],
+            outputRange: [0,  1]
+        });
+        let scale = this.state.widthSP.interpolate({
+            inputRange: [0, 0.3, 1],
+            outputRange: [0, 1, 1]
+        });
+
+
+        let borderRadiusWrap = this.state.widthSP.interpolate({
+            inputRange: [0, 0.3, 0.5, 1],
+            outputRange: [60, 50, 6, 4]
+        });
+
         let searchIconOpacity = this.state.widthSP.interpolate({
             inputRange: [0, 0.1, 1],
             outputRange: [1, 0.1, 0]
@@ -82,40 +99,53 @@ class Header extends React.Component {
         });
 
         return (
-            <View style={{ width: screenWidth, backgroundColor: '#3F51B5', paddingTop: 24, elevation: 5, height: 80 }}>
-                <View style={{ width: '100%', paddingVertical: 0, paddingLeft: 16, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', alignItems: 'center', alignContent: 'stretch' }}>
+            <View style={styles.header}>
+                <View style={styles.wrap}>
 
-                    <Animated.View style={{ position: 'relative', left: titleLeft, width: HEDER_TITLE_WIDTH }}>
-                        <Text style={{ color: '#fff', fontSize: 16 }}>ETS GROUP</Text>
+                    <Animated.View style={[styles.titleWrap, { left: titleLeft }]}>
+                        <Text style={styles.titleText}>ETS GROUP</Text>
                     </Animated.View>
-                    <Animated.View style={{ position: 'relative', width: HEADER_HEIGHT, height: HEADER_HEIGHT, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: HEADER_HEIGHT }}>
+
+                    <View style={styles.rightPanel}>
 
                         <View style={{ width: '100%', position: 'relative', alignItems: 'flex-end', justifyContent: 'center', height: HEADER_HEIGHT, }}>
-                            <Animated.View style={{ width: searchWidth, position: 'relative', opacity: searchOpacity,borderRadius: 4, }}>
-                                <TextInput returnKeyType="search" multiline={false} value={this.state.searchText} onChangeText={(text) => { this.setState({ searchText: text }) }} onSubmitEditing={(event) => this.findOem(event.nativeEvent.text)} ref={el => { this.searchPanel = el; }} underlineColorAndroid='rgba(0,0,0,0)' placeholder='Поиск по номеру' style={{ width: '100%', backgroundColor: '#fff', fontSize: 15, paddingVertical: 6, borderBottomWidth: 0, borderRadius: 4, borderWidth: 0, paddingHorizontal: 16, paddingHorizontal:  HEADER_HEIGHT }}></TextInput>
+                            <Animated.View style={[styles.searchPanelWrap, { opacity: searchWrapOpacity, width: searchWidth, borderRadius: borderRadiusWrap, transform:[{scale:scale}] }]}>
 
-                                <View style={{ position: 'absolute', left: 0 }}>
-                                    <TouchableOpacity onPress={()=>{this.props.toggleSearchPanel(false)}}>
-                                        <View style={{ padding: 10, flexDirection: 'column', alignItems: 'center', width: HEADER_HEIGHT }}>
+                                <Animated.View style={{ backgroundColor: '#fff', borderRadius: 4, opacity: searchOpacity }}>
+                                    <TextInput
+                                        returnKeyType="search"
+                                        multiline={false}
+                                        value={this.state.searchText}
+                                        onChangeText={(text) => { this.setState({ searchText: text }) }}
+                                        onSubmitEditing={(event) => this.findOem(event.nativeEvent.text)}
+                                        ref={el => { this.searchPanel = el; }}
+                                        underlineColorAndroid='rgba(0,0,0,0)'
+                                        placeholder='Поиск по номеру'
+                                        style={styles.textInput}></TextInput>
+                                </Animated.View>
+
+                                <Animated.View style={{ position: 'absolute', left: 0, opacity: searchOpacity }}>
+                                    <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false) }}>
+                                        <View style={styles.iconWrap}>
                                             <Feather name="arrow-left" size={20} color="#999" style={{}} />
                                         </View>
                                     </TouchableOpacity>
-                                </View>
+                                </Animated.View>
 
-                                <View style={{ position: 'absolute', right: 0, zIndex: 10 }}>
+                                <Animated.View style={{ position: 'absolute', right: 0, zIndex: 10 ,opacity: searchOpacity}}>
                                     <TouchableOpacity onPress={() => { this.setState({ searchText: '' }) }}>
-                                        <View style={{ padding: 10, flexDirection: 'column', alignItems: 'center', width: HEADER_HEIGHT }}>
+                                        <View style={styles.iconWrap}>
                                             <Feather name="x" size={20} color="#999" style={{}} />
                                         </View>
                                     </TouchableOpacity>
-                                </View>
+                                </Animated.View>
 
                             </Animated.View>
 
                             <Animated.View style={{ position: 'absolute', right: 0, top: searchIconTop, zIndex: 10, opacity: searchIconOpacity }}>
                                 <View>
-                                    <TouchableOpacity onPress={()=>{this.props.toggleSearchPanel(true)}}>
-                                        <View style={{ width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
+                                    <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(true) }}>
+                                        <View style={{ width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                                             <Feather name="search" size={20} color="#fff" style={{}} />
                                         </View>
                                     </TouchableOpacity>
@@ -124,13 +154,13 @@ class Header extends React.Component {
 
                         </View>
 
-                    </Animated.View>
+                    </View>
 
 
 
                     <View style={{ width: HEADER_HEIGHT }}>
                         <TouchableOpacity>
-                            <View style={{ width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
+                            <View style={{ width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                                 <Feather name="shopping-cart" size={20} color="#fff" style={{}} />
                             </View>
                         </TouchableOpacity>
@@ -148,8 +178,34 @@ class Header extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        searchPanelShown: state.test.searchPanelShown
+        searchPanelShown: state.app.searchPanelShown
     }
 }
 
-export default connect(mapStateToProps, {toggleSearchPanel})(Header)
+const mapDispatchToProps = (dispatch, payload) => {
+    return {
+        toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
+    }
+}
+
+
+styles = StyleSheet.create({
+    header: {
+        width: screenWidth, backgroundColor: '#3F51B5', paddingTop: 24, elevation: 5, height: 80
+    },
+    wrap: {
+        width: '100%', paddingVertical: 0, paddingLeft: 16, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', alignItems: 'center', alignContent: 'stretch'
+    },
+    titleWrap: {
+        position: 'relative', width: HEDER_TITLE_WIDTH
+    },
+    titleText: { color: '#fff', fontSize: 16 },
+    rightPanel: { position: 'relative', width: HEADER_HEIGHT, height: HEADER_HEIGHT, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: HEADER_HEIGHT },
+    searchPanelWrap: { position: 'relative', backgroundColor: '#fff' },
+    textInput: { width: '100%', backgroundColor: 'transparent', fontSize: 15, paddingVertical: 6, borderBottomWidth: 0, borderRadius: 4, borderWidth: 0, paddingHorizontal: 16, paddingHorizontal: HEADER_HEIGHT },
+    iconWrap: { padding: 10, flexDirection: 'column', alignItems: 'center', width: HEADER_HEIGHT }
+})
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header)

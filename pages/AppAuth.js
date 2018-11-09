@@ -3,7 +3,7 @@ import {
     Text,View, Button
 } from 'react-native';
 import { connect } from 'react-redux';
-import {testChange,toggleSearchPanel} from '../actions'
+import {toggleSearchPanel} from '../actions'
 import Header from '../components/Header/Header'
 
 class AppAuth extends React.Component {
@@ -11,10 +11,6 @@ class AppAuth extends React.Component {
     constructor(props) {
         super(props)
         console.log(this.props)
-    }
-
-    _onPress=()=>{
-        this.props.testChange('Hello')
     }
 
     render() {
@@ -34,9 +30,14 @@ class AppAuth extends React.Component {
 
 
 const mapStateToProps = state => {
+    
     return {
-        searchPanelShown: state.test.searchPanelShown
+        searchPanelShown: state.app.searchPanelShown
     }
 }
-
-export default connect(mapStateToProps, {toggleSearchPanel})(AppAuth)
+const mapDispatchToProps = (dispatch, payload) => {
+    return{
+        toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
+    } 
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AppAuth)
