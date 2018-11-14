@@ -17,12 +17,13 @@ import AppAuth from './pages/AppAuth';
 import AppNoAuth from './pages/AppNoAuth';
 
 
-import {createStore} from 'redux';
+import {createStore, applyMiddleware } from 'redux';
 import {Provider, connect} from 'react-redux';
+import thunk from 'redux-thunk'
 import reducers from './reducers';
 
 
-let store = createStore(reducers);
+let store = createStore(reducers, applyMiddleware(thunk));
 
 
 class App extends React.Component {

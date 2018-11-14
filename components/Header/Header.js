@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Dimensions, TextInput, Animated, Easing, 
 import Feather from '@expo/vector-icons/Feather';
 
 import { connect } from 'react-redux';
-import { toggleSearchPanel } from '../../actions/index'
+import { toggleSearchPanel, onInput, removeText ,navigate, setSearchText,fetchSearchResult } from '../../actions/index'
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -36,7 +36,6 @@ class Header extends React.Component {
 
         }).start((done) => {
             if (done.finished) {
-                this.setState({ visibilityIconSearch: false })
             }
         });
         this.searchPanel.focus()
@@ -45,21 +44,18 @@ class Header extends React.Component {
     hideSearchPanel = (e) => {
         Animated.timing(this.state.widthSP, {
             toValue: 0,
-            duration: 300,
+            duration: 250,
             easing: Easing.linear()
         }).start((done) => {
             if (done.finished) {
-                this.setState({ visibilityIconSearch: true })
                 Keyboard.dismiss()
-
             }
         });
     }
 
+
     render() {
-        console.log('header props', this.props)
-
-
+        
         let searchWidth = this.state.widthSP.interpolate({
             inputRange: [0, 0.3, 1],
             outputRange: [56, 56, SEARCH_WIDTH]
@@ -79,7 +75,7 @@ class Header extends React.Component {
             outputRange: [0,  1]
         });
         let scale = this.state.widthSP.interpolate({
-            inputRange: [0, 0.3, 1],
+            inputRange: [0, 0.4, 1],
             outputRange: [0, 1, 1]
         });
 
@@ -102,8 +98,18 @@ class Header extends React.Component {
             <View style={styles.header}>
                 <View style={styles.wrap}>
 
-                    <Animated.View style={[styles.titleWrap, { left: titleLeft }]}>
-                        <Text style={styles.titleText}>ETS GROUP</Text>
+                    <Animated.View style={[styles.titleWrap, { left: titleLeft, alignItems:'center' }]}>
+                        
+                        <Animated.View style={{  }}>
+                            <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false) }}>
+                                <View style={[styles.iconWrap, {height:HEADER_HEIGHT, width:HEADER_HEIGHT, backgroundColor:'transparent', alignItems:'center', flexDirection:'row', alignContent:'center'}]}>
+                                    <Feather name="arrow-left" size={20} color="#fff" style={{}} />
+                                </View>
+                            </TouchableOpacity>
+                        </Animated.View>
+
+                        <Text style={styles.titleText}>{this.props.screenParams.headerText}</Text>
+
                     </Animated.View>
 
                     <View style={styles.rightPanel}>
@@ -115,9 +121,9 @@ class Header extends React.Component {
                                     <TextInput
                                         returnKeyType="search"
                                         multiline={false}
-                                        value={this.state.searchText}
-                                        onChangeText={(text) => { this.setState({ searchText: text }) }}
-                                        onSubmitEditing={(event) => this.findOem(event.nativeEvent.text)}
+                                        value={this.props.text}
+                                        onChangeText={(text) => { this.props.onInput(text) }}
+                                        onSubmitEditing={(event) => { this.props.fetchSearchResult(this.props.text); this.props.removeText(); this.props.toggleSearchPanel(false); this.props.navigate('SearchResult', {headerText:'Поиск'})}}
                                         ref={el => { this.searchPanel = el; }}
                                         underlineColorAndroid='rgba(0,0,0,0)'
                                         placeholder='Поиск по номеру'
@@ -133,7 +139,7 @@ class Header extends React.Component {
                                 </Animated.View>
 
                                 <Animated.View style={{ position: 'absolute', right: 0, zIndex: 10 ,opacity: searchOpacity}}>
-                                    <TouchableOpacity onPress={() => { this.setState({ searchText: '' }) }}>
+                                    <TouchableOpacity onPress={this.props.removeText}>
                                         <View style={styles.iconWrap}>
                                             <Feather name="x" size={20} color="#999" style={{}} />
                                         </View>
@@ -159,7 +165,7 @@ class Header extends React.Component {
 
 
                     <View style={{ width: HEADER_HEIGHT }}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{this.props.navigate('Cart')}}>
                             <View style={{ width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                                 <Feather name="shopping-cart" size={20} color="#fff" style={{}} />
                             </View>
@@ -178,13 +184,21 @@ class Header extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        searchPanelShown: state.app.searchPanelShown
+        searchPanelShown: state.app.searchPanelShown,
+        text: state.app.text,
+        screenParams : state.app.screenParams,
+        
     }
 }
 
-const mapDispatchToProps = (dispatch, payload) => {
+const mapDispatchToProps = (dispatch, payload,params) => {
     return {
         toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
+        onInput : (payload) => dispatch(onInput(payload)),
+        removeText : () => dispatch(removeText()),
+        navigate : (payload,params) => dispatch(navigate(payload,params)),
+        setSearchText: (payload) => dispatch(setSearchText(payload)),
+        fetchSearchResult:(payload)=>{dispatch(fetchSearchResult(payload))}
     }
 }
 
@@ -197,7 +211,7 @@ styles = StyleSheet.create({
         width: '100%', paddingVertical: 0, paddingLeft: 16, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', alignItems: 'center', alignContent: 'stretch'
     },
     titleWrap: {
-        position: 'relative', width: HEDER_TITLE_WIDTH
+        position: 'relative', width: HEDER_TITLE_WIDTH, flexDirection:'row'
     },
     titleText: { color: '#fff', fontSize: 16 },
     rightPanel: { position: 'relative', width: HEADER_HEIGHT, height: HEADER_HEIGHT, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: HEADER_HEIGHT },
