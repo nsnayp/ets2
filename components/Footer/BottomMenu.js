@@ -29,13 +29,13 @@ class BottomMenu extends React.Component {
 				<View style={{ width: '20%' }}>
 					<TouchableNativeFeedback  onPress={()=>this.props.navigate('Dashboard')} >
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="layers" size={25} color={ (this.props.currentScreen=='Dashboard')?'#3F51B5':'#8a8a8a' }  />
+							<Feather name="home" size={25} color={ (this.props.currentScreen=='Dashboard')?'#3F51B5':'#8a8a8a' }  />
 
 						</View>
 					</TouchableNativeFeedback>
 				</View>
 				<View style={{ width: '20%' }}>
-					<TouchableNativeFeedback onPress={() => this.props.navigate('Orders')}>
+					<TouchableNativeFeedback onPress={() => this.props.navigate('Orders', {headerText:'ETS.Заказы'})}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="folder" size={25} color={ (this.props.currentScreen=='Orders')?'#3F51B5':'#8a8a8a' } />
 							{/* <Text style={{fontSize:12, color:'#999'}}>Домой</Text> */}
@@ -43,21 +43,21 @@ class BottomMenu extends React.Component {
 					</TouchableNativeFeedback>
 				</View>
 				<View style={{ width: '20%' }}>
-					<TouchableNativeFeedback onPress={() =>this.props.navigate('SearchResult')}>
+					<TouchableNativeFeedback onPress={() =>this.props.navigate('SearchResult', {headerText:'ETS.Поиск'})}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' ,backgroundColor:'#fff'}}>
 							<Feather name="search" size={25} color={ (this.props.currentScreen=='SearchResult')?'#3F51B5':'#8a8a8a' } />
 						</View>
 					</TouchableNativeFeedback>
 				</View>
 				<View style={{ width: '20%' }}>
-					<TouchableNativeFeedback onPress={() => this.props.navigate('Cart')}>
+					<TouchableNativeFeedback onPress={() => this.props.navigate('Cart', {headerText:'ETS.Корзина'})}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="cloud" size={25} color={ (this.props.currentScreen=='Cart')?'#3F51B5':'#8a8a8a' } />
+							<Feather name="shopping-cart" size={25} color={ (this.props.currentScreen=='Cart')?'#3F51B5':'#8a8a8a' } />
 						</View>
 					</TouchableNativeFeedback>
 				</View>
 				<View style={{ width: '20%' }}>
-					<TouchableNativeFeedback onPress={() => this.props.navigate('Offers')}>
+					<TouchableNativeFeedback onPress={() => this.props.navigate('Offers', {headerText:'ETS.Настройки'})}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="settings" size={25} color={ (this.props.currentScreen=='Offers')?'#3F51B5':'#8a8a8a' } />
 						</View>
@@ -78,7 +78,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = (dispatch, payload) => {
     return {
-		navigate : (payload) => dispatch(navigate(payload)),
+		navigate : (payload,params) => dispatch(navigate(payload,params)),
 		toggleSearchPanel:(payload)=> dispatch(toggleSearchPanel(payload))
     }
 }

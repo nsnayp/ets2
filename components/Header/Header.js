@@ -53,7 +53,20 @@ class Header extends React.Component {
         });
     }
 
-
+    renderBackButton=()=>{
+        if(this.props.screenParams.backButtonVisible){
+            return(
+            <Animated.View style={{  }}>
+                <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false) }}>
+                    <View style={[styles.iconWrap, {height:HEADER_HEIGHT, width:HEADER_HEIGHT, backgroundColor:'transparent', alignItems:'center', flexDirection:'row', alignContent:'center'}]}>
+                        <Feather name="arrow-left" size={20} color="#fff" style={{}} />
+                    </View>
+                </TouchableOpacity>
+            </Animated.View>
+            )
+        }
+        return null
+    }
     render() {
         
         let searchWidth = this.state.widthSP.interpolate({
@@ -100,13 +113,7 @@ class Header extends React.Component {
 
                     <Animated.View style={[styles.titleWrap, { left: titleLeft, alignItems:'center' }]}>
                         
-                        <Animated.View style={{  }}>
-                            <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false) }}>
-                                <View style={[styles.iconWrap, {height:HEADER_HEIGHT, width:HEADER_HEIGHT, backgroundColor:'transparent', alignItems:'center', flexDirection:'row', alignContent:'center'}]}>
-                                    <Feather name="arrow-left" size={20} color="#fff" style={{}} />
-                                </View>
-                            </TouchableOpacity>
-                        </Animated.View>
+                        {this.renderBackButton()}
 
                         <Text style={styles.titleText}>{this.props.screenParams.headerText}</Text>
 
@@ -123,7 +130,14 @@ class Header extends React.Component {
                                         multiline={false}
                                         value={this.props.text}
                                         onChangeText={(text) => { this.props.onInput(text) }}
-                                        onSubmitEditing={(event) => { this.props.fetchSearchResult(this.props.text); this.props.removeText(); this.props.toggleSearchPanel(false); this.props.navigate('SearchResult', {headerText:'Поиск'})}}
+                                        onSubmitEditing={(event) => {
+                                            //requestAnimationFrame(() => {
+                                                this.props.fetchSearchResult(this.props.text);
+                                                this.props.removeText();
+                                                this.props.toggleSearchPanel(false);
+                                                this.props.navigate('SearchResult', {headerText:'Поиск '+this.props.text})
+                                            //})
+                                        }}
                                         ref={el => { this.searchPanel = el; }}
                                         underlineColorAndroid='rgba(0,0,0,0)'
                                         placeholder='Поиск по номеру'

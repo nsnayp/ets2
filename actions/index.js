@@ -36,21 +36,40 @@ export const removeText = () =>{
     }
 }
 
+export const loadingSearchStart = () =>{
+    return {
+        type:'LOADING_SEARCH_START'
+    }
+}
 
+export const loadingSearchEnd = () =>{
+    return {
+        type:'LOADING_SEARCH_END'
+    }
+}
+export const loadingError = () =>{
+    return {
+        type:'LOADING_ERROR'
+    }
+}
 
 export const fetchSearchResult = (payload) =>{
+    
     return (dispatch) => {
+        dispatch(loadingSearchStart());
+        //setTimeout(()=>{
         fetch('http://etsgroup.ru/search/api?text='+payload)
         .then(data => data.json())
-        .then(data =>  dispatch(addSearchResult(data)) )
-        .catch((err) => console.log('err:', err))
+        .then(data =>  {dispatch(loadingSearchEnd()); dispatch(addSearchResult(data))} )
+        .catch((err) => {dispatch(loadingError());})
+       // },2000)
     }
 }
 
 
 export const navigate = (payload, params = {}) =>{
     //dispatch(toggleSearchPanel(false))
-    params = { ...{headerText:'ETS GROUP'}, ...params }
+    params = { ...{headerText:'ETS GROUP', backButtonVisible: false}, ...params }
     return {
         type:'NAVIGATE',
         payload:payload,

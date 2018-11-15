@@ -8,7 +8,10 @@ const INITIAL_STATE = {
         headerText:'ETS GROUP'
     },
     searchResult:[],
-    searchText:''
+    searchText:'',
+    loadingSearch:false,
+    loadingError:false,
+    loaded:false
 }
 
 export default (state = INITIAL_STATE, action)=>{
@@ -23,7 +26,9 @@ export default (state = INITIAL_STATE, action)=>{
         case 'ADD_SEARCH_RESULT':
             return {
                 ...state,
-                searchResult: action.payload
+                searchResult: action.payload,
+                loadingError: false,
+                loaded:true
             }
         case 'SEARCH_PANEL_ONINPUT':
             return {
@@ -39,6 +44,24 @@ export default (state = INITIAL_STATE, action)=>{
             return {
                 ...state,
                 text: ''
+            }
+        case 'LOADING_SEARCH_END':
+            return {
+                ...state,
+                loadingSearch: false,
+                loaded:true
+            }
+        case 'LOADING_SEARCH_START':
+            return {
+                ...state,
+                loadingSearch: true,
+                loaded:false
+            }
+        case 'LOADING_ERROR':
+            return {
+                ...state,
+                loadingSearch: false,
+                loadingError: true,
             }
         case 'NAVIGATE':
             return {
