@@ -2,16 +2,14 @@ import * as React from 'react';
 import { Text, View, Button, Image } from 'react-native';
 import { connect } from 'react-redux';
 import {toggleSearchPanel} from '../actions';
-
 class Cart extends React.Component {
     constructor(props) {
         super(props)
     }
-
     render() {
          return (
             <View>
-                <Text>Hello, its Cart</Text>
+                <Text>{JSON.stringify(this.props.cart)}</Text>
 
             </View>
         )
@@ -20,7 +18,7 @@ class Cart extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        searchPanelShown: state.app.searchPanelShown
+        cart: state.cart.cart
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {
