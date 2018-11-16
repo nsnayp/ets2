@@ -57,15 +57,17 @@ class Header extends React.Component {
         if(this.props.screenParams.backButtonVisible){
             return(
             <Animated.View style={{  }}>
-                <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false) }}>
-                    <View style={[styles.iconWrap, {height:HEADER_HEIGHT, width:HEADER_HEIGHT, backgroundColor:'transparent', alignItems:'center', flexDirection:'row', alignContent:'center'}]}>
+                <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false); this.props.navigate('SearchResult', {headerText:'ETS.Поиск'}) }}>
+                    <View style={[ {width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }]}>
                         <Feather name="arrow-left" size={20} color="#fff" style={{}} />
                     </View>
                 </TouchableOpacity>
             </Animated.View>
             )
         }
-        return null
+        return (
+            <View style={{width:16, height:HEADER_HEIGHT}}></View>
+        )
     }
     render() {
         
@@ -114,8 +116,8 @@ class Header extends React.Component {
                     <Animated.View style={[styles.titleWrap, { left: titleLeft, alignItems:'center' }]}>
                         
                         {this.renderBackButton()}
-
-                        <Text style={styles.titleText}>{this.props.screenParams.headerText}</Text>
+                        
+                        <Text style={ [styles.titleText] }>{this.props.screenParams.headerText}</Text>
 
                     </Animated.View>
 
@@ -181,13 +183,11 @@ class Header extends React.Component {
                     <View style={{ width: HEADER_HEIGHT }}>
                         <TouchableOpacity onPress={()=>{this.props.navigate('Cart')}}>
                             <View style={{ width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
-                                <Feather name="shopping-cart" size={20} color="#fff" style={{}} />
+                                <Feather name="mail" size={20} color="#fff" style={{}} />
                             </View>
                         </TouchableOpacity>
                     </View>
                 </View>
-
-
 
 
             </View>
@@ -222,7 +222,7 @@ styles = StyleSheet.create({
         width: screenWidth, backgroundColor: '#3F51B5', paddingTop: 24, elevation: 5, height: 80
     },
     wrap: {
-        width: '100%', paddingVertical: 0, paddingLeft: 16, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', alignItems: 'center', alignContent: 'stretch'
+        width: '100%', paddingVertical: 0, paddingLeft: 0, flexDirection: 'row', justifyContent: 'space-between', position: 'relative', alignItems: 'center', alignContent: 'stretch'
     },
     titleWrap: {
         position: 'relative', width: HEDER_TITLE_WIDTH, flexDirection:'row'

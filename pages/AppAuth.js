@@ -11,7 +11,7 @@ import SearchResult from '../pages/SearchResult';
 import Offers from '../pages/Offers';
 import Orders from '../pages/Orders';
 import Cart from '../pages/Cart';
-
+import Settings from '../pages/Settings';
 
 import Header from '../components/Header/Header';
 import BottomMenu from '../components/Footer/BottomMenu';
@@ -35,6 +35,10 @@ const Navigator = createDrawerNavigator(
         ,
         Cart: {
 			screen: Cart,
+        }
+        ,
+        Settings: {
+			screen: Settings,
 		}
 		
 	}

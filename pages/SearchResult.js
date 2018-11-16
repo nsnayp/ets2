@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Text, View, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View,  Image, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import {toggleSearchPanel, addSearchResult, setSearchText} from '../actions';
+import {toggleSearchPanel, addSearchResult,  navigate,  offersSetProductId} from '../actions';
 
 class SearchResult extends React.Component {
     constructor(props) {
@@ -47,7 +47,15 @@ class SearchResult extends React.Component {
                     <ScrollView>
                     { 
                         (this.props.searchResult)?this.props.searchResult.map((item,index) =>
-                        <TouchableOpacity key={index}>
+                        <TouchableOpacity 
+                            key={index} 
+                            onPress={()=> {
+                                requestAnimationFrame(() => {
+                                    this.props.offersSetProductId(item.id);
+                                    this.props.navigate('Offers', {headerText:item.brand+' '+item.oem,backButtonVisible:true})
+                                    
+                                })
+                            }}>
                             <View style={{flexDirection:'row', paddingVertical:10, paddingHorizontal:16, backgroundColor:'#fff', borderTopColor:'#fafafa', borderTopWidth:1,alignContent:'center', alignItems:'center'}}>
                                 <Image source={{uri:'http://etsgroup.ru/img_serv/brands/'+item.brand+'.png'}} style={{width:30, height:30}}></Image>
                                 <Text style={{color:'blue', fontSize:14, marginLeft:16, marginRight:16}}>{item.oem} {item.brand} <Text style={{color:'#999'}}>{item.title}</Text></Text>
@@ -87,14 +95,16 @@ const mapStateToProps = state => {
         searchText: state.app.searchText,
         loadingSearch:state.app.loadingSearch,
         loadingError:state.app.loadingError,
-        loaded:state.app.loaded
+        loaded:state.app.loaded,
+       
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {
     return{
         toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
         addSearchResult: (payload) => dispatch(addSearchResult(payload)),
-        
+        navigate : (payload,params) => dispatch(navigate(payload,params)),
+        offersSetProductId: (payload) => dispatch(offersSetProductId(payload)),
         
     } 
 }

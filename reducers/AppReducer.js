@@ -1,4 +1,3 @@
-
 const INITIAL_STATE = {
     searchPanelShown:false,
     text:'',
@@ -11,7 +10,8 @@ const INITIAL_STATE = {
     searchText:'',
     loadingSearch:false,
     loadingError:false,
-    loaded:false
+    loaded:false,
+    productId:null
 }
 
 export default (state = INITIAL_STATE, action)=>{
@@ -44,6 +44,11 @@ export default (state = INITIAL_STATE, action)=>{
             return {
                 ...state,
                 text: ''
+            }
+        case 'SET_PRODUCT_ID':
+            return {
+                ...state,
+                productId: action.payload
             }
         case 'LOADING_SEARCH_END':
             return {
