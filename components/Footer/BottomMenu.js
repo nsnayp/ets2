@@ -21,7 +21,6 @@ class BottomMenu extends React.Component {
 	}
 
 	renderNotify = ()=>{
-		console.log(this.props.cart)
 		if(this.props.cart.length>0){
 			return(
 				<View style={{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', right:16, top:4}}>
@@ -35,12 +34,13 @@ class BottomMenu extends React.Component {
 	}
 
 	navigateSearchScreen=()=>{
-		console.log('this.props.productId',this.props.productId)
+		requestAnimationFrame(() => {
 		if(this.props.productId){
 			this.props.navigate('Offers', {headerText:'ETS.Поиск',backButtonVisible:true})
 		}else{
 			this.props.navigate('SearchResult', {headerText:'ETS.Поиск'})
 		}
+		})
 	}
 
 

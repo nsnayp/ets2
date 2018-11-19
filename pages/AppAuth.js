@@ -73,6 +73,7 @@ class AppAuth extends React.Component {
                 
 
                 <Navigator
+                    onNavigationStateChange={null}
 					/*onNavigationStateChange={(prevState, currentState) => {
 						this.curState(currentState)
 					}}*/

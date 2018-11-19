@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Dimensions, TextInput, Animated, Easing, 
 import Feather from '@expo/vector-icons/Feather';
 
 import { connect } from 'react-redux';
-import { toggleSearchPanel, onInput, removeText ,navigate, setSearchText,fetchSearchResult,offersSetProductId } from '../../actions/index'
+import { toggleSearchPanel, onInput, removeText ,navigate, setSearchText,fetchSearchResult,offersSetProductId,setOffers } from '../../actions/index'
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -58,9 +58,11 @@ class Header extends React.Component {
             return(
             <Animated.View style={{  }}>
                 <TouchableOpacity onPress={() => { 
+                        
                         this.props.toggleSearchPanel(false); 
                         this.props.navigate('SearchResult', {headerText:'ETS.Поиск'}) ;
-                        this.props.offersSetProductId(null)
+                        this.props.offersSetProductId(null);
+                        this.props.setOffers(null);
                     
                     }}>
                     <View style={[ {width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }]}>
@@ -139,7 +141,11 @@ class Header extends React.Component {
                                         onChangeText={(text) => { this.props.onInput(text) }}
                                         onSubmitEditing={(event) => {
                                             //requestAnimationFrame(() => {
+                                                this.props.offersSetProductId(null);
+                                                this.props.setOffers(null);
                                                 this.props.fetchSearchResult(this.props.text);
+
+
                                                 this.props.removeText();
                                                 this.props.toggleSearchPanel(false);
                                                 this.props.navigate('SearchResult', {headerText:'Поиск '+this.props.text})
@@ -218,6 +224,7 @@ const mapDispatchToProps = (dispatch, payload,params) => {
         setSearchText: (payload) => dispatch(setSearchText(payload)),
         fetchSearchResult:(payload)=>{dispatch(fetchSearchResult(payload))},
         offersSetProductId: (payload) => dispatch(offersSetProductId(payload)),
+        setOffers:(payload)=> dispatch(setOffers(payload)),
     }
 }
 

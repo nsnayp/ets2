@@ -5,13 +5,14 @@ import {
 	TouchableOpacity,
 	Animated,
 	Easing,
-
+	StyleSheet
 } from 'react-native';
 import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
 
 
 import { connect } from 'react-redux';
 import {addToCart,deleteFromCart} from '../../actions';
+import SrokText from './SrokText';
 
 
 export class OfferItem extends React.Component {
@@ -22,24 +23,16 @@ export class OfferItem extends React.Component {
 		this.state.toCartQty = 1
 		
 	}
-	
+
+componentWillReceiveProps(){
+	console.log('re-render')
+}
+shouldComponentUpdate(){
+	console.log('re-render')
+	return true
+}
 renderSrok=srok=>{
-	if(srok==0){
-		return(
-			<View style={{flexDirection:'row',alignItems:'center'}}>
-				<View style={{backgroundColor:'#4CAF50', width:16,borderRadius:2, height:16,borderColor:'#4CAF50'}}></View>
-				<Text style={{marginLeft:10, fontSize:14, color:'green'}}>Склад</Text>
-			</View>
-			
-		)
-	}else{
-		return(
-			<View style={{flexDirection:'row',alignItems:'center'}}>
-				<View style={{backgroundColor:'#fff', width:16, height:16, borderRadius:2, borderWidth:2,borderColor:'#4CAF50'}}></View>
-				<Text style={{marginLeft:10, fontSize:14, color:'#424242'}}>{srok} дн</Text>
-			</View>
-		)
-	}
+	return <SrokText srok={srok}></SrokText>
 }
 
 renderCart=offer=>{
@@ -57,7 +50,7 @@ renderCart=offer=>{
 				})
 			}}
 			>
-				<View style={{paddingVertical:8, paddingRight:10,paddingLeft:8,borderRadius:2, backgroundColor:'#fff'}}>
+				<View style={styles.cartBtnFalse}>
 					<Feather name="shopping-cart" size={22} color="#999" style={{}} />
 				</View>
 			</TouchableOpacity>
@@ -77,12 +70,12 @@ renderCart=offer=>{
 						})
 					}}
 				>
-					<View style={{paddingVertical:8, paddingRight:10,paddingLeft:8, borderRadius:2, backgroundColor:'#fff'}}>
+					<View style={styles.cartBtnTrue}>
 						<Feather name="shopping-cart" size={22} color="#999" style={{}} />
 					</View>
 				</TouchableOpacity>
 
-				<View style={{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', left:23, top:-2}}>
+				<View style={styles.cartBtnNotify}>
 					<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>{this.state.cartQty}</Text>
 				</View>
 
@@ -102,55 +95,49 @@ render=()=>{
 	if(offer.visible){
 	return(
 		<Animated.View key={offer.id} style={{width:'300%', flexDirection:'row', marginLeft:carMarginLeft,}}>
-			<View  style={{width:'33.3333%', flexDirection:'row', justifyContent:'space-between', paddingLeft:16, paddingRight:8,  paddingVertical:4, borderTopColor:'#fafafa', borderTopWidth:1}}>
-				
-				<View style={{flexDirection:'row', alignItems:'center', justifyContent:'flex-start', width:'20%'}}>
+			<View  style={styles.row1}>
+	
+				<View style={styles.column1}>
 					{this.renderSrok(offer.srok)}	
-				
 				</View>
-				<View  style={{width:'20%', alignItems:'flex-end', alignContent:'center', justifyContent:'center'}}>
+				<View  style={styles.column2}>
 					<Text style={{marginLeft:10, fontSize:14, color:'#424242'}}>{offer.qty} шт</Text>
 				</View>
 
-				<View  style={{width:'15%', alignItems:'center', justifyContent:'center', alignContent:'center', flexDirection:'row'}}>
-					<View style={{width:5, height:14, marginRight:0, backgroundColor:'#4CAF50'}}></View>
-					<View style={{width:5, height:14, marginRight:0, backgroundColor:'#4CAF50'}}></View>
-					<View style={{width:5, height:14, marginRight:0, backgroundColor:'#4CAF50'}}></View>
-					<View style={{width:5, height:14, marginRight:0, backgroundColor:'#4CAF50'}}></View>
-					<View style={{width:5, height:14,  marginRight:0, backgroundColor:'#eee'}}></View>
+				<View  style={styles.column3}>
 				</View>
 
-				<View  style={{width:'20%',alignItems:'center',  justifyContent:'center', alignContent:'center'}}>
+				<View  style={styles.column4}>
 					<Text style={{marginLeft:10, fontSize:14, color:'#424242'}}>{offer.price} ₽</Text>
 				</View>
-				<View style={{width:'25%', flexDirection:'row'}}>
-					<View  style={{ alignItems:'flex-end', width:'50%', justifyContent:'center'}}>
-						<Feather name="info" size={22} color="#999" style={{}} />
+				<View style={styles.column5}>
+					<View  style={styles.infoIcon}>
+						<Feather name="info" size={22} color="#999" />
 					</View>
-					<View  style={{ alignItems:'flex-end', width:'50%', justifyContent:'center'}}>
+					<View  style={styles.cartBtn}>
 						{this.renderCart(offer)}
 					</View>
 				</View>
 				
 			</View>
-			<View  style={{width:'33.3333%', flexDirection:'row', justifyContent:'space-between', paddingLeft:16, paddingRight:8,   paddingVertical:0,  borderTopColor:'#fafafa', borderTopWidth:1}}>
+			<View  style={styles.row2}>
 				<View style={{flexDirection:'row', alignContent:'flex-start'}}>
 
 					<TouchableOpacity
 					onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty-1}) }}
 					>
-						<View style={{paddingVertical:8, paddingRight:10,paddingLeft:8,  marginRight:14, borderRadius:2, backgroundColor:'#fff'}}>
+						<View style={styles.iconMinusWrap}>
 							<FontAwesome name="minus" size={22} color="#999" style={{}} />
 						</View>
 					</TouchableOpacity>
 
-					<View style={{paddingVertical:8, paddingRight:10,paddingLeft:8,  marginRight:14, borderRadius:2, backgroundColor:'#fff'}}>
+					<View style={styles.qtyText}>
 						<Text>{this.state.toCartQty} шт</Text>
 					</View>
 					<TouchableOpacity
 					onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty+1}) }}
 					>
-						<View style={{paddingVertical:8, paddingRight:10,paddingLeft:8,  marginRight:14, borderRadius:2, backgroundColor:'#fff'}}>
+						<View style={styles.iconPlusWrap}>
 							<FontAwesome name="plus" size={22} color="#999" style={{}} />
 						</View>
 					</TouchableOpacity>
@@ -169,7 +156,7 @@ render=()=>{
 							
 						}}
 					>
-						<View style={{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2, backgroundColor:'#fff'}}>
+						<View style={styles.iconClose}>
 							<MaterialIcons name="close" size={22} color="#f44336" style={{}} />
 						</View>
 					</TouchableOpacity>
@@ -188,7 +175,7 @@ render=()=>{
 							this.setState({cartQty:this.state.toCartQty, inCart:true})
 						}}
 					>
-						<View style={{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2, backgroundColor:'#fff'}}>
+						<View style={styles.iconCheck}>
 							<Feather name="check" size={22} color="#4CAF50" style={{}} />
 						</View>
 					</TouchableOpacity>
@@ -204,6 +191,30 @@ render=()=>{
 }
 }
 
+const styles = StyleSheet.create({
+	row1:{width:'33.3333%', flexDirection:'row', justifyContent:'space-between', paddingLeft:16, paddingRight:8,  paddingVertical:4, borderTopColor:'#fafafa', borderTopWidth:1},
+	row2:{width:'33.3333%', flexDirection:'row', justifyContent:'space-between', paddingLeft:16, paddingRight:8,   paddingVertical:0,  borderTopColor:'#fafafa', borderTopWidth:1},
+
+	column1: {flexDirection:'row', alignItems:'center', justifyContent:'flex-start', width:'20%'},
+	column2: {width:'20%', alignItems:'flex-end', alignContent:'center', justifyContent:'center'},
+	column3: {width:'15%', alignItems:'center', justifyContent:'center', alignContent:'center', flexDirection:'row'},
+	column4: {width:'20%',alignItems:'center',  justifyContent:'center', alignContent:'center'},
+	column5:{width:'25%', flexDirection:'row'},
+	infoIcon:{ alignItems:'flex-end', width:'50%', justifyContent:'center'},
+	cartBtn:{ alignItems:'flex-end', width:'50%', justifyContent:'center'},
+	cartBtnNotify:{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', left:23, top:-2},
+	squireNal:{backgroundColor:'#4CAF50', width:16,borderRadius:2, height:16,borderColor:'#4CAF50'},
+	squireDay:{backgroundColor:'#fff', width:16, height:16, borderRadius:2, borderWidth:2,borderColor:'#4CAF50'},
+	squireWrap:{flexDirection:'row',alignItems:'center'},
+	iconMinusWrap:{paddingVertical:8, paddingRight:10,paddingLeft:8,  marginRight:14, borderRadius:2, backgroundColor:'#fff'},
+	iconPlusWrap:{paddingVertical:8, paddingRight:10,paddingLeft:8,  marginRight:14, borderRadius:2, backgroundColor:'#fff'},
+	qtyText:{paddingVertical:8, paddingRight:10,paddingLeft:8,  marginRight:14, borderRadius:2, backgroundColor:'#fff'},
+	cartBtnFalse:{paddingVertical:8, paddingRight:10,paddingLeft:8,borderRadius:2, backgroundColor:'#fff'},
+	cartBtnTrue:{paddingVertical:8, paddingRight:10,paddingLeft:8, borderRadius:2, backgroundColor:'#fff'},
+	iconClose:{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2, backgroundColor:'#fff'},
+	iconCheck:{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2, backgroundColor:'#fff'},
+	
+  });
 
 
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Text, View,  Image, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
-import {toggleSearchPanel, addSearchResult,  navigate,  offersSetProductId} from '../actions';
+import {toggleSearchPanel, addSearchResult,  navigate,  offersSetProductId, fetchOffers} from '../actions';
 
 class SearchResult extends React.Component {
     constructor(props) {
@@ -50,11 +50,12 @@ class SearchResult extends React.Component {
                         <TouchableOpacity 
                             key={index} 
                             onPress={()=> {
-                                requestAnimationFrame(() => {
+                                //requestAnimationFrame(() => {
+                                    //this.props.fetchOffers(item.id)
                                     this.props.offersSetProductId(item.id);
                                     this.props.navigate('Offers', {headerText:item.brand+' '+item.oem,backButtonVisible:true})
                                     
-                                })
+                                //})
                             }}>
                             <View style={{flexDirection:'row', paddingVertical:10, paddingHorizontal:16, backgroundColor:'#fff', borderTopColor:'#fafafa', borderTopWidth:1,alignContent:'center', alignItems:'center'}}>
                                 <Image source={{uri:'http://etsgroup.ru/img_serv/brands/'+item.brand+'.png'}} style={{width:30, height:30}}></Image>
@@ -105,7 +106,7 @@ const mapDispatchToProps = (dispatch, payload) => {
         addSearchResult: (payload) => dispatch(addSearchResult(payload)),
         navigate : (payload,params) => dispatch(navigate(payload,params)),
         offersSetProductId: (payload) => dispatch(offersSetProductId(payload)),
-        
+        fetchOffers : (payload) => dispatch(fetchOffers(payload))
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResult)
