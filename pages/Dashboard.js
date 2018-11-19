@@ -15,10 +15,9 @@ class Dashboard extends React.Component {
  
 
         return (
-            <View>
-                <Text>Hello, its dashboard</Text>
-                <Image source={{uri:'http://etsgroup.ru/img/shuffler.jpg'}} style={{width:100, height:100}}></Image>
-                <Button title='erert' onPress={()=>{this.props.toggleSearchPanel(true)}}></Button>
+            <View style={{flexDirection:'column', justifyContent:'center', alignContent:'center', alignItems:'center', flex:1}}>
+                <Text style={{fontSize:15}}>Привет, это наша первая версия</Text>
+                
             </View>
         )
 

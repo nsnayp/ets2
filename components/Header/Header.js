@@ -3,7 +3,7 @@ import { Text, View, TouchableOpacity, Dimensions, TextInput, Animated, Easing, 
 import Feather from '@expo/vector-icons/Feather';
 
 import { connect } from 'react-redux';
-import { toggleSearchPanel, onInput, removeText ,navigate, setSearchText,fetchSearchResult } from '../../actions/index'
+import { toggleSearchPanel, onInput, removeText ,navigate, setSearchText,fetchSearchResult,offersSetProductId } from '../../actions/index'
 
 
 const screenWidth = Dimensions.get('window').width;
@@ -57,7 +57,12 @@ class Header extends React.Component {
         if(this.props.screenParams.backButtonVisible){
             return(
             <Animated.View style={{  }}>
-                <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false); this.props.navigate('SearchResult', {headerText:'ETS.Поиск'}) }}>
+                <TouchableOpacity onPress={() => { 
+                        this.props.toggleSearchPanel(false); 
+                        this.props.navigate('SearchResult', {headerText:'ETS.Поиск'}) ;
+                        this.props.offersSetProductId(null)
+                    
+                    }}>
                     <View style={[ {width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }]}>
                         <Feather name="arrow-left" size={20} color="#fff" style={{}} />
                     </View>
@@ -201,7 +206,6 @@ const mapStateToProps = state => {
         searchPanelShown: state.app.searchPanelShown,
         text: state.app.text,
         screenParams : state.app.screenParams,
-        
     }
 }
 
@@ -212,7 +216,8 @@ const mapDispatchToProps = (dispatch, payload,params) => {
         removeText : () => dispatch(removeText()),
         navigate : (payload,params) => dispatch(navigate(payload,params)),
         setSearchText: (payload) => dispatch(setSearchText(payload)),
-        fetchSearchResult:(payload)=>{dispatch(fetchSearchResult(payload))}
+        fetchSearchResult:(payload)=>{dispatch(fetchSearchResult(payload))},
+        offersSetProductId: (payload) => dispatch(offersSetProductId(payload)),
     }
 }
 

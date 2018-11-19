@@ -34,13 +34,23 @@ class BottomMenu extends React.Component {
 		
 	}
 
+	navigateSearchScreen=()=>{
+		console.log('this.props.productId',this.props.productId)
+		if(this.props.productId){
+			this.props.navigate('Offers', {headerText:'ETS.Поиск',backButtonVisible:true})
+		}else{
+			this.props.navigate('SearchResult', {headerText:'ETS.Поиск'})
+		}
+	}
+
+
 	render() {
 
 		return (
 			
 			<View style={{ backgroundColor: '#fff', width: '100%', justifyContent: 'space-evenly', alignItems: 'stretch', flexDirection: 'row', paddingHorizontal: 10, borderTopColor:'#eee', borderTopWidth:1, elevation: 10  }}>
 				<View style={{ width: '20%' }}>
-					<TouchableNativeFeedback  onPress={()=>this.props.navigate('Dashboard')} >
+					<TouchableNativeFeedback  onPress={() => requestAnimationFrame(() =>this.props.navigate('Dashboard') )} >
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="home" size={23} color={ (this.props.currentScreen=='Dashboard')?'#3F51B5':'#8a8a8a' }  />
 
@@ -63,14 +73,14 @@ class BottomMenu extends React.Component {
 				</View>
 
 				<View style={{ width: '20%' }}>
-					<TouchableNativeFeedback onPress={() =>this.props.navigate('SearchResult', {headerText:'ETS.Поиск'})}>
+					<TouchableNativeFeedback onPress={() =>this.navigateSearchScreen() }>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' ,backgroundColor:'#fff'}}>
 							<Feather name="search" size={23} color={ (this.props.currentScreen=='SearchResult'||this.props.currentScreen=='Offers')?'#3F51B5':'#8a8a8a' } />
 						</View>
 					</TouchableNativeFeedback>
 				</View>
 				<View style={{ width: '20%' , position:'relative'}}>
-					<TouchableNativeFeedback onPress={() => this.props.navigate('Cart', {headerText:'ETS.Корзина'})}>
+					<TouchableNativeFeedback onPress={() => requestAnimationFrame(()=>this.props.navigate('Cart', {headerText:'ETS.Корзина'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="shopping-cart" size={23} color={ (this.props.currentScreen=='Cart')?'#3F51B5':'#8a8a8a' } />
 						</View>
@@ -83,7 +93,7 @@ class BottomMenu extends React.Component {
 					
 				</View>
 				<View style={{ width: '20%' }}>
-					<TouchableNativeFeedback onPress={() => this.props.navigate('Settings', {headerText:'ETS.Настройки'})}>
+					<TouchableNativeFeedback onPress={() => requestAnimationFrame(() => this.props.navigate('Settings', {headerText:'ETS.Настройки'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="settings" size={23} color={ (this.props.currentScreen=='Settings')?'#3F51B5':'#8a8a8a' } />
 						</View>
@@ -99,7 +109,8 @@ class BottomMenu extends React.Component {
 const mapStateToProps = state => {
     return {
 		currentScreen: state.app.currentScreen,
-		cart:state.cart.cart
+		cart:state.cart.cart,
+		productId:state.offers.productId
     }
 }
 

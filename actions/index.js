@@ -105,7 +105,7 @@ export const setOffers = (payload) =>{
 export const fetchOffers = (payload) =>{
     return (dispatch) => {
         dispatch(setIsLoading(true))
-        fetch('http:/10.0.30.21/offer/api/'+payload+'?k=Ght59Jfesksef324')
+        fetch('http:/etsgroup.ru/offer/api1/'+payload+'?k=Ght59Jfesksef324')
         .then(data => data.json())
         .then(data =>  {
             var newdata = {}
