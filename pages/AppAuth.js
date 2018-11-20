@@ -1,10 +1,12 @@
 import * as React from 'react';
 import {
-    View 
+    View ,ActivityIndicator,AsyncStorage, AppState
 } from 'react-native';
 import { connect } from 'react-redux';
-import {toggleSearchPanel,navigate} from '../actions';
-import { createDrawerNavigator,NavigationActions  } from 'react-navigation';
+import {toggleSearchPanel,navigate,setCart} from '../actions';
+
+
+import { createStackNavigator,NavigationActions  } from 'react-navigation';
 
 import Dashboard from '../pages/Dashboard';
 import SearchResult from '../pages/SearchResult';
@@ -16,17 +18,18 @@ import Settings from '../pages/Settings';
 import Header from '../components/Header/Header';
 import BottomMenu from '../components/Footer/BottomMenu';
 
-const Navigator = createDrawerNavigator(
-	{
+const Navigator = createStackNavigator(
+	{   
+        
+        
 		Dashboard: {
 			screen: Dashboard,
         },
-        SearchResult: {
-			screen: SearchResult,
-        }
-        ,
         Offers: {
 			screen: Offers,
+        },
+        SearchResult: {
+			screen: SearchResult,
         }
         ,
         Orders: {
@@ -41,11 +44,22 @@ const Navigator = createDrawerNavigator(
 			screen: Settings,
 		}
 		
-	}
+    },
+    {
+        headerMode :"none",
+        cardShadowEnabled :false,
+        cardStyle:{
+            backgroundColor:'#f7f7f7'
+        }
+    }
 );
 
 
 class AppAuth extends React.Component {
+
+    
+
+
 
     constructor(props) {
         super(props)
@@ -53,6 +67,19 @@ class AppAuth extends React.Component {
 			currentRoute:0,
 		}
     }
+
+    componentWillMount(){
+        console.log('will mount')
+        AsyncStorage.getItem('cart')
+        .then((cart)=>{
+            console.log('cart from storage',cart)
+            this.props.setCart(JSON.parse(cart))
+		}).catch((error)=>{
+            console.log('error cart from storage',error)
+		})
+        
+    }
+
 
     componentWillReceiveProps(props) {
         if (props.currentScreen!=this.props.currentScreen) {
@@ -74,9 +101,11 @@ class AppAuth extends React.Component {
 
                 <Navigator
                     onNavigationStateChange={null}
+                    renderLoadingExperimental={() => <ActivityIndicator />}
 					/*onNavigationStateChange={(prevState, currentState) => {
 						this.curState(currentState)
-					}}*/
+                    }}*/
+                   
 				 	ref={el => { this.navig = el; }} 
 				 /> 
 				<BottomMenu currentRoute={this.state.currentRoute} navigation={this.navigate}></BottomMenu>
@@ -98,6 +127,7 @@ const mapDispatchToProps = (dispatch, payload) => {
     return{
         toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
         navigate : (payload) => dispatch(navigate(payload)),
+        setCart :  (payload) => dispatch(setCart(payload)),
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AppAuth)

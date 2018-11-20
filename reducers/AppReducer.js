@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     loadingSearch:false,
     loadingError:false,
     loaded:false,
-    productId:null
+    productId:null,
+    modalVisible:false
 }
 
 export default (state = INITIAL_STATE, action)=>{
@@ -29,6 +30,11 @@ export default (state = INITIAL_STATE, action)=>{
                 searchResult: action.payload,
                 loadingError: false,
                 loaded:true
+            }
+        case 'TOGGLE_MODAL_VISIBLE':
+            return {
+                ...state,
+                modalVisible: action.payload,
             }
         case 'SEARCH_PANEL_ONINPUT':
             return {

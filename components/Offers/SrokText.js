@@ -22,7 +22,7 @@ export default class SrokText extends React.PureComponent {
             return(
                 <View style={styles.squireWrap}>
                     <View style={styles.squireDay}></View>
-                    <Text style={{marginLeft:10, fontSize:14, color:'#424242'}}>{srok} дн</Text>
+                    <Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{srok} дн</Text>
                 </View>
             )
         }

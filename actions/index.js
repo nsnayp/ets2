@@ -1,4 +1,6 @@
 //import { connect } from 'react-redux';
+import { AsyncStorage } from 'react-native';
+
 
 export const toggleSearchPanel = (payload) =>{
     return {
@@ -60,7 +62,12 @@ export const setproductId = (payload) =>{
     }
 }
 
-
+export const toggleModalVisible = (payload) =>{
+    return {
+        type:'TOGGLE_MODAL_VISIBLE',
+        payload:payload
+    }
+}
 
 
 
@@ -147,6 +154,19 @@ export const fetchOffers = (payload) =>{
 /* OFFERS PAGE ACTIONS END*/
 
 /* CART PAGE ACTIONS */
+
+/*export const setStorageCart=(payload)=>{
+    AsyncStorage.setItem('cart', payload)
+    return (dispatch) =>  dispatch(setCart(payload))
+}*/
+
+export const setCart=(payload)=>{
+    AsyncStorage.setItem('cart', payload)
+    return {
+        type:'SET_CART',
+        payload:payload
+    }
+}
 
 export const addToCart = (payload) =>{
     return {

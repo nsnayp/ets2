@@ -18,7 +18,7 @@ import AppNoAuth from './pages/AppNoAuth';
 
 
 import {createStore, applyMiddleware } from 'redux';
-import {Provider, connect} from 'react-redux';
+import {Provider} from 'react-redux';
 import thunk from 'redux-thunk'
 import reducers from './reducers';
 
@@ -31,8 +31,11 @@ class App extends React.Component {
 	state = {
 		notification: {},
 		logedIn:null,
-		userKey:null
+		userKey:null,
 	};
+
+
+
 
 
 	constructor(props) {

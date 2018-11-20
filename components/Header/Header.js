@@ -11,7 +11,7 @@ const screenHeight = Dimensions.get('window').height;
 const HEADER_HEIGHT = 56;
 const ICON_WIDTH = HEADER_HEIGHT
 const HEDER_TITLE_WIDTH = screenWidth - HEADER_HEIGHT - HEADER_HEIGHT - 16
-const SEARCH_WIDTH = HEDER_TITLE_WIDTH + ICON_WIDTH
+const SEARCH_WIDTH = HEDER_TITLE_WIDTH + ICON_WIDTH + ICON_WIDTH
 
 class Header extends React.Component {
 
@@ -186,18 +186,22 @@ class Header extends React.Component {
                             </Animated.View>
 
                         </View>
+                        
+                    <View style={{width:16, height:HEADER_HEIGHT}}></View>
+                        
 
                     </View>
 
 
-
-                    <View style={{ width: HEADER_HEIGHT }}>
+                    {/* <View style={{ width: HEADER_HEIGHT }}>
                         <TouchableOpacity onPress={()=>{this.props.navigate('Cart')}}>
                             <View style={{ width: HEADER_HEIGHT, height: HEADER_HEIGHT, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                                 <Feather name="mail" size={20} color="#fff" style={{}} />
                             </View>
                         </TouchableOpacity>
-                    </View>
+                    </View> */}
+
+
                 </View>
 
 

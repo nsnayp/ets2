@@ -2,11 +2,12 @@ import * as React from 'react';
 import {
 	View,
 	TouchableNativeFeedback,
-	Text
+	Text,
+	AsyncStorage
 } from 'react-native';
 import { MaterialIcons,Feather } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { toggleSearchPanel, onInput, removeText ,navigate } from '../../actions/index'
+import { toggleSearchPanel, navigate } from '../../actions/index';
 
 
 class BottomMenu extends React.Component {
@@ -14,17 +15,22 @@ class BottomMenu extends React.Component {
 		super(props);
 	}
 
-	_onPress = (screen) =>{
-		requestAnimationFrame(() => {
-			this.props.navigation(screen); 
-		})  
+	componentWillReceiveProps(props){
+		
+		if( JSON.stringify(this.props.cart)!=JSON.stringify(props.cart) && Object.values(this.props.cart).length>0){
+			console.log('save cart')
+			AsyncStorage.setItem('cart', JSON.stringify(props.cart)).catch((error)=>{
+        	    console.log('error cart from storage',error)
+			})
+		}
 	}
 
 	renderNotify = ()=>{
-		if(this.props.cart.length>0){
+		const len = Object.values(this.props.cart).length
+		if(len>0){
 			return(
 				<View style={{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', right:16, top:4}}>
-					<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>{this.props.cart.length}</Text>
+					<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>{len}</Text>
 				</View>
 			)
 		}else{
@@ -117,7 +123,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, payload) => {
     return {
 		navigate : (payload,params) => dispatch(navigate(payload,params)),
-		toggleSearchPanel:(payload)=> dispatch(toggleSearchPanel(payload))
+		toggleSearchPanel:(payload)=> dispatch(toggleSearchPanel(payload)),
     }
 }
 

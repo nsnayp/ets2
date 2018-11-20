@@ -11,7 +11,7 @@ import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
 
 
 import { connect } from 'react-redux';
-import {addToCart,deleteFromCart} from '../../actions';
+import {addToCart,deleteFromCart, toggleModalVisible} from '../../actions';
 import SrokText from './SrokText';
 
 
@@ -22,13 +22,22 @@ export class OfferItem extends React.Component {
 		this.state.carMarginLeft=new Animated.Value(0)
 		this.state.toCartQty = 1
 		
+
+		
+
+		 
 	}
 
 componentWillReceiveProps(){
-	console.log('re-render')
+	console.log('listItem newProps')
 }
-shouldComponentUpdate(){
-	console.log('re-render')
+shouldComponentUpdate(props){
+	console.log('listItem shouldUpdate')
+	if(JSON.stringify(this.props.cart)!=JSON.stringify(props.cart)){
+		console.log('dont update')
+		return false
+	}
+	console.log('updated')
 	return true
 }
 renderSrok=srok=>{
@@ -51,7 +60,7 @@ renderCart=offer=>{
 			}}
 			>
 				<View style={styles.cartBtnFalse}>
-					<Feather name="shopping-cart" size={22} color="#999" style={{}} />
+					<Feather name="shopping-cart" size={20} color="#999" style={{}} />
 				</View>
 			</TouchableOpacity>
 		)
@@ -71,7 +80,7 @@ renderCart=offer=>{
 					}}
 				>
 					<View style={styles.cartBtnTrue}>
-						<Feather name="shopping-cart" size={22} color="#999" style={{}} />
+						<Feather name="shopping-cart" size={20} color="#999" style={{}} />
 					</View>
 				</TouchableOpacity>
 
@@ -87,6 +96,7 @@ renderCart=offer=>{
 
 
 render=()=>{
+	//console.log('renderItem')
 	let carMarginLeft = this.state.carMarginLeft.interpolate({
 		inputRange: [0, 1],
 		outputRange: [0, -410]
@@ -101,18 +111,24 @@ render=()=>{
 					{this.renderSrok(offer.srok)}	
 				</View>
 				<View  style={styles.column2}>
-					<Text style={{marginLeft:10, fontSize:14, color:'#424242'}}>{offer.qty} шт</Text>
+					<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.qty} шт</Text>
 				</View>
 
 				<View  style={styles.column3}>
 				</View>
 
 				<View  style={styles.column4}>
-					<Text style={{marginLeft:10, fontSize:14, color:'#424242'}}>{offer.price} ₽</Text>
+					<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.price} ₽</Text>
 				</View>
 				<View style={styles.column5}>
 					<View  style={styles.infoIcon}>
-						<Feather name="info" size={22} color="#999" />
+						<TouchableOpacity
+							onPress={(e)=>{ this.props.toggleModalVisible(true) }}
+						>
+							<View style={styles.cartBtnTrue}>
+								<Feather name="info" size={22} color="#999" style={{}} />
+							</View>
+						</TouchableOpacity>
 					</View>
 					<View  style={styles.cartBtn}>
 						{this.renderCart(offer)}
@@ -124,7 +140,7 @@ render=()=>{
 				<View style={{flexDirection:'row', alignContent:'flex-start'}}>
 
 					<TouchableOpacity
-					onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty-1}) }}
+						onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty-1}) }}
 					>
 						<View style={styles.iconMinusWrap}>
 							<FontAwesome name="minus" size={22} color="#999" style={{}} />
@@ -145,14 +161,35 @@ render=()=>{
 				<View style={{flexDirection:'row', alignContent:'flex-end', justifyContent:'center', width:'20%'}}>
 					<TouchableOpacity
 						onPress={(e)=>{
-							this.props.deleteFromCart(offer)
+							
+							/*Animated.timing(this.state.carMarginLeft, {
+								toValue: 0 ,
+								duration: 250,
+					
+								easing:Easing.elastic()
+							}).start(
+								()=>{
+									offer.cartQty = null
+									offer.inCart = false
+									this.props.deleteFromCart(offer)
+								}
+							);*/
+
+
 							Animated.timing(this.state.carMarginLeft, {
 								toValue: 0 ,
 								duration: 250,
 					
 								easing:Easing.elastic()
 							}).start();
-							this.setState({cartQty:null, inCart:false, toCartQty:1})
+							
+							
+							this.setState({cartQty:null, inCart:false},
+								()=>{
+									this.props.deleteFromCart(this.state)
+								})
+							
+						
 							
 						}}
 					>
@@ -164,7 +201,20 @@ render=()=>{
 						onPress={(e)=>{
 
 
-							this.props.addToCart(offer)
+							//this.props.addToCart(offer)
+
+							/*Animated.timing(this.state.carMarginLeft, {
+								toValue: 0 ,
+								duration: 250,
+					
+								easing:Easing.elastic()
+							}).start(
+								()=>{
+									offer.cartQty = this.state.toCartQty
+									offer.inCart = true
+									this.props.addToCart(offer)
+								}
+							);*/
 
 							Animated.timing(this.state.carMarginLeft, {
 								toValue: 0 ,
@@ -172,7 +222,12 @@ render=()=>{
 					
 								easing:Easing.elastic()
 							}).start();
-							this.setState({cartQty:this.state.toCartQty, inCart:true})
+							
+							
+							this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
+								this.props.addToCart(this.state)
+							})
+							
 						}}
 					>
 						<View style={styles.iconCheck}>
@@ -199,9 +254,9 @@ const styles = StyleSheet.create({
 	column2: {width:'20%', alignItems:'flex-end', alignContent:'center', justifyContent:'center'},
 	column3: {width:'15%', alignItems:'center', justifyContent:'center', alignContent:'center', flexDirection:'row'},
 	column4: {width:'20%',alignItems:'center',  justifyContent:'center', alignContent:'center'},
-	column5:{width:'25%', flexDirection:'row'},
-	infoIcon:{ alignItems:'flex-end', width:'50%', justifyContent:'center'},
-	cartBtn:{ alignItems:'flex-end', width:'50%', justifyContent:'center'},
+	column5:{width:'25%', flexDirection:'row', alignItems:'flex-end',justifyContent:'flex-end'},
+	infoIcon:{ alignItems:'flex-end', justifyContent:'center'},
+	cartBtn:{ alignItems:'flex-end',  justifyContent:'center'},
 	cartBtnNotify:{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', left:23, top:-2},
 	squireNal:{backgroundColor:'#4CAF50', width:16,borderRadius:2, height:16,borderColor:'#4CAF50'},
 	squireDay:{backgroundColor:'#fff', width:16, height:16, borderRadius:2, borderWidth:2,borderColor:'#4CAF50'},
@@ -227,6 +282,7 @@ const mapDispatchToProps = (dispatch, payload) => {
     return{
 		addToCart: (payload) => dispatch(addToCart(payload)),
 		deleteFromCart: (payload) => dispatch(deleteFromCart(payload)),
+		toggleModalVisible: (payload) => dispatch(toggleModalVisible(payload)),
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(OfferItem)

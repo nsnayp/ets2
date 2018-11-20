@@ -1,26 +1,29 @@
 const INITIAL_STATE = {
-    cart:[],
+    cart:{},
  }
  
 export default (state = INITIAL_STATE, action)=>{
  
     switch (action.type) {
- 
+        case 'SET_CART':
+            return {
+                cart: action.payload
+              }
         case 'ADD_CART':
             return {
-                ...state,
-                cart: [...state.cart,action.payload]
-            }
+                cart: {
+                  ...state.cart,
+                  [action.payload.id.toString()]: action.payload
+                }
+              }
         
         case 'DELETE_CART':
+
+        const { [action.payload.id.toString()]: removedItem, ...newCart } = state.cart;
             return {
-                ...state,
-                cart: [
-                    ...state.cart.slice(0, action.payload),
-                    ...state.cart.slice(action.payload + 1)
-                ]
+                cart: newCart
             }
    
-         default: return state
+        default: return state
      }
  }
