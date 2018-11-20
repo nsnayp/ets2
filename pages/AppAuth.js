@@ -73,7 +73,7 @@ class AppAuth extends React.Component {
         AsyncStorage.getItem('cart')
         .then((cart)=>{
             console.log('cart from storage',cart)
-            this.props.setCart(JSON.parse(cart))
+            this.props.setCart(cart)
 		}).catch((error)=>{
             console.log('error cart from storage',error)
 		})

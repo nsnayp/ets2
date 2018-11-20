@@ -47,7 +47,7 @@ class App extends React.Component {
 			if(value!=null){
 				this.setState({ userKey: value, logedIn:true });
 			}else{
-				this.setState({ logedIn:false });
+				this.setState({ logedIn:true });
 			}
 		})
 		.done();

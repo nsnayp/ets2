@@ -164,7 +164,7 @@ export const setCart=(payload)=>{
     AsyncStorage.setItem('cart', payload)
     return {
         type:'SET_CART',
-        payload:payload
+        payload: JSON.parse(payload)
     }
 }
 
