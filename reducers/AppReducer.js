@@ -51,11 +51,11 @@ export default (state = INITIAL_STATE, action)=>{
                 ...state,
                 text: ''
             }
-        case 'SET_PRODUCT_ID':
+        /*case 'SET_PRODUCT_ID':
             return {
                 ...state,
                 productId: action.payload
-            }
+            }*/
         case 'LOADING_SEARCH_END':
             return {
                 ...state,

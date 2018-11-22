@@ -16,9 +16,7 @@ class BottomMenu extends React.Component {
 	}
 
 	componentWillReceiveProps(props){
-		
 		if( JSON.stringify(this.props.cart)!=JSON.stringify(props.cart) && Object.values(this.props.cart).length>0){
-			console.log('save cart')
 			AsyncStorage.setItem('cart', JSON.stringify(props.cart)).catch((error)=>{
         	    console.log('error cart from storage',error)
 			})

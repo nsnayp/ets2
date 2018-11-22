@@ -4,11 +4,12 @@ import {
 	View,
 	StyleSheet,
     Image,
-    FlatList
+    FlatList,
+    TouchableOpacity
 	
 } from 'react-native';
 
-
+import {showOfferGroup} from '../../actions';
 import { connect } from 'react-redux';
 import OfferItem from './OfferItem'
 
@@ -16,33 +17,37 @@ import OfferItem from './OfferItem'
 export class OffersList extends React.Component {
 
 constructor(props) {
-    console.log('construct flatList')
 	super(props); 
 }
 
 
 renderOffer=offerGroup=>{
-
     return offerGroup.offers.map(offer =>{
+
         if(this.props.cart[offer.id.toString()]){
 			offer.inCart = true
 			offer.cartQty = this.props.cart[offer.id.toString()].cartQty
-		}
-        return <OfferItem key={offer.id} offer={offer}></OfferItem>
+        }
+        return <OfferItem key={offer.id} offer={offer} visible={offer.visible}></OfferItem>
     })
 }
 
-renderMoreOffers = (offerGroup) =>{
+renderMoreOffers = (offerGroup,index) =>{
     if(offerGroup.hidden_offer_count>0){ 
         return (
+            <TouchableOpacity
+                onPress={ ()=>this.props.showOfferGroup(index)}
+            >
             <View style={{ flexDirection:'row', justifyContent:'flex-end',  paddingHorizontal:16,  paddingBottom:8}}>
                 <Text style={{fontSize:13, color:'#86adde'}}>еще {offerGroup.hidden_offer_count} предложений</Text>
             </View>
+            </TouchableOpacity>
         )
     }
 }
 
-renderOfferGroup = offerGroup =>{
+renderOfferGroup = (offerGroup, index) =>{
+
 	return(
 		<View key={offerGroup.oem} style={{  position:'relative', backgroundColor:'#fff'}}>
 			<View style={{ flexDirection:'row', justifyContent:'flex-start',  paddingHorizontal:16,  backgroundColor:'#fafafa', paddingVertical:8}}>
@@ -53,7 +58,7 @@ renderOfferGroup = offerGroup =>{
 			</View>
 			{ this.renderOffer(offerGroup)}
 			
-			{ this.renderMoreOffers(offerGroup) }
+			{ this.renderMoreOffers(offerGroup,index) }
 							
 		</View>
 	)
@@ -62,16 +67,15 @@ renderOfferGroup = offerGroup =>{
 
 
 render() {
-        console.log('render flatList')
         return (
             <View style={{flex:1, backgroundColor:'#fff'}}>
                 
                 <FlatList
                     data={this.props.offers}
-                    renderItem={({item}) =>  this.renderOfferGroup(item) }  
+                    renderItem={({item, index}) =>  this.renderOfferGroup(item,index) }  
                     keyExtractor={(item, index) => index.toString()} 
                     initialNumToRender={6}
-                    refreshing={true}
+                    refreshing={false}
                 >
                 
                 </FlatList>
@@ -100,12 +104,13 @@ const styles = StyleSheet.create({
 
   const mapStateToProps = state => {
     return {
-        cart: state.cart.cart
+        cart: state.cart.cart,
+
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {
     return{
-		
+		showOfferGroup : payload => dispatch(showOfferGroup(payload))
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(OffersList)

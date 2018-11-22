@@ -53,6 +53,7 @@ class SearchResult extends React.Component {
                                 //requestAnimationFrame(() => {
                                     this.props.fetchOffers(item.id)
                                     this.props.offersSetProductId(item.id);
+                                    console.log('set product ')
                                     this.props.navigate('Offers', {headerText:item.brand+' '+item.oem,backButtonVisible:true})
                                     
                                 //})

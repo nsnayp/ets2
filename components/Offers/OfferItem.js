@@ -21,25 +21,13 @@ export class OfferItem extends React.Component {
 		this.state = { ...this.props.offer}
 		this.state.carMarginLeft=new Animated.Value(0)
 		this.state.toCartQty = 1
-		
-
-		
-
-		 
+			 
 	}
 
-componentWillReceiveProps(){
-	console.log('listItem newProps')
+componentWillReceiveProps(props){
+	
 }
-shouldComponentUpdate(props){
-	console.log('listItem shouldUpdate')
-	if(JSON.stringify(this.props.cart)!=JSON.stringify(props.cart)){
-		console.log('dont update')
-		return false
-	}
-	console.log('updated')
-	return true
-}
+
 renderSrok=srok=>{
 	return <SrokText srok={srok}></SrokText>
 }
@@ -96,150 +84,149 @@ renderCart=offer=>{
 
 
 render=()=>{
-	//console.log('renderItem')
 	let carMarginLeft = this.state.carMarginLeft.interpolate({
 		inputRange: [0, 1],
 		outputRange: [0, -410]
-	  });
-	  const offer = this.state;
-	if(offer.visible){
-	return(
-		<Animated.View key={offer.id} style={{width:'300%', flexDirection:'row', marginLeft:carMarginLeft,}}>
-			<View  style={styles.row1}>
-	
-				<View style={styles.column1}>
-					{this.renderSrok(offer.srok)}	
-				</View>
-				<View  style={styles.column2}>
-					<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.qty} шт</Text>
-				</View>
+	});
+	const offer = this.state;
+	if(this.props.visible){
+		return(
+			<Animated.View key={offer.id} style={{width:'300%', flexDirection:'row', marginLeft:carMarginLeft,}}>
+				<View  style={styles.row1}>
+		
+					<View style={styles.column1}>
+						{this.renderSrok(offer.srok)}	
+					</View>
+					<View  style={styles.column2}>
+						<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.qty} шт</Text>
+					</View>
 
-				<View  style={styles.column3}>
-				</View>
+					<View  style={styles.column3}>
+					</View>
 
-				<View  style={styles.column4}>
-					<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.price} ₽</Text>
+					<View  style={styles.column4}>
+						<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.price} ₽</Text>
+					</View>
+					<View style={styles.column5}>
+						<View  style={styles.infoIcon}>
+							<TouchableOpacity
+								onPress={(e)=>{ this.props.toggleModalVisible(true) }}
+							>
+								<View style={styles.cartBtnTrue}>
+									<Feather name="info" size={22} color="#999" style={{}} />
+								</View>
+							</TouchableOpacity>
+						</View>
+						<View  style={styles.cartBtn}>
+							{this.renderCart(offer)}
+						</View>
+					</View>
+					
 				</View>
-				<View style={styles.column5}>
-					<View  style={styles.infoIcon}>
+				<View  style={styles.row2}>
+					<View style={{flexDirection:'row', alignContent:'flex-start'}}>
+
 						<TouchableOpacity
-							onPress={(e)=>{ this.props.toggleModalVisible(true) }}
+							onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty-1}) }}
 						>
-							<View style={styles.cartBtnTrue}>
-								<Feather name="info" size={22} color="#999" style={{}} />
+							<View style={styles.iconMinusWrap}>
+								<FontAwesome name="minus" size={22} color="#999" style={{}} />
+							</View>
+						</TouchableOpacity>
+
+						<View style={styles.qtyText}>
+							<Text>{this.state.toCartQty} шт</Text>
+						</View>
+						<TouchableOpacity
+						onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty+1}) }}
+						>
+							<View style={styles.iconPlusWrap}>
+								<FontAwesome name="plus" size={22} color="#999" style={{}} />
 							</View>
 						</TouchableOpacity>
 					</View>
-					<View  style={styles.cartBtn}>
-						{this.renderCart(offer)}
-					</View>
-				</View>
-				
-			</View>
-			<View  style={styles.row2}>
-				<View style={{flexDirection:'row', alignContent:'flex-start'}}>
-
-					<TouchableOpacity
-						onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty-1}) }}
-					>
-						<View style={styles.iconMinusWrap}>
-							<FontAwesome name="minus" size={22} color="#999" style={{}} />
-						</View>
-					</TouchableOpacity>
-
-					<View style={styles.qtyText}>
-						<Text>{this.state.toCartQty} шт</Text>
-					</View>
-					<TouchableOpacity
-					onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty+1}) }}
-					>
-						<View style={styles.iconPlusWrap}>
-							<FontAwesome name="plus" size={22} color="#999" style={{}} />
-						</View>
-					</TouchableOpacity>
-				</View>
-				<View style={{flexDirection:'row', alignContent:'flex-end', justifyContent:'center', width:'20%'}}>
-					<TouchableOpacity
-						onPress={(e)=>{
-							
-							/*Animated.timing(this.state.carMarginLeft, {
-								toValue: 0 ,
-								duration: 250,
-					
-								easing:Easing.elastic()
-							}).start(
-								()=>{
-									offer.cartQty = null
-									offer.inCart = false
-									this.props.deleteFromCart(offer)
-								}
-							);*/
-
-
-							Animated.timing(this.state.carMarginLeft, {
-								toValue: 0 ,
-								duration: 250,
-					
-								easing:Easing.elastic()
-							}).start();
-							
-							
-							this.setState({cartQty:null, inCart:false},
-								()=>{
-									this.props.deleteFromCart(this.state)
-								})
-							
+					<View style={{flexDirection:'row', alignContent:'flex-end', justifyContent:'center', width:'20%'}}>
+						<TouchableOpacity
+							onPress={(e)=>{
+								
+								/*Animated.timing(this.state.carMarginLeft, {
+									toValue: 0 ,
+									duration: 250,
 						
+									easing:Easing.elastic()
+								}).start(
+									()=>{
+										offer.cartQty = null
+										offer.inCart = false
+										this.props.deleteFromCart(offer)
+									}
+								);*/
+
+
+								Animated.timing(this.state.carMarginLeft, {
+									toValue: 0 ,
+									duration: 250,
+						
+									easing:Easing.elastic()
+								}).start();
+								
+								
+								this.setState({cartQty:null, inCart:false},
+									()=>{
+										this.props.deleteFromCart(this.state)
+									})
+								
 							
-						}}
-					>
-						<View style={styles.iconClose}>
-							<MaterialIcons name="close" size={22} color="#f44336" style={{}} />
-						</View>
-					</TouchableOpacity>
-					<TouchableOpacity
-						onPress={(e)=>{
+								
+							}}
+						>
+							<View style={styles.iconClose}>
+								<MaterialIcons name="close" size={22} color="#f44336" style={{}} />
+							</View>
+						</TouchableOpacity>
+						<TouchableOpacity
+							onPress={(e)=>{
 
 
-							//this.props.addToCart(offer)
+								//this.props.addToCart(offer)
 
-							/*Animated.timing(this.state.carMarginLeft, {
-								toValue: 0 ,
-								duration: 250,
+								/*Animated.timing(this.state.carMarginLeft, {
+									toValue: 0 ,
+									duration: 250,
+						
+									easing:Easing.elastic()
+								}).start(
+									()=>{
+										offer.cartQty = this.state.toCartQty
+										offer.inCart = true
+										this.props.addToCart(offer)
+									}
+								);*/
+
+								Animated.timing(this.state.carMarginLeft, {
+									toValue: 0 ,
+									duration: 250,
+						
+									easing:Easing.elastic()
+								}).start();
+								
+								
+								this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
+									this.props.addToCart(this.state)
+								})
+								
+							}}
+						>
+							<View style={styles.iconCheck}>
+								<Feather name="check" size={22} color="#4CAF50" style={{}} />
+							</View>
+						</TouchableOpacity>
+					</View>
 					
-								easing:Easing.elastic()
-							}).start(
-								()=>{
-									offer.cartQty = this.state.toCartQty
-									offer.inCart = true
-									this.props.addToCart(offer)
-								}
-							);*/
 
-							Animated.timing(this.state.carMarginLeft, {
-								toValue: 0 ,
-								duration: 250,
-					
-								easing:Easing.elastic()
-							}).start();
-							
-							
-							this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
-								this.props.addToCart(this.state)
-							})
-							
-						}}
-					>
-						<View style={styles.iconCheck}>
-							<Feather name="check" size={22} color="#4CAF50" style={{}} />
-						</View>
-					</TouchableOpacity>
 				</View>
-				
-
-			</View>
-		</Animated.View>
-	)
+			</Animated.View>
+		)
 	}else{
 		return null
 	}
@@ -275,7 +262,6 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
     return {
-        
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {

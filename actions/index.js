@@ -84,10 +84,17 @@ export const fetchSearchResult = (payload) =>{
     }
 }
 
+export const showOfferGroup =(payload)=>{
+    return {
+        type:'SHOW_OFFER_GROUP',
+        payload:payload
+    }
+}
 
 /* OFFERS PAGE ACTIONS */
 
 export const offersSetProductId = (payload) =>{
+   
     return {
         type:'SET_PRODUCT_ID',
         payload:payload
@@ -124,7 +131,7 @@ export const fetchOffers = (payload) =>{
                 item.toCartQty=1;
                 item.qty=item.rest;
                 item.visible = (item.visible)?true:false;
-                
+                item.hiddenGroup = (item.visible)?false:true;
 
                 var key = item.brand+item.oem
                 if(!newdata[key]){newdata[key]={}; newdata[key].offers=[] }
@@ -149,7 +156,6 @@ export const fetchOffers = (payload) =>{
 
     }
 }
-
 
 /* OFFERS PAGE ACTIONS END*/
 

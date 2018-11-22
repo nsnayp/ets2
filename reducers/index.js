@@ -6,5 +6,6 @@ import cartReducer from './cartReducer';
 export default combineReducers({
     app : AppReducer,
     offers: offersReducer,
-    cart: cartReducer
+    cart: cartReducer,
+
 })

@@ -26,10 +26,23 @@ export default (state = INITIAL_STATE, action)=>{
                 loadingError: action.payload
             }
         case 'SET_OFFERS':
+            //console.log(action.payload,'offers')
             return {
                 ...state,
                 offers: action.payload
-            }    
+            }
+        case 'SHOW_OFFER_GROUP':
+            const index = action.payload
+            let offers1 = Object.assign(state.offers);
+
+            for(const k in offers1[index].offers){
+                offers1[index].offers[k].visible = true;
+            }
+
+            return {
+                offers:[...offers1],
+                productId: state.productId
+            } 
         default: return state
     }
 }
