@@ -23,7 +23,7 @@ class ModalOfferDetail extends React.Component {
                 visible={this.props.modalVisible}
                 animationType ="fade"
             >
-                <View style={{backgroundColor:'#00000052', paddingHorizontal:24, paddingVertical:56, flex:1, flexDirection:'row', alignItems:'flex-end'}}>
+                <View style={{backgroundColor:'#00000052', paddingHorizontal:24, paddingVertical:60, flex:1, flexDirection:'row', alignItems:'flex-start'}}>
                     <View style={{backgroundColor:"#fff", width:'100%', elevation:5, borderRadius:5, padding:24}}>
                         <Text style={{fontSize:18}}>ZF 1315202037</Text>
                         <Text>В наличии</Text>

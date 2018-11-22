@@ -65,21 +65,14 @@ class AppAuth extends React.Component {
         super(props)
         this.state = {
 			currentRoute:0,
-		}
-    }
-
-    componentWillMount(){
-        console.log('will mount')
+        }
         AsyncStorage.getItem('cart')
         .then((cart)=>{
-            console.log('cart from storage',cart)
             this.props.setCart(cart)
 		}).catch((error)=>{
-            console.log('error cart from storage',error)
+            this.props.setCart({})
 		})
-        
     }
-
 
     componentWillReceiveProps(props) {
         if (props.currentScreen!=this.props.currentScreen) {

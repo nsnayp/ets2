@@ -65,6 +65,7 @@ render() {
         console.log('render flatList')
         return (
             <View style={{flex:1, backgroundColor:'#fff'}}>
+                
                 <FlatList
                     data={this.props.offers}
                     renderItem={({item}) =>  this.renderOfferGroup(item) }  
