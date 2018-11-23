@@ -32,13 +32,27 @@ export default (state = INITIAL_STATE, action)=>{
                 offers: action.payload
             }
         case 'SHOW_OFFER_GROUP':
-            const index = action.payload
-            let offers1 = Object.assign(state.offers);
+            var index = action.payload
+            var offers1 = Object.assign(state.offers);
 
             for(const k in offers1[index].offers){
                 offers1[index].offers[k].visible = true;
             }
+            offers1[index].collapsed = false
+            return {
+                offers:[...offers1],
+                productId: state.productId
+            }
+         case 'HIDE_OFFER_GROUP':
+            var index = action.payload
+            var offers1 = Object.assign(state.offers);
 
+            for(const k in offers1[index].offers){
+                if(offers1[index].offers[k].hiddenGroup==true){
+                    offers1[index].offers[k].visible = false;
+                }
+            }
+            offers1[index].collapsed = true
             return {
                 offers:[...offers1],
                 productId: state.productId

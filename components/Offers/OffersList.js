@@ -9,7 +9,7 @@ import {
 	
 } from 'react-native';
 
-import {showOfferGroup} from '../../actions';
+import {showOfferGroup,hideOfferGroup} from '../../actions';
 import { connect } from 'react-redux';
 import OfferItem from './OfferItem'
 
@@ -33,13 +33,23 @@ renderOffer=offerGroup=>{
 }
 
 renderMoreOffers = (offerGroup,index) =>{
-    if(offerGroup.hidden_offer_count>0){ 
+    if(offerGroup.hidden_offer_count>0&&offerGroup.collapsed==true){ 
         return (
             <TouchableOpacity
                 onPress={ ()=>this.props.showOfferGroup(index)}
             >
             <View style={{ flexDirection:'row', justifyContent:'flex-end',  paddingHorizontal:16,  paddingBottom:8}}>
                 <Text style={{fontSize:13, color:'#86adde'}}>еще {offerGroup.hidden_offer_count} предложений</Text>
+            </View>
+            </TouchableOpacity>
+        )
+    }else if(offerGroup.hidden_offer_count>0&&offerGroup.collapsed==false){ 
+        return (
+            <TouchableOpacity
+                onPress={ ()=>this.props.hideOfferGroup(index)}
+            >
+            <View style={{ flexDirection:'row', justifyContent:'flex-end',  paddingHorizontal:16,  paddingBottom:8}}>
+                <Text style={{fontSize:13, color:'#86adde'}}>скрыть {offerGroup.hidden_offer_count} предложений</Text>
             </View>
             </TouchableOpacity>
         )
@@ -110,7 +120,8 @@ const styles = StyleSheet.create({
 }
 const mapDispatchToProps = (dispatch, payload) => {
     return{
-		showOfferGroup : payload => dispatch(showOfferGroup(payload))
+        showOfferGroup : payload => dispatch(showOfferGroup(payload)),
+        hideOfferGroup : payload => dispatch(hideOfferGroup(payload))
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(OffersList)

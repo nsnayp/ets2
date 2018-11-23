@@ -91,6 +91,13 @@ export const showOfferGroup =(payload)=>{
     }
 }
 
+export const hideOfferGroup =(payload)=>{
+    return {
+        type:'HIDE_OFFER_GROUP',
+        payload:payload
+    }
+}
+
 /* OFFERS PAGE ACTIONS */
 
 export const offersSetProductId = (payload) =>{
@@ -122,6 +129,7 @@ export const fetchOffers = (payload) =>{
         fetch('http:/etsgroup.ru/offer/api1/'+payload+'?k=Ght59Jfesksef324')
         .then(data => data.json())
         .then(data =>  {
+            
             var newdata = {}
             var images = data.product.img.img
             for(k in data.offers){
@@ -135,6 +143,8 @@ export const fetchOffers = (payload) =>{
 
                 var key = item.brand+item.oem
                 if(!newdata[key]){newdata[key]={}; newdata[key].offers=[] }
+
+                newdata[key].collapsed = true
                 newdata[key].hidden_offer_count = item.hidden_offer_count;
                 newdata[key].oem = item.oem;
                 newdata[key].brand = item.brand; 
@@ -144,7 +154,7 @@ export const fetchOffers = (payload) =>{
             for(k in newdata){
                 newdata1.push(newdata[k])
             }
-            
+            console.log(newdata1)
             dispatch(setOffers(newdata1))
             dispatch(setIsLoading(false))
         })
