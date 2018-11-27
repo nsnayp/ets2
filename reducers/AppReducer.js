@@ -2,17 +2,14 @@ const INITIAL_STATE = {
     searchPanelShown:false,
     text:'',
     currentScreen:'Dashboard',
-    
-    screenParams:{
-        headerText:'ETS GROUP'
-    },
     searchResult:[],
     searchText:'',
     loadingSearch:false,
     loadingError:false,
     loaded:false,
     productId:null,
-    modalVisible:false
+    modalVisible:false,
+    modalData:null
 }
 
 export default (state = INITIAL_STATE, action)=>{
@@ -34,7 +31,8 @@ export default (state = INITIAL_STATE, action)=>{
         case 'TOGGLE_MODAL_VISIBLE':
             return {
                 ...state,
-                modalVisible: action.payload,
+                modalVisible: action.payload.modalVisible,
+                modalData: action.payload.modalData
             }
         case 'SEARCH_PANEL_ONINPUT':
             return {

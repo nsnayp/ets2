@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Text, View,  Image, TouchableOpacity, ScrollView } from 'react-native';
+import { Text, View,  Image, TouchableOpacity, ScrollView,BackHandler } from 'react-native';
 import { connect } from 'react-redux';
-import {toggleSearchPanel, addSearchResult,  navigate,  offersSetProductId, fetchOffers} from '../actions';
+import {toggleSearchPanel, addSearchResult,  navigate,  offersSetProductId, fetchOffers,setOffers} from '../actions';
 
 class SearchResult extends React.Component {
     constructor(props) {
@@ -9,11 +9,17 @@ class SearchResult extends React.Component {
         //console.log(this.props)
     }
 
-    componentWillMount = ()=>{
-        
+    componentDidMount() {
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+            this.props.navigate('Dashboard') ;
+            this.props.offersSetProductId(null);
+            this.props.setOffers(null);
+            return true;
+        });
     }
     
-    componentDidMount(){
+    componentWillUnmount() {
+        this.backHandler.remove();
     }
     
     render() {
@@ -53,7 +59,6 @@ class SearchResult extends React.Component {
                                 //requestAnimationFrame(() => {
                                     this.props.fetchOffers(item.id)
                                     this.props.offersSetProductId(item.id);
-                                    console.log('set product ')
                                     this.props.navigate('Offers', {headerText:item.brand+' '+item.oem,backButtonVisible:true})
                                     
                                 //})
@@ -107,7 +112,8 @@ const mapDispatchToProps = (dispatch, payload) => {
         addSearchResult: (payload) => dispatch(addSearchResult(payload)),
         navigate : (payload,params) => dispatch(navigate(payload,params)),
         offersSetProductId: (payload) => dispatch(offersSetProductId(payload)),
-        fetchOffers : (payload) => dispatch(fetchOffers(payload))
+        fetchOffers : (payload) => dispatch(fetchOffers(payload)),
+        setOffers : (payload) => dispatch(setOffers(payload))
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResult)

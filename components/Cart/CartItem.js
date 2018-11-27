@@ -6,12 +6,13 @@ import {
 	Animated,
 	StyleSheet
 } from 'react-native';
-import { Feather } from '@expo/vector-icons';
+import { Feather ,FontAwesome} from '@expo/vector-icons';
 
 
 import { connect } from 'react-redux';
 import {addToCart,deleteFromCart, toggleModalVisible} from '../../actions';
 import SrokText from '../../components/Offers/SrokText';
+import {prettyNumber} from '../../helpers/helpers';
 
 
 export class CartItem extends React.Component {
@@ -30,18 +31,23 @@ render=()=>{
 			<View  style={[styles.row1,{width:'100%', flexDirection:'row', backgroundColor:'#fff'}]} >
 	
 				<View style={styles.column1}>
-					<Text>{offer.brand+' '+offer.oem}</Text>
+					<Text>{offer.brand}</Text>
+					<Text>{offer.oem}</Text>
 				</View>
 				<View  style={styles.column2}>
 					<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.cartQty} шт</Text>
 				</View>
 
 				<View  style={styles.column4}>
-					<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.price} ₽</Text>
+					<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{prettyNumber(offer.price)} ₽</Text>
 				</View>
 				<View style={styles.column5}>
 					<View  style={styles.infoIcon}>
-						
+					<TouchableOpacity>
+							<View style={styles.iconPlusWrap}>
+								<Feather name="chevron-right" size={22} color="#999" style={{}} />
+							</View>
+						</TouchableOpacity>
 					</View>
 
 				</View>
@@ -59,11 +65,10 @@ const styles = StyleSheet.create({
 	row1:{width:'33.3333%', flexDirection:'row', justifyContent:'space-between', paddingLeft:16, paddingRight:8,  paddingVertical:4, borderTopColor:'#fafafa', borderTopWidth:1},
 	row2:{width:'33.3333%', flexDirection:'row', justifyContent:'space-between', paddingLeft:16, paddingRight:8,   paddingVertical:0,  borderTopColor:'#fafafa', borderTopWidth:1},
 
-	column1: {flexDirection:'row', alignItems:'center', justifyContent:'flex-start', width:'20%'},
+	column1: {flexDirection:'column', alignItems:'flex-start', justifyContent:'flex-start', width:'30%'},
 	column2: {width:'20%', alignItems:'flex-end', alignContent:'center', justifyContent:'center'},
-	column3: {width:'15%', alignItems:'center', justifyContent:'center', alignContent:'center', flexDirection:'row'},
 	column4: {width:'20%',alignItems:'center',  justifyContent:'center', alignContent:'center'},
-	column5:{width:'25%', flexDirection:'row', alignItems:'flex-end',justifyContent:'flex-end'},
+	column5:{width:'20%', flexDirection:'row', alignItems:'flex-end',justifyContent:'flex-end'},
 	infoIcon:{ alignItems:'flex-end', justifyContent:'center'},
 	cartBtn:{ alignItems:'flex-end',  justifyContent:'center'},
 	cartBtnNotify:{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', left:23, top:-2},

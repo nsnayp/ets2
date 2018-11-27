@@ -2,11 +2,11 @@ import * as React from 'react';
 import {
 	View,
 	ActivityIndicator,
-	Modal, Text,Image
+	Text,Image,BackHandler
 } from 'react-native';
 
 import { connect } from 'react-redux';
-import {fetchOffers} from '../actions';
+import {fetchOffers,navigate} from '../actions';
 import OffersList from '../components/Offers/OffersList';
 import ModalOfferDetail from '../components/ModalOfferDetail';
 import ImgFullscreen from '../components/ImgFullscreen';
@@ -16,6 +16,19 @@ export class Offers extends React.Component {
 constructor(props) {
 	super(props); 
 }
+
+
+componentDidMount() {
+    this.backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+        this.props.navigate('SearchResult') ;
+        return true;
+    });
+}
+
+componentWillUnmount() {
+    this.backHandler.remove();
+}
+
 
 renderImage=(image, images)=>{
 	return(
@@ -70,6 +83,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, payload) => {
     return{
         fetchOffers: (payload) => dispatch(fetchOffers(payload)),
+        navigate:(payload)=>dispatch(navigate(payload))
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Offers)

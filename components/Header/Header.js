@@ -54,13 +54,13 @@ class Header extends React.Component {
     }
 
     renderBackButton=()=>{
-        if(this.props.screenParams.backButtonVisible){
+        if(this.props.screens[this.props.currentScreen].backButtonVisible){
             return(
             <Animated.View style={{  }}>
                 <TouchableOpacity onPress={() => { 
                         
                         this.props.toggleSearchPanel(false); 
-                        this.props.navigate('SearchResult', {headerText:'ETS.Поиск'}) ;
+                        this.props.navigate('SearchResult') ;
                         this.props.offersSetProductId(null);
                         this.props.setOffers(null);
                     
@@ -124,7 +124,7 @@ class Header extends React.Component {
                         
                         {this.renderBackButton()}
                         
-                        <Text style={ [styles.titleText] }>{this.props.screenParams.headerText}</Text>
+                        <Text style={ [styles.titleText] }>{ this.props.screens[this.props.currentScreen].headerText}</Text>
 
                     </Animated.View>
 
@@ -216,6 +216,8 @@ const mapStateToProps = state => {
         searchPanelShown: state.app.searchPanelShown,
         text: state.app.text,
         screenParams : state.app.screenParams,
+        currentScreen:state.app.currentScreen,
+        screens : state.screens.screens,
     }
 }
 

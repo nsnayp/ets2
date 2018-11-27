@@ -35,7 +35,7 @@ class Dashboard extends React.Component {
                     </View>
                     <View style={{flexDirection:'row'}}>
                         <View style={{alignSelf:'center', justifyContent:"flex-end", padding:16}}>
-                            <Feather name="phone" size={24} color="green" />
+                            <Feather name="phone" size={24} color="#8BC34A" />
                         </View>
                     </View>
                 

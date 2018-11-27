@@ -3,7 +3,7 @@ import {  View, FlatList, Text } from 'react-native';
 import { connect } from 'react-redux';
 import {toggleSearchPanel} from '../../actions';
 import CartItem from './CartItem';
-
+import {prettyNumber} from '../../helpers/helpers';
 class CartList extends React.Component {
     constructor(props) {
         super(props)
@@ -24,7 +24,7 @@ class CartList extends React.Component {
     render() {
          return (
             <View>
-                <Text style={{padding:30}}>ИТОГО: {this.cartTotal()}</Text>
+                <Text style={{padding:30}}>ИТОГО: {prettyNumber(this.cartTotal())}</Text>
                 <FlatList
                     data={Object.values(this.props.cart)}
                     renderItem={({item}) =>  this.renderRow(item) }  

@@ -25,6 +25,14 @@ export const onInput = (payload) =>{
     }
 }
 
+
+export const changeScreenParams = (payload)=>{
+    return {
+        type:'CHANGE_SCREEN_PARAMS',
+        payload:payload
+    }
+}
+
 export const setSearchText = (payload) =>{
     return {
         type:'SET_SEARCH_TEXT',
@@ -154,7 +162,6 @@ export const fetchOffers = (payload) =>{
             for(k in newdata){
                 newdata1.push(newdata[k])
             }
-            console.log(newdata1)
             dispatch(setOffers(newdata1))
             dispatch(setIsLoading(false))
         })
@@ -202,8 +209,6 @@ export const deleteFromCart = (payload) =>{
 
 
 export const navigate = (payload, params = {}) =>{
-    //dispatch(toggleSearchPanel(false))
-    params = { ...{headerText:'ETS GROUP', backButtonVisible: false}, ...params }
     return {
         type:'NAVIGATE',
         payload:payload,

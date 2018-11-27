@@ -23,12 +23,7 @@ constructor(props) {
 
 renderOffer=offerGroup=>{
     return offerGroup.offers.map(offer =>{
-
-        if(this.props.cart[offer.id.toString()]){
-			offer.inCart = true
-			offer.cartQty = this.props.cart[offer.id.toString()].cartQty
-        }
-        return <OfferItem key={offer.id} offer={offer} visible={offer.visible}></OfferItem>
+        return <OfferItem key={offer.id} offer={offer} cart={this.props.cart[offer.id.toString()]} visible={offer.visible}></OfferItem>
     })
 }
 

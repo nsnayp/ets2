@@ -3,7 +3,7 @@ import {
     View ,ActivityIndicator,AsyncStorage, AppState
 } from 'react-native';
 import { connect } from 'react-redux';
-import {toggleSearchPanel,navigate,setCart} from '../actions';
+import {navigate,setCart, changeScreenParams} from '../actions';
 
 
 import { createStackNavigator,NavigationActions  } from 'react-navigation';
@@ -70,18 +70,20 @@ class AppAuth extends React.Component {
         .then((cart)=>{
             this.props.setCart(cart)
 		}).catch((error)=>{
-            this.props.setCart({})
+            this.props.setCart({})  
 		})
     }
 
     componentWillReceiveProps(props) {
         if (props.currentScreen!=this.props.currentScreen) {
-            this.navigate(props.currentScreen)
+            this.navigate(props.currentScreen,props.screenParams)
         } 
     }
 
-    navigate = (screen, params = {search:null}) => {
-		this.navig.dispatch(NavigationActions.navigate( {routeName:screen, params: params} ))
+    navigate = (screen,params = null) => {
+
+        this.props.changeScreenParams({screen:screen, headerText: params.headerText, backButtonVisible: params.backButtonVisible})
+		this.navig.dispatch(NavigationActions.navigate( {routeName:screen} ))
 	}
 
     render() {
@@ -95,9 +97,9 @@ class AppAuth extends React.Component {
                 <Navigator
                     onNavigationStateChange={null}
                     renderLoadingExperimental={() => <ActivityIndicator />}
-					/*onNavigationStateChange={(prevState, currentState) => {
-						this.curState(currentState)
-                    }}*/
+					onNavigationStateChange={(prevState, currentState) => {
+						console.log(currentState)
+                    }}
                    
 				 	ref={el => { this.navig = el; }} 
 				 /> 
@@ -112,15 +114,15 @@ class AppAuth extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        searchPanelShown: state.app.searchPanelShown,
         currentScreen: state.app.currentScreen,
+        screenParams: state.app.screenParams
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {
     return{
-        toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
         navigate : (payload) => dispatch(navigate(payload)),
         setCart :  (payload) => dispatch(setCart(payload)),
+        changeScreenParams: (payload)=>dispatch(changeScreenParams(payload)),
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AppAuth)

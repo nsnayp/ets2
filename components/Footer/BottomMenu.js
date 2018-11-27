@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { MaterialIcons,Feather } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { toggleSearchPanel, navigate } from '../../actions/index';
+import { toggleSearchPanel, navigate,changeScreenParams } from '../../actions/index';
 
 
 class BottomMenu extends React.Component {
@@ -40,7 +40,7 @@ class BottomMenu extends React.Component {
 	navigateSearchScreen=()=>{
 		requestAnimationFrame(() => {
 		if(this.props.productId){
-			this.props.navigate('Offers', {headerText:'ETS.Поиск',backButtonVisible:true})
+			this.props.navigate('Offers', {backButtonVisible:true})
 		}else{
 			this.props.navigate('SearchResult', {headerText:'ETS.Поиск'})
 		}
@@ -56,7 +56,7 @@ class BottomMenu extends React.Component {
 				<View style={{ width: '20%' }}>
 					<TouchableNativeFeedback  onPress={() => requestAnimationFrame(() =>this.props.navigate('Dashboard') )} >
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="home" size={23} color={ (this.props.currentScreen=='Dashboard')?'#3F51B5':'#8a8a8a' }  />
+							<Feather name="home" size={23} color={ (this.props.currentScreen=='Dashboard')?'#3F51B5':'#9E9E9E' }  />
 
 						</View>
 					</TouchableNativeFeedback>
@@ -65,7 +65,7 @@ class BottomMenu extends React.Component {
 				<View style={{ width: '20%', position:'relative' }}>
 					<TouchableNativeFeedback onPress={() => this.props.navigate('Orders', {headerText:'ETS.Заказы'})}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="clipboard" size={23} color={ (this.props.currentScreen=='Orders')?'#3F51B5':'#8a8a8a' } />
+							<Feather name="clipboard" size={23} color={ (this.props.currentScreen=='Orders')?'#3F51B5':'#9E9E9E' } />
 							{/* <Text style={{fontSize:12, color:'#999'}}>Домой</Text> */}
 						</View>
 					</TouchableNativeFeedback>
@@ -79,14 +79,14 @@ class BottomMenu extends React.Component {
 				<View style={{ width: '20%' }}>
 					<TouchableNativeFeedback onPress={() =>this.navigateSearchScreen() }>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' ,backgroundColor:'#fff'}}>
-							<Feather name="search" size={23} color={ (this.props.currentScreen=='SearchResult'||this.props.currentScreen=='Offers')?'#3F51B5':'#8a8a8a' } />
+							<Feather name="search" size={23} color={ (this.props.currentScreen=='SearchResult'||this.props.currentScreen=='Offers')?'#3F51B5':'#9E9E9E' } />
 						</View>
 					</TouchableNativeFeedback>
 				</View>
 				<View style={{ width: '20%' , position:'relative'}}>
 					<TouchableNativeFeedback onPress={() => requestAnimationFrame(()=>this.props.navigate('Cart', {headerText:'ETS.Корзина'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="shopping-cart" size={23} color={ (this.props.currentScreen=='Cart')?'#3F51B5':'#8a8a8a' } />
+							<Feather name="shopping-cart" size={23} color={ (this.props.currentScreen=='Cart')?'#3F51B5':'#9E9E9E' } />
 						</View>
 					</TouchableNativeFeedback>
 					{ 
@@ -99,7 +99,7 @@ class BottomMenu extends React.Component {
 				<View style={{ width: '20%' }}>
 					<TouchableNativeFeedback onPress={() => requestAnimationFrame(() => this.props.navigate('Settings', {headerText:'ETS.Настройки'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="settings" size={23} color={ (this.props.currentScreen=='Settings')?'#3F51B5':'#8a8a8a' } />
+							<Feather name="settings" size={23} color={ (this.props.currentScreen=='Settings')?'#3F51B5':'#9E9E9E' } />
 						</View>
 					</TouchableNativeFeedback>
 				</View>
@@ -114,7 +114,8 @@ const mapStateToProps = state => {
     return {
 		currentScreen: state.app.currentScreen,
 		cart:state.cart.cart,
-		productId:state.offers.productId
+		productId:state.offers.productId,
+		
     }
 }
 
@@ -122,6 +123,7 @@ const mapDispatchToProps = (dispatch, payload) => {
     return {
 		navigate : (payload,params) => dispatch(navigate(payload,params)),
 		toggleSearchPanel:(payload)=> dispatch(toggleSearchPanel(payload)),
+		/*changeScreenParams: (payload) => dispatch(changeScreenParams(payload)),*/
     }
 }
 
