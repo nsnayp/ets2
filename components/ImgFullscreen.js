@@ -1,15 +1,19 @@
 import React, { Component, } from "react";
+import { connect } from 'react-redux';
+
 import { View , ScrollView, Dimensions,Modal,Text,TouchableNativeFeedback,PanResponder, Animated, Easing} from 'react-native';
 import ScaledImage from './ScaledImage';
+
+import {setVisible} from '../actions/PhotoViewer';
+
 
 var screenWidth = Dimensions.get('window').width;
 var screenHeight = Dimensions.get('window').height;
 
-export default class ImgFullscreen extends Component {
+class ImgFullscreen extends Component {
 constructor(props) {
     super(props);
     this.state={
-        show:false,
         indexImg : 0,
         translateY : new Animated.Value(0),
         translateX : new Animated.Value(0)
@@ -25,12 +29,7 @@ renderScaledImage=(image,count)=>{
 		extrapolate: 'clamp',
     });
     var plus = Math.round(screenWidth*count)
-    /*const x = this.state.translateX.interpolate({
-		inputRange: [-1000, 1000+plus],
-		outputRange: [-1000, 1000+plus],
-		extrapolate: 'clamp',
-    });*/
-    //const x = Math.round(  parseInt( () + this.state.translateX) )
+
     return(
         <Animated.View key={image.src+'1'} style={{width:screenWidth, height:'100%', flexDirection:'column',justifyContent:'center' }}>
             <ScaledImage width={screenWidth} uri={image.src} />
@@ -127,14 +126,14 @@ _panResponder = PanResponder.create({
 
 renderModal=()=>{ 
     //console.log('images',this.props.images)
-    if(this.state.show){
+    if(this.props.visible){
         const w = screenWidth*this.props.images.length
     return(
         <Modal
             animationType ="fade"
-                onRequestClose={ ()=>{ this.setState({show:false})  } }
+                onRequestClose={ ()=>{ this.props.setVisible(false)  } }
                 transparent={true}
-                visible={this.state.show}
+                visible={this.props.visible}
             >
                 <View style={{ width:screenWidth, height:screenHeight, zIndex:100, top:0, left:0, backgroundColor:'#000', position:'absolute', flexDirection:'row'}}  {...this._panResponder.panHandlers}>
                     <Animated.View  style={{ width:w, height:screenHeight,  flexDirection:'row',  transform: [{ translateY: this.state.translateY},{ translateX: this.state.translateX}]}}  >
@@ -150,14 +149,25 @@ renderModal=()=>{
 
 render() {
     return (
-        <View>
-        <TouchableNativeFeedback onPress={ ()=>{  this.setState({show:true}) }}>
-            {this.props.children}
-        </TouchableNativeFeedback>
-        {this.renderModal()}  
-        </View>      
+        this.renderModal()
     );
 
 }
 }
 
+
+
+
+const mapStateToProps = state => {
+    
+    return {
+        visible: state.photo.visible,
+        images: state.photo.images,
+    }
+}
+const mapDispatchToProps = (dispatch, payload) => {
+    return{
+        setVisible: (payload) => dispatch(setVisible(payload)),
+    } 
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ImgFullscreen)

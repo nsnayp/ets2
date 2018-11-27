@@ -10,9 +10,10 @@ import {
 } from 'react-native';
 
 import {showOfferGroup,hideOfferGroup} from '../../actions';
+import{openPhotoViewer} from '../../actions/PhotoViewer';
+
 import { connect } from 'react-redux';
 import OfferItem from './OfferItem'
-import ImgFullscreen from '../ImgFullscreen';
 
 export class OffersList extends React.Component {
 
@@ -73,14 +74,20 @@ renderOfferGroup = (offerGroup, index) =>{
 
 renderImage=(image, images)=>{
 	return(
-		<ImgFullscreen key={image.src} images={images}>
+        
+              
+
+        <TouchableOpacity
+            key={image.src} 
+            onPress={()=>{ this.props.openPhotoViewer(images, 0) }}
+        >
 				<View  key={image.key} style={{position:'relative', borderRadius:3, marginLeft:3,}}>
 					<Image source={{uri:image.src}} style={{width:70, height:70, borderRadius:3}} />
 					<View style={{ position:'absolute', width:'100%', top:0, height:'100%', backgroundColor:'#2632387a', zIndex:10, paddingHorizontal:8, paddingVertical:3,  justifyContent:'flex-end' , borderRadius:3}}>
 						{ <Text style={{color:'#fff', fontSize:12, width:'100%', textAlign:'center'}}>{images.length} фото</Text> }
 					</View>
 				</View>
-		</ImgFullscreen>
+        </TouchableOpacity>
 	)
 }
 
@@ -149,7 +156,9 @@ const styles = StyleSheet.create({
 const mapDispatchToProps = (dispatch, payload) => {
     return{
         showOfferGroup : payload => dispatch(showOfferGroup(payload)),
-        hideOfferGroup : payload => dispatch(hideOfferGroup(payload))
+        hideOfferGroup : payload => dispatch(hideOfferGroup(payload)),
+        openPhotoViewer: (payload) => dispatch(openPhotoViewer(payload)),
+
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(OffersList)

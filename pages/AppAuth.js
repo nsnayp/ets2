@@ -17,6 +17,8 @@ import Settings from '../pages/Settings';
 
 import Header from '../components/Header/Header';
 import BottomMenu from '../components/Footer/BottomMenu';
+import ImgFullscreen from '../components/ImgFullscreen';
+
 
 const Navigator = createStackNavigator(
 	{   
@@ -92,7 +94,7 @@ class AppAuth extends React.Component {
             /* <KeyboardAvoidingView behavior="padding" enabled  */
             <View style={{flex:1, flexDirection:'column', justifyContent:'space-between'}}>
                 <Header></Header>
-                
+                <ImgFullscreen></ImgFullscreen>
 
                 <Navigator
                     onNavigationStateChange={null}

@@ -7,6 +7,7 @@ import {
 
 import { connect } from 'react-redux';
 import {fetchOffers,navigate} from '../actions';
+
 import OffersList from '../components/Offers/OffersList';
 import ModalOfferDetail from '../components/ModalOfferDetail';
 
@@ -62,7 +63,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, payload) => {
     return{
         fetchOffers: (payload) => dispatch(fetchOffers(payload)),
-        navigate:(payload)=>dispatch(navigate(payload))
+        navigate:(payload)=>dispatch(navigate(payload)),
+
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Offers)

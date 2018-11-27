@@ -2,7 +2,9 @@ import * as React from 'react';
 import { Text, View,Button, TouchableOpacity, Dimensions, TextInput, Animated, Easing, Keyboard, StyleSheet, Image } from 'react-native';
 import { connect } from 'react-redux';
 import {toggleSearchPanel} from '../actions';
+
 import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
+
 
 
 class Dashboard extends React.Component {
@@ -44,6 +46,10 @@ class Dashboard extends React.Component {
 
                 <Text style={{fontSize:15, padding:24}}>Привет, это наша первая версия</Text>
 
+
+                
+
+                
 
             </View>
         )
