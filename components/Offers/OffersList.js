@@ -12,7 +12,7 @@ import {
 import {showOfferGroup,hideOfferGroup} from '../../actions';
 import { connect } from 'react-redux';
 import OfferItem from './OfferItem'
-
+import ImgFullscreen from '../ImgFullscreen';
 
 export class OffersList extends React.Component {
 
@@ -53,25 +53,57 @@ renderMoreOffers = (offerGroup,index) =>{
 
 renderOfferGroup = (offerGroup, index) =>{
 
-	return(
-		<View key={offerGroup.oem} style={{  position:'relative', backgroundColor:'#fff'}}>
-			<View style={{ flexDirection:'row', justifyContent:'flex-start',  paddingHorizontal:16,  backgroundColor:'#fafafa', paddingVertical:8}}>
+        return(
+            <View key={offerGroup.oem} style={{  position:'relative', backgroundColor:'#fff'}}>
+                <View style={{ flexDirection:'row', justifyContent:'flex-start',  paddingHorizontal:16,  backgroundColor:'#fafafa', paddingVertical:8}}>
 
-                <Image source={{uri:'http://etsgroup.ru/img_serv/brands/'+offerGroup.brand+'.png'}} style={{width:20, height:20, marginRight:8}}></Image>
-				<Text style={{color:'#666', fontWeight:'800'}}>{offerGroup.brand} {offerGroup.oem}</Text>
-				
-			</View>
-			{ this.renderOffer(offerGroup)}
-			
-			{ this.renderMoreOffers(offerGroup,index) }
-							
-		</View>
-	)
+                    <Image source={{uri:'http://etsgroup.ru/img_serv/brands/'+offerGroup.brand+'.png'}} style={{width:20, height:20, marginRight:8}}></Image>
+                    <Text style={{color:'#666', fontWeight:'800'}}>{offerGroup.brand} {offerGroup.oem}</Text>
+                    
+                </View>
+                { this.renderOffer(offerGroup)}
+                
+                { this.renderMoreOffers(offerGroup,index) }
+                                
+            </View>
+        )
+    
 }
 
 
+renderImage=(image, images)=>{
+	return(
+		<ImgFullscreen key={image.src} images={images}>
+				<View  key={image.key} style={{position:'relative', borderRadius:3, marginLeft:3,}}>
+					<Image source={{uri:image.src}} style={{width:70, height:70, borderRadius:3}} />
+					<View style={{ position:'absolute', width:'100%', top:0, height:'100%', backgroundColor:'#2632387a', zIndex:10, paddingHorizontal:8, paddingVertical:3,  justifyContent:'flex-end' , borderRadius:3}}>
+						{ <Text style={{color:'#fff', fontSize:12, width:'100%', textAlign:'center'}}>{images.length} фото</Text> }
+					</View>
+				</View>
+		</ImgFullscreen>
+	)
+}
+
+renderImageSmall(images){
+	if(images&&images.length>0){
+        return Object.values(images).map((image,index )=> this.renderImage(image, images) )
+	}else{
+		return null
+	}
+}
+
+renderListHeader=()=>{
+    return(
+
+        <View style={{flexDirection:'row', paddingVertical:16, paddingHorizontal:8, backgroundColor:'#fff'}}>
+            { this.renderImageSmall(this.props.images) }
+        </View>
+
+    )
+}
 
 render() {
+
         return (
             <View style={{flex:1, backgroundColor:'#fff'}}>
                 
@@ -81,6 +113,7 @@ render() {
                     keyExtractor={(item, index) => index.toString()} 
                     initialNumToRender={6}
                     refreshing={false}
+                    ListHeaderComponent={this.renderListHeader}
                 >
                 
                 </FlatList>
@@ -110,7 +143,7 @@ const styles = StyleSheet.create({
   const mapStateToProps = state => {
     return {
         cart: state.cart.cart,
-
+        images:state.offers.images
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {

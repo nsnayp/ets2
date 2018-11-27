@@ -130,6 +130,12 @@ export const setOffers = (payload) =>{
     }
 }
 
+export const setImages = (payload) =>{
+    return {
+        type:'SET_IMAGES',
+        payload:payload
+    }
+}
 
 export const fetchOffers = (payload) =>{
     return (dispatch) => {
@@ -140,6 +146,13 @@ export const fetchOffers = (payload) =>{
             
             var newdata = {}
             var images = data.product.img.img
+            var newImages = []
+
+
+            for(i in images){
+                newImages.push({src:'http://etsgroup.ru/assets/product/100/'+images[i]})
+            }
+
             for(k in data.offers){
                 var item = data.offers[k]
 
@@ -163,6 +176,7 @@ export const fetchOffers = (payload) =>{
                 newdata1.push(newdata[k])
             }
             dispatch(setOffers(newdata1))
+            dispatch(setImages(newImages))
             dispatch(setIsLoading(false))
         })
             

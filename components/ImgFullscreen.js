@@ -92,7 +92,7 @@ _panResponder = PanResponder.create({
         //console.log(gest)
         Animated.timing(this.state.translateY, {
           toValue: 0 ,
-		  duration: 250,
+		  duration: 100,
 		
         }).start();
 
@@ -118,7 +118,7 @@ _panResponder = PanResponder.create({
 
         Animated.timing(this.state.translateX, {
             toValue: toVal,
-            duration: 250,
+            duration: 100,
             
         }).start();
 

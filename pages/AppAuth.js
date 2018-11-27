@@ -98,7 +98,7 @@ class AppAuth extends React.Component {
                     onNavigationStateChange={null}
                     renderLoadingExperimental={() => <ActivityIndicator />}
 					onNavigationStateChange={(prevState, currentState) => {
-						console.log(currentState)
+						//console.log(currentState)
                     }}
                    
 				 	ref={el => { this.navig = el; }} 

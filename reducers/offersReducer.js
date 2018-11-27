@@ -3,6 +3,7 @@ const INITIAL_STATE = {
    isLoading:false,
    loadingError:false,
    productId:null,
+   images:[]
    
 }
 
@@ -30,6 +31,11 @@ export default (state = INITIAL_STATE, action)=>{
             return {
                 ...state,
                 offers: action.payload
+            }
+        case 'SET_IMAGES':
+            return {
+                ...state,
+                images: action.payload
             }
         case 'SHOW_OFFER_GROUP':
             var index = action.payload
