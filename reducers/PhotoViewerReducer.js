@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     images:[],
-    visible:false
+    visible:false,
+    activeImage:0
  }
  
 export default (state = INITIAL_STATE, action)=>{
@@ -14,6 +15,11 @@ export default (state = INITIAL_STATE, action)=>{
             return {
                 ...state, images: action.payload
             }
+        case 'SET_ACTIVE_IMAGE':
+            return {
+                ...state, activeImage: action.payload
+            }
+            
 
         default: return state
      }

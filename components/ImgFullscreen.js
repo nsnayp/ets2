@@ -16,24 +16,18 @@ constructor(props) {
     this.state={
         indexImg : 0,
         translateY : new Animated.Value(0),
-        translateX : new Animated.Value(0)
+        translateX : new Animated.Value(0),
+        offset: screenWidth*this.props.activeImage
     }
 
 }
 
 renderScaledImage=(image,count)=>{
-    console.log(count)
-    const scale = this.state.translateY.interpolate({
-		inputRange: [-300, 0],
-		outputRange: [0.8, 1],
-		extrapolate: 'clamp',
-    });
-    var plus = Math.round(screenWidth*count)
 
     return(
-        <Animated.View key={image.src+'1'} style={{width:screenWidth, height:'100%', flexDirection:'column',justifyContent:'center' }}>
-            <ScaledImage width={screenWidth} uri={image.src} />
-        </Animated.View>
+        <View key={image.src+'1'} style={{width:screenWidth, height:'100%', flexDirection:'column',justifyContent:'center' }}>
+            <ScaledImage width={screenWidth} uri={image.srcBig} />
+        </View>
     )
 }
 
@@ -52,40 +46,42 @@ getDirection = ({ moveX, moveY, dx, dy}) => {
   
 	if (draggedLeft || draggedRight) {
 	  if (draggedLeft) dragDirection += 'dragged left '
-	  if (draggedRight) dragDirection +=  'dragged right ';
+      if (draggedRight) dragDirection +=  'dragged right ';
+      return false;
 	}
-  	if (dragDirection) return dragDirection;
+  	if (dragDirection) return true;
+}
+
+getDirection1=(g,i)=>{
+    console.log(g,i)
+    /*if(Math.abs(dy)>Math.abs(dx) ){
+        console.log('false',Math.abs(dy),Math.abs(dx))
+        return false
+        
+    }
+    console.log('true',Math.abs(dy),Math.abs(dx),dy,dx)
+    return true*/
+    return true
 }
 
 _panResponder = PanResponder.create({
-   // onMoveShouldSetResponderCapture: () => true,
-    //onMoveShouldSetPanResponderCapture: () => true,
-    onResponderTerminationRequest: () => false,
-    onStartShouldSetPanResponder: ()=> true,
-	onMoveShouldSetPanResponder:(evt, gestureState) => true,
+    onMoveShouldSetResponderCapture: (e,g) => true,
+    onMoveShouldSetPanResponderCapture: (e,g) => true,
+    onResponderTerminationRequest: (e,g) => true,
+
+    onStartShouldSetPanResponder: (e,g)=> false,
+    onMoveShouldSetPanResponder:(e, g) => this.getDirection1(g),
 	onPanResponderMove:(e, gest) => {
         var x = Math.abs(gest.dx)
         var y = Math.abs(gest.dy)
-        let newGest = {dx:gest.dx};
-
 
         if(y>x){
             Animated.event([
                 null , 
                 {dy: this.state.translateY},
             ])(e, gest)
-        }else{
-
-            newGest.dx = ( (this.state.indexImg) * -screenWidth) + gest.dx
-            console.log('ndx',newGest.dx, gest.dx, gest.moveX,this.state.indexImg)
-            Animated.event([
-                null , 
-                {dx: this.state.translateX},
-            ])(e, newGest)
         }
-        
 	},
-
 
     onPanResponderRelease: (e, gest) => {
         //console.log(gest)
@@ -94,65 +90,52 @@ _panResponder = PanResponder.create({
 		  duration: 100,
 		
         }).start();
-
-
-
-        let toVal = 0
-
-        if(gest.dx < -100){
-            let _indexImg = this.state.indexImg+1;
-            if(_indexImg>this.props.images.length-1){_indexImg=this.props.images.length-1}
-
-            toVal = -screenWidth*_indexImg;
-            this.setState({indexImg:_indexImg})
-
-        }else if(gest.dx > 100){
-
-            let _indexImg = this.state.indexImg-1;
-            if(_indexImg<0){_indexImg=0}
-
-            toVal = screenWidth*_indexImg;
-            this.setState({indexImg:_indexImg})
-        }
-
-        Animated.timing(this.state.translateX, {
-            toValue: toVal,
-            duration: 100,
-            
-        }).start();
-
     }
 });
 
-renderModal=()=>{ 
-    //console.log('images',this.props.images)
-    if(this.props.visible){
-        const w = screenWidth*this.props.images.length
-    return(
-        <Modal
-            animationType ="fade"
-                onRequestClose={ ()=>{ this.props.setVisible(false)  } }
-                transparent={true}
-                visible={this.props.visible}
-            >
-                <View style={{ width:screenWidth, height:screenHeight, zIndex:100, top:0, left:0, backgroundColor:'#000', position:'absolute', flexDirection:'row'}}  {...this._panResponder.panHandlers}>
-                    <Animated.View  style={{ width:w, height:screenHeight,  flexDirection:'row',  transform: [{ translateY: this.state.translateY},{ translateX: this.state.translateX}]}}  >
-                            {Object.values(this.props.images).map( (image,index) => this.renderScaledImage(image,index))}
-                    </Animated.View>
-                </View>
-                
-        </Modal>
-    )}else{
-        return null
+componentWillReceiveProps=()=>{
+    
+}
+
+componentDidMount=()=>{
+    
+}
+
+componentDidUpdate=()=>{
+    if(this.scrollView1){
+        var inst = this
+        setTimeout(()=>{
+            inst.scrollView1.scrollTo({x: screenWidth*inst.props.activeImage, y: 0, animated: false});
+        },100)
+        
     }
 }
 
-render() {
-    return (
-        this.renderModal()
-    );
+render=()=>{ 
 
+    return(
+        <Modal
+            animationType ="fade"
+            onRequestClose={ ()=>{ this.props.setVisible(false)  } }
+            transparent={true}
+            visible={this.props.visible}
+            >
+ 
+            <ScrollView
+                onScroll= {function(event) {
+                    console.log(event.nativeEvent.contentOffset.x);
+                }}
+                pagingEnabled ref={el => { this.scrollView1 = el }}  
+                horizontal  
+                style={{ width:'100%', height:'100%', backgroundColor:'#000', flexDirection:'row'}}  >
+                    {Object.values(this.props.images).map( (image,index) => this.renderScaledImage(image,index))}
+            </ScrollView>
+                
+        </Modal>
+    )
 }
+
+
 }
 
 
@@ -163,6 +146,7 @@ const mapStateToProps = state => {
     return {
         visible: state.photo.visible,
         images: state.photo.images,
+        activeImage:state.photo.activeImage
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {

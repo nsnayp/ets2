@@ -72,14 +72,16 @@ renderOfferGroup = (offerGroup, index) =>{
 }
 
 
-renderImage=(image, images)=>{
+renderImage=(images, index)=>{
+
+    const image = images[index]
 	return(
         
               
 
         <TouchableOpacity
             key={image.src} 
-            onPress={()=>{ this.props.openPhotoViewer(images, 0) }}
+            onPress={()=>{ this.props.openPhotoViewer(images, index) }}
         >
 				<View  key={image.key} style={{position:'relative', borderRadius:3, marginLeft:3,}}>
 					<Image source={{uri:image.src}} style={{width:70, height:70, borderRadius:3}} />
@@ -93,7 +95,7 @@ renderImage=(image, images)=>{
 
 renderImageSmall(images){
 	if(images&&images.length>0){
-        return Object.values(images).map((image,index )=> this.renderImage(image, images) )
+        return Object.values(images).map((image,index )=> this.renderImage(images, index) )
 	}else{
 		return null
 	}
@@ -157,7 +159,7 @@ const mapDispatchToProps = (dispatch, payload) => {
     return{
         showOfferGroup : payload => dispatch(showOfferGroup(payload)),
         hideOfferGroup : payload => dispatch(hideOfferGroup(payload)),
-        openPhotoViewer: (payload) => dispatch(openPhotoViewer(payload)),
+        openPhotoViewer: (payload, index) => dispatch(openPhotoViewer(payload,index)),
 
     } 
 }

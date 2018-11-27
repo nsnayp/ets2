@@ -12,6 +12,12 @@ export const setVisible = (payload) =>{
     }
 }
 
+export const setActiveImage = (payload) =>{
+    return {
+        type:'SET_ACTIVE_IMAGE',
+        payload:payload
+    }
+}
 
 
 
@@ -20,5 +26,7 @@ export const openPhotoViewer = (images,index) =>{
     return (dispatch) => {
         dispatch(setImages(images));
         dispatch(setVisible(true));
+        dispatch(setActiveImage(index));
+        
     }
 }
