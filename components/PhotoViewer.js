@@ -51,7 +51,7 @@ componentWillMount() {
       //console.log(e.nativeEvent)
       const touches = e.nativeEvent.touches;
 
-      console.log(touches.length)
+      //console.log(touches.length)
       if(touches.length==1){
         if(this.state.scaled){
          // console.log('смещение')
@@ -63,7 +63,22 @@ componentWillMount() {
         }
         
       }else if(touches.length==2){
-        const a={scale : 2}
+
+
+        x1 = e.nativeEvent.pageX;
+        y1 = e.nativeEvent.pageY;
+        x2 = e.nativeEvent.touches[1].pageX;
+        y2 = e.nativeEvent.touches[1].pageY;
+        
+        dx = Math.abs(x2-x1);
+        dy = Math.abs(y2-y1);
+
+        h = 700;
+
+        console.log(dx, dy )
+
+
+        const a={scale : 10- h/dy}
         Animated.event([null, {scale: this.state.scale}])(e,a);
         this.setState({scaled:true})
       }

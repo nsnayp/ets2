@@ -6,7 +6,7 @@ import {   Dimensions,Modal, Animated} from 'react-native';
 import {setVisible} from '../actions/PhotoViewer';
 
 import PhotoViewer from './PhotoViewer';
-
+import ImageViewer from 'react-native-image-zoom-viewer';
 
 var screenWidth = Dimensions.get('window').width;
 var screenHeight = Dimensions.get('window').height;
@@ -34,9 +34,9 @@ render=()=>{
             transparent={true}
             visible={this.props.visible}
             
-            >
-             <PhotoViewer  images={this.props.images} activeImage={this.props.activeImage}></PhotoViewer>
-
+            > 
+            {/*  <PhotoViewer  images={this.props.images} activeImage={this.props.activeImage}></PhotoViewer> */}
+             <ImageViewer imageUrls={this.props.images} index={this.props.activeImage}/>
         </Modal>
     )
 }

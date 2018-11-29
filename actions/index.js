@@ -150,7 +150,7 @@ export const fetchOffers = (payload) =>{
 
 
             for(i in images){
-                newImages.push({src:'http://etsgroup.ru/assets/product/100/'+images[i], srcBig:'http://etsgroup.ru/assets/product/1000/'+images[i]})
+                newImages.push({src:'http://etsgroup.ru/assets/product/100/'+images[i], srcBig:'http://etsgroup.ru/assets/product/1000/'+images[i], url:'http://etsgroup.ru/assets/product/1000/'+images[i]})
             }
 
             for(k in data.offers){

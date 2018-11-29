@@ -20,6 +20,7 @@
     "react-native-base64": "0.0.2",
     "react-native-elements": "0.19.1",
     "react-native-fontawesome": "^5.7.0",
+    "react-native-image-zoom-viewer": "^2.2.24",
     "react-navigation": "^2.18.1",
     "react-redux": "^5.1.0",
     "redux": "^4.0.1",
