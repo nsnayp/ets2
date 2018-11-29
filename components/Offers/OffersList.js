@@ -86,7 +86,6 @@ renderImage=(images, index)=>{
 				<View  key={image.key} style={{position:'relative', borderRadius:3, marginLeft:3,}}>
 					<Image source={{uri:image.src}} style={{width:70, height:70, borderRadius:3}} />
 					<View style={{ position:'absolute', width:'100%', top:0, height:'100%', backgroundColor:'#2632387a', zIndex:10, paddingHorizontal:8, paddingVertical:3,  justifyContent:'flex-end' , borderRadius:3}}>
-						{ <Text style={{color:'#fff', fontSize:12, width:'100%', textAlign:'center'}}>{images.length} фото</Text> }
 					</View>
 				</View>
         </TouchableOpacity>

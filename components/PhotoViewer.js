@@ -32,7 +32,12 @@ componentWillMount() {
   this._panResponder = PanResponder.create({
     onMoveShouldSetResponderCapture: () => true,
     onMoveShouldSetPanResponderCapture: () => true,
-    onStartShouldSetPanResponderCapture:()=>true,
+    onStartShouldSetPanResponderCapture:()=>true, // если родитель то можно без этого, если чайлд то тру / похож на PreventDefault или stopPropagation
+    onMoveShouldSetPanResponderCapture: () => true, //хз
+    // думаю срабатывает при старте тача типа элементу сверху спустился тач от родителя событие, тип того
+    onPanResponderGrant:()=>{
+        //console.log('onPanResponderGrant')
+    },
 
     onPanResponderMove: (e,g)=>{
       //console.log(e.nativeEvent)
@@ -50,6 +55,7 @@ componentWillMount() {
         }
         
       }else if(touches.length==2){
+        console.log('2 touches')
         const a={scale : 2}
         Animated.event([null, {scale: this.state.scale}])(e,a);
         this.setState({scaled:true})
