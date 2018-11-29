@@ -38,6 +38,8 @@ export default (state = INITIAL_STATE, action)=>{
                 images: action.payload
             }
         case 'SHOW_OFFER_GROUP':
+
+        console.log(state.images)
             var index = action.payload
             var offers1 = Object.assign(state.offers);
 
@@ -46,10 +48,12 @@ export default (state = INITIAL_STATE, action)=>{
             }
             offers1[index].collapsed = false
             return {
+                ...state,
                 offers:[...offers1],
                 productId: state.productId
             }
          case 'HIDE_OFFER_GROUP':
+         console.log(state.images)
             var index = action.payload
             var offers1 = Object.assign(state.offers);
 
@@ -60,6 +64,7 @@ export default (state = INITIAL_STATE, action)=>{
             }
             offers1[index].collapsed = true
             return {
+                ...state,
                 offers:[...offers1],
                 productId: state.productId
             } 
