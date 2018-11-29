@@ -30,20 +30,28 @@ componentWillMount() {
 
 
   this._panResponder = PanResponder.create({
-    onMoveShouldSetResponderCapture: () => true,
-    onMoveShouldSetPanResponderCapture: () => true,
+    
+    onMoveShouldSetResponderCapture: () => false, //не влияет на чайлд
     onStartShouldSetPanResponderCapture:()=>true, // если родитель то можно без этого, если чайлд то тру / похож на PreventDefault или stopPropagation
     onMoveShouldSetPanResponderCapture: () => true, //хз
+    onMoveShouldSetPanResponder:()=>false,//не влияет на чайлд
     // думаю срабатывает при старте тача типа элементу сверху спустился тач от родителя событие, тип того
-    onPanResponderGrant:()=>{
+    onPanResponderGrant:(e,g)=>{
+     
         //console.log('onPanResponderGrant')
+    },
+    //дичь запрашивает отмену события, в моем случае когда 2 пальца, эта хрень разрешает или запрещает
+    onPanResponderTerminationRequest: (e, g) => false,
+    //Сюда приходит перехваченный\запрещенный ивент
+    onPanResponderTerminate:(e,g)=>{
+      //console.log(e.nativeEvent)
     },
 
     onPanResponderMove: (e,g)=>{
       //console.log(e.nativeEvent)
       const touches = e.nativeEvent.touches;
 
-
+      console.log(touches.length)
       if(touches.length==1){
         if(this.state.scaled){
          // console.log('смещение')
@@ -55,7 +63,6 @@ componentWillMount() {
         }
         
       }else if(touches.length==2){
-        console.log('2 touches')
         const a={scale : 2}
         Animated.event([null, {scale: this.state.scale}])(e,a);
         this.setState({scaled:true})
