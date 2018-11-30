@@ -175,8 +175,9 @@ export const fetchOffers = (payload) =>{
             for(k in newdata){
                 newdata1.push(newdata[k])
             }
-            dispatch(setOffers(newdata1))
             dispatch(setImages(newImages))
+            dispatch(setOffers(newdata1))
+            
             dispatch(setIsLoading(false))
         })
             
