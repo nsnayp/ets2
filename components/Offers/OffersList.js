@@ -23,13 +23,28 @@ constructor(props) {
 }
 
 componentWillReceiveProps(props){
-    console.log(this.props.cartRefreshDate, props.cartRefreshDate)
+   
 }
 
 renderOffer=offers=>{
     return offers.offers.map(offer =>{
+
+
+
         var cartItem = this.props.cart[offer.id.toString()];
-        return <OfferItem key={offer.id} offer={offer} cart={cartItem}  refreshDate={offer.refreshDate}    visible={offer.visible}></OfferItem>
+        
+        if(cartItem){
+            console.log('pp',cartItem.cartQty)
+
+            offer.inCart = cartItem.inCart
+            offer.cartQty = cartItem.cartQty
+            offer.toCartQty = cartItem.toCartQty
+        }
+
+        return <OfferItem key={offer.id} offer={offer} cq={offer.cartQty} visible={offer.visible}></OfferItem>
+
+
+
     })
 }
 
@@ -112,7 +127,6 @@ renderListHeader=()=>{
 }
 
 render() {
-
         return (
             <View style={{flex:1, backgroundColor:'#fff'}}>
                 
@@ -123,7 +137,7 @@ render() {
                     initialNumToRender={6}
                     refreshing={false}
                     ListHeaderComponent={this.renderListHeader}
-                    extraData={this.props.cartRefreshDate}
+                    extraData={this.props.cart}
                     
                 >
                 

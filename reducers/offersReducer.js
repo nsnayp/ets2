@@ -52,7 +52,7 @@ export default (state = INITIAL_STATE, action)=>{
             }
             return {
                 ...state,
-                offers: offers
+                offers: [...offers]
             }
 
         case 'SHOW_OFFER_GROUP':

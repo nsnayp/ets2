@@ -15,7 +15,7 @@ import {addToCart,deleteFromCart, toggleModalVisible, changeQty} from '../../act
 import SrokText from '../Offers/SrokText';
 import {prettyNumber} from '../../helpers/helpers';
 
-export class OfferItem extends React.Component {
+export class CartItem extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = { ...this.props.offer}
@@ -25,10 +25,10 @@ export class OfferItem extends React.Component {
 
 setCart = () =>{
 	if(this.props.cart){
-		this.setState({
+		/*this.setState({
 			inCart:true,
 			cartQty:this.props.cart.cartQty
-		})
+		})*/
 	}
 }
 
@@ -76,7 +76,9 @@ changeQty=(znak)=>{
 }
 
 changeQty1=(val)=>{
-	this.setState({cartQty:val},()=>{
+	console.log(val);
+	let ins = this.state;
+	this.setState({cartQty:val, toCartQty:val},()=>{
 		this.props.changeQty(this.state)
 	});
 	
@@ -246,4 +248,4 @@ const mapDispatchToProps = (dispatch, payload) => {
 		changeQty: (payload) => dispatch(changeQty(payload)),
     } 
 }
-export default connect(mapStateToProps, mapDispatchToProps)(OfferItem)
+export default connect(mapStateToProps, mapDispatchToProps)(CartItem)

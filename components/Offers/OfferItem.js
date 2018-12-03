@@ -18,29 +18,12 @@ import {prettyNumber} from '../../helpers/helpers';
 export class OfferItem extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { ...this.props.offer}
-		this.state.carMarginLeft=new Animated.Value(0)
-		this.state.toCartQty = 1
+		this.props.offer = { ...this.props.offer}
+		this.state = {}
+		this.state.carMarginLeft = new Animated.Value(0)
 	}
 
-setCart = () =>{
-	if(this.props.cart){
-		this.setState({
-			inCart:true,
-			cartQty:this.props.cart.cartQty,
-			toCartQty:this.props.cart.cartQty,
-		})
-	}
-}
 
-
-
-componentWillReceiveProps(props){
-	this.setCart()
-}
-componentDidMount(){
-	this.setCart()
-}
 
 renderSrok=srok=>{
 	return <SrokText srok={srok}></SrokText>
@@ -87,7 +70,7 @@ renderCart=offer=>{
 				</TouchableOpacity>
 
 				<View style={styles.cartBtnNotify}>
-					<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>{this.state.cartQty}</Text>
+					<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>{this.props.offer.cartQty}</Text>
 				</View>
 
 			</View>
@@ -97,14 +80,14 @@ renderCart=offer=>{
 
 changeQty=(znak)=>{
 	if(znak==1){
-		return (this.state.toCartQty<this.state.qty)? this.state.toCartQty+1:this.state.toCartQty
+		return (this.props.offer.toCartQty<this.props.offer.qty)? this.props.offer.toCartQty+1:this.props.offer.toCartQty
 	}else{
-		return (this.state.toCartQty>1)? this.state.toCartQty-1:1
+		return (this.props.offer.toCartQty>1)? this.props.offer.toCartQty-1:1
 	}
 }
 
 render=()=>{
-
+	console.log('render item', this.props.offer.cartQty)
 	
 
 	let carMarginLeft = this.state.carMarginLeft.interpolate({
@@ -117,7 +100,7 @@ render=()=>{
         outputRange: ['rgba(255, 255, 255,1)', 'rgba(245, 251, 255,1)']
     });
 
-	const offer = this.state;
+	const offer = this.props.offer;
 	if(this.props.visible){
 		return(
 			<Animated.View key={offer.id} style={{width:'300%', flexDirection:'row', marginLeft:carMarginLeft,}}>
@@ -156,7 +139,7 @@ render=()=>{
 					<View style={{flexDirection:'row', alignContent:'flex-start', alignItems:'center'}}>
 
 						<TouchableOpacity
-							onPress={(e)=>{ this.setState({toCartQty:this.changeQty(0)}) }}
+							onPress={(e)=>{ this.props.offer.toCartQty = this.changeQty(0) }}
 						>
 							<View style={styles.iconMinusWrap}>
 								<FontAwesome name="minus" size={14} color="#999" style={{}} />
@@ -164,10 +147,10 @@ render=()=>{
 						</TouchableOpacity>
 
 						<View style={styles.qtyText}>
-							<Text>{this.state.toCartQty} шт</Text>
+							<Text>{this.props.offer.toCartQty} шт</Text>
 						</View>
 						<TouchableOpacity
-						onPress={(e)=>{ this.setState({toCartQty:this.changeQty(1)}) }}
+						onPress={(e)=>{ this.props.offer.toCartQty = this.changeQty(1) }}
 						>
 							<View style={styles.iconPlusWrap}>
 								<FontAwesome name="plus" size={14} color="#999" style={{}} />
@@ -188,7 +171,7 @@ render=()=>{
 								
 								this.setState({cartQty:null, inCart:false},
 									()=>{
-										this.props.deleteFromCart(this.state)
+										this.props.deleteFromCart(this.props.offer)
 									})
 								
 							
@@ -211,8 +194,8 @@ render=()=>{
 								}).start();
 								
 								
-								this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
-									this.props.addToCart(this.state)
+								this.setState({cartQty:this.props.offer.toCartQty, inCart:true},()=>{
+									this.props.addToCart(this.props.offer)
 								})
 								
 							}}

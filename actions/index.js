@@ -223,7 +223,7 @@ export const someChange = (payload) =>{
 export const changeQty = (payload) =>{
     return (dispatch)=>{
         dispatch(changeCartQty(payload));
-        dispatch(someChange(payload.id));
+        //dispatch(someChange(payload.id));
     }
 }
 
