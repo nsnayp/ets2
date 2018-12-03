@@ -27,7 +27,8 @@ setCart = () =>{
 	if(this.props.cart){
 		this.setState({
 			inCart:true,
-			cartQty:this.props.cart.cartQty
+			cartQty:this.props.cart.cartQty,
+			toCartQty:this.props.cart.cartQty,
 		})
 	}
 }
@@ -94,7 +95,13 @@ renderCart=offer=>{
 	}
 }
 
-
+changeQty=(znak)=>{
+	if(znak==1){
+		return (this.state.toCartQty<this.state.qty)? this.state.toCartQty+1:this.state.toCartQty
+	}else{
+		return (this.state.toCartQty>1)? this.state.toCartQty-1:1
+	}
+}
 
 render=()=>{
 
@@ -149,7 +156,7 @@ render=()=>{
 					<View style={{flexDirection:'row', alignContent:'flex-start', alignItems:'center'}}>
 
 						<TouchableOpacity
-							onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty-1}) }}
+							onPress={(e)=>{ this.setState({toCartQty:this.changeQty(0)}) }}
 						>
 							<View style={styles.iconMinusWrap}>
 								<FontAwesome name="minus" size={14} color="#999" style={{}} />
@@ -160,7 +167,7 @@ render=()=>{
 							<Text>{this.state.toCartQty} шт</Text>
 						</View>
 						<TouchableOpacity
-						onPress={(e)=>{ this.setState({toCartQty:this.state.toCartQty+1}) }}
+						onPress={(e)=>{ this.setState({toCartQty:this.changeQty(1)}) }}
 						>
 							<View style={styles.iconPlusWrap}>
 								<FontAwesome name="plus" size={14} color="#999" style={{}} />
@@ -262,6 +269,8 @@ const mapDispatchToProps = (dispatch, payload) => {
 		addToCart: (payload) => dispatch(addToCart(payload)),
 		deleteFromCart: (payload) => dispatch(deleteFromCart(payload)),
 		toggleModalVisible: (payload) => dispatch(toggleModalVisible(payload)),
+		
+		
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(OfferItem)

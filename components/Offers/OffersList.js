@@ -22,10 +22,14 @@ constructor(props) {
 	super(props); 
 }
 
+componentWillReceiveProps(props){
+    console.log(this.props.cartRefreshDate, props.cartRefreshDate)
+}
 
-renderOffer=offerGroup=>{
-    return offerGroup.offers.map(offer =>{
-        return <OfferItem key={offer.id} offer={offer} cart={this.props.cart[offer.id.toString()]} visible={offer.visible}></OfferItem>
+renderOffer=offers=>{
+    return offers.offers.map(offer =>{
+        var cartItem = this.props.cart[offer.id.toString()];
+        return <OfferItem key={offer.id} offer={offer} cart={cartItem}  refreshDate={offer.refreshDate}    visible={offer.visible}></OfferItem>
     })
 }
 
@@ -74,12 +78,8 @@ renderOfferGroup = (offerGroup, index) =>{
 
 
 renderImage=(images, index)=>{
-    console.log('renderImage')
     const image = images[index]
 	return(
-        
-              
-
         <TouchableOpacity
             key={image.src} 
             onPress={()=>{ this.props.openPhotoViewer(images, index) }}
@@ -123,6 +123,8 @@ render() {
                     initialNumToRender={6}
                     refreshing={false}
                     ListHeaderComponent={this.renderListHeader}
+                    extraData={this.props.cartRefreshDate}
+                    
                 >
                 
                 </FlatList>
@@ -152,7 +154,8 @@ const styles = StyleSheet.create({
   const mapStateToProps = state => {
     return {
         cart: state.cart.cart,
-        images:state.offers.images
+        images:state.offers.images,
+        cartRefreshDate: state.cart.cartRefreshDate
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {

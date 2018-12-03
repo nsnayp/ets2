@@ -27,7 +27,7 @@ export default (state = INITIAL_STATE, action)=>{
                 loadingError: action.payload
             }
         case 'SET_OFFERS':
-            //console.log(action.payload,'offers')
+
             return {
                 ...state,
                 offers: action.payload
@@ -37,9 +37,26 @@ export default (state = INITIAL_STATE, action)=>{
                 ...state,
                 images: action.payload
             }
+        
+        case 'SOME_CHANGE':
+            var id = action.payload;
+            var offers = Object.assign(state.offers);
+
+            for(const k in offers){
+                for(const k1 in offers[k].offers){
+                    if(offers[k].offers[k1].id==id){
+                        offers[k].offers[k1].refreshDate = new Date();
+                    }
+                    
+                }
+            }
+            return {
+                ...state,
+                offers: offers
+            }
+
         case 'SHOW_OFFER_GROUP':
 
-        console.log(state.images)
             var index = action.payload
             var offers1 = Object.assign(state.offers);
 
@@ -53,7 +70,6 @@ export default (state = INITIAL_STATE, action)=>{
                 productId: state.productId
             }
          case 'HIDE_OFFER_GROUP':
-         console.log(state.images)
             var index = action.payload
             var offers1 = Object.assign(state.offers);
 

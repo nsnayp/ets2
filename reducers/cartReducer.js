@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
     cart:{},
+    cartRefreshDate: new Date()
  }
  
 export default (state = INITIAL_STATE, action)=>{
@@ -16,6 +17,15 @@ export default (state = INITIAL_STATE, action)=>{
                   [action.payload.id.toString()]: action.payload
                 }
               }
+        case 'CHANGE_QTY':
+
+            return {
+                cart: {
+                ...state.cart,
+                    [action.payload.id.toString()]: action.payload
+                },
+                cartRefreshDate: new Date()
+            }
         
         case 'DELETE_CART':
 

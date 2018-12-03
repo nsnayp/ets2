@@ -140,7 +140,7 @@ export const setImages = (payload) =>{
 export const fetchOffers = (payload) =>{
     return (dispatch) => {
         dispatch(setIsLoading(true))
-        fetch('http:/etsgroup.ru/offer/api1/'+payload+'?k=Ght59Jfesksef324')
+        fetch('http:/etsgroup.ru/offer/api1/'+payload+'?k=Ght59Jfesksef324&user_id=4225')
         .then(data => data.json())
         .then(data =>  {
             
@@ -203,6 +203,27 @@ export const setCart=(payload)=>{
     return {
         type:'SET_CART',
         payload: JSON.parse(payload)
+    }
+}
+
+export const changeCartQty = (payload) =>{
+    return {
+        type:'CHANGE_QTY',
+        payload:payload
+    }
+}
+
+export const someChange = (payload) =>{
+    return {
+        type:'SOME_CHANGE',
+        payload:payload
+    }
+}
+
+export const changeQty = (payload) =>{
+    return (dispatch)=>{
+        dispatch(changeCartQty(payload));
+        dispatch(someChange(payload.id));
     }
 }
 
