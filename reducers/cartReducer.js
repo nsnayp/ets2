@@ -38,17 +38,25 @@ export default (state = INITIAL_STATE, action)=>{
 
             for(var k in action.payload){
 
-                cart[k].price = action.payload[k].price;
-                cart[k].rest = action.payload[k].rest;
-                if(action.payload[k].rest<cart[k].cartQty){
+                
+
+
+                if(action.payload[k].rest<cart[k].cartQty_first){
                     cart[k].cartQty = action.payload[k].rest;
+                    
                 }else{
                     cart[k].cartQty = cart[k].cartQty_first;
                 }
 
+                cart[k].price = action.payload[k].price;
+                cart[k].rest = action.payload[k].rest;
+                cart[k].toCartQty = cart[k].cartQty;
+
             }
             return{
-                cart: cart
+                cart: {...state.cart,...cart},
+                cartRefreshDate: new Date()
+
             }
 
 

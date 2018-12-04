@@ -20,6 +20,12 @@ export class CartItem extends React.Component {
 		super(props)
 		this.state = { ...this.props.offer}
 		this.state.carMarginLeft=new Animated.Value(0)
+
+		/*setInterval(()=>{
+			console.log('go get cart')
+			this.updateFromOffer(props)
+		},5000)*/
+
 	}
 
 updateFromOffer = (props) =>{
@@ -28,9 +34,8 @@ updateFromOffer = (props) =>{
 		cartQty:	props.offer.cartQty,
 		toCartQty:	props.offer.toCartQty,
 		inCart:		props.offer.inCart,
-		actualCartQty: props.offer.actualCartQty,
-		actualPrice: props.offer.actualPrice,
 		price: props.offer.price,
+		rest:props.offer.rest
 	})
 }
 
@@ -97,14 +102,14 @@ renderPencil=offer=>{
 
 changeQty=(znak)=>{
 	if(znak==1){
-		return (this.state.toCartQty<this.state.qty)? this.state.toCartQty+1:this.state.toCartQty
+		return (this.state.toCartQty<this.state.rest)? this.state.toCartQty+1:this.state.toCartQty
 	}else{
 		return (this.state.toCartQty>1)? this.state.toCartQty-1:1
 	}
 }
 
 changeQty1=(val)=>{
-	this.setState({cartQty:val, toCartQty:val},()=>{
+	this.setState({cartQty:val, cartQty_first:val, toCartQty:val},()=>{
 		this.props.changeQty(this.state)
 	});
 	

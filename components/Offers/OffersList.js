@@ -36,7 +36,7 @@ renderOffer=offers=>{
         if(cartItem){
             offer.inCart = cartItem.inCart
             offer.cartQty = cartItem.cartQty
-            offer.toCartQty = cartItem.toCartQty
+            offer.toCartQty = cartItem.cartQty
         }else{
             offer.inCart = false
             offer.cartQty = null
