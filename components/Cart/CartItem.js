@@ -111,12 +111,12 @@ changeQty1=(val)=>{
 }
 
 renderActualQty=offer=>{
-	if(offer.actualCartQty){
+	if(offer.cartQty<offer.cartQty_first){
 		
 		return (
 			<View>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.actualCartQty} шт</Text>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999',textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{offer.cartQty} шт</Text>
+				<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.cartQty} шт</Text>
+				<Text style={{marginLeft:10, fontSize:14, color:'#999',textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{offer.cartQty_first} шт</Text>
 			</View>
 		)
 	}else{
@@ -125,11 +125,11 @@ renderActualQty=offer=>{
 }
 
 renderActualPrice=offer=>{
-	if(offer.actualPrice){
+	if(offer.price!=offer.price_first){
 		return (
 			<View>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{ prettyNumber(offer.actualPrice)} ₽</Text>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{ prettyNumber(offer.price)} ₽</Text>
+				<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{ prettyNumber(offer.price)} ₽</Text>
+				<Text style={{marginLeft:10, fontSize:14, color:'#999' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{ prettyNumber(offer.price_first)} ₽</Text>
 			</View>
 		)
 	}else{

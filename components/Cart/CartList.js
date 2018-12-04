@@ -20,7 +20,7 @@ class CartList extends React.Component {
 
     renderRow =cartItem=>{
         return (
-            <CartItem key={cartItem.id} offer={cartItem} actualCartQty={cartItem.actualCartQty} actualPrice={cartItem.actualPrice} ></CartItem>
+            <CartItem key={cartItem.id} offer={cartItem} price={cartItem.price} cartQty={cartItem.cartQty} ></CartItem>
         )
     }
     cartTotal = () =>{

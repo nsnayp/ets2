@@ -11,6 +11,10 @@ export default (state = INITIAL_STATE, action)=>{
                 cart: action.payload
               }
         case 'ADD_CART':
+
+            action.payload.price_first = action.payload.price
+            action.payload.cartQty_first = action.payload.cartQty
+
             return {
                 cart: {
                   ...state.cart,
@@ -33,15 +37,13 @@ export default (state = INITIAL_STATE, action)=>{
             var cart = {...state.cart}    
 
             for(var k in action.payload){
-                if(action.payload[k].price!=cart[k].price){
-                    cart[k].actualPrice = action.payload[k].price;
-                }else{
-                    delete cart[k].actualPrice
-                }
+
+                cart[k].price = action.payload[k].price;
+                cart[k].rest = action.payload[k].rest;
                 if(action.payload[k].rest<cart[k].cartQty){
-                    cart[k].actualCartQty = action.payload[k].rest;
+                    cart[k].cartQty = action.payload[k].rest;
                 }else{
-                    delete cart[k].actualCartQty
+                    cart[k].cartQty = cart[k].cartQty_first;
                 }
 
             }
