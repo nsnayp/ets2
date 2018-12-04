@@ -144,16 +144,11 @@ const changeCartItem = (payload) =>{
     }
 }
 
-
-
-
 export const fetchActualCart = payload =>{
-   // http://etsgroup.ru/offer/api2?user_id=4225&offerIds=["41579"]
    return (dispatch) => {
     fetch('http://etsgroup.ru/offer/api2?k=Ght59Jfesksef324&user_id=4225&offerIds='+JSON.stringify(payload))
     .then(data => data.json())
     .then(data =>  {
-        //console.log(data)
         dispatch(changeCartItem(data))
     })
     .catch((err) => {
@@ -161,7 +156,6 @@ export const fetchActualCart = payload =>{
     })
    }
 }
-
 
 export const fetchOffers = (payload) =>{
     return (dispatch) => {

@@ -1,4 +1,7 @@
 export const prettyNumber = (number)=>{
+
+    number = (isNaN(number))? 0:parseInt(number)
+    //console.log(number)
     thousand_separator = ' ';
     var	reverse   = number.toString().split('').reverse().join(''),
     thousands = reverse.match(/\d{1,3}/g);

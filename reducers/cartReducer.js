@@ -29,16 +29,19 @@ export default (state = INITIAL_STATE, action)=>{
         
         
         case 'CHANGE_CART_ITEM':
+            //console.log('get actual cart')
             var cart = {...state.cart}    
 
             for(var k in action.payload){
                 if(action.payload[k].price!=cart[k].price){
-                    cart[k].actualPrice = cart[k].price
-                    cart[k].price = action.payload[k].price;
+                    cart[k].actualPrice = action.payload[k].price;
+                }else{
+                    delete cart[k].actualPrice
                 }
                 if(action.payload[k].rest<cart[k].cartQty){
-                    cart[k].actualCartQty = cart[k].cartQty
-                    cart[k].cartQty = action.payload[k].cartQty;
+                    cart[k].actualCartQty = action.payload[k].rest;
+                }else{
+                    delete cart[k].actualCartQty
                 }
 
             }

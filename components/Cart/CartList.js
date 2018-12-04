@@ -17,13 +17,6 @@ class CartList extends React.Component {
         this.props.fetchActualCart(offerIds)
     }
 
-    componentWillReceiveProps=props=>{
-        offerIds = [];
-        for(var k in props.cart){
-            offerIds.push(props.cart[k].id)
-        }
-        this.props.fetchActualCart(offerIds)
-    }
 
     renderRow =cartItem=>{
         return (
