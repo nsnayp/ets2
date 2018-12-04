@@ -34,14 +34,16 @@ renderOffer=offers=>{
         var cartItem = this.props.cart[offer.id.toString()];
         
         if(cartItem){
-            console.log('pp',cartItem.cartQty)
-
             offer.inCart = cartItem.inCart
             offer.cartQty = cartItem.cartQty
             offer.toCartQty = cartItem.toCartQty
+        }else{
+            offer.inCart = false
+            offer.cartQty = null
+            offer.toCartQty = 1
         }
 
-        return <OfferItem key={offer.id} offer={offer} cq={offer.cartQty} visible={offer.visible}></OfferItem>
+        return <OfferItem key={offer.id} offer={offer} cartItem={cartItem} visible={offer.visible}></OfferItem>
 
 
 
@@ -101,7 +103,7 @@ renderImage=(images, index)=>{
         >
 				<View  key={image.key} style={{position:'relative', borderRadius:3, marginLeft:3,width:80, height:80,}}>
 					<Image source={{uri:image.src}} style={{width:80, height:80, borderRadius:3}} />
-					<View style={{ position:'absolute', width:'100%', top:0, height:'100%', backgroundColor:'#2632387a', zIndex:10, paddingHorizontal:8, paddingVertical:3,  justifyContent:'flex-end' , borderRadius:3}}>
+					<View style={{ position:'absolute', width:'100%', top:0, height:'100%', backgroundColor:'#4c4c4c3d', zIndex:10, paddingHorizontal:8, paddingVertical:3,  justifyContent:'flex-end' , borderRadius:3}}>
 					</View>
 				</View>
         </TouchableOpacity>

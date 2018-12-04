@@ -5,7 +5,7 @@ import {
 	TouchableOpacity,
 	Animated,
 	Easing,
-	StyleSheet
+	StyleSheet,InteractionManager
 } from 'react-native';
 import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
 
@@ -20,32 +20,61 @@ export class CartItem extends React.Component {
 		super(props)
 		this.state = { ...this.props.offer}
 		this.state.carMarginLeft=new Animated.Value(0)
-		this.state.toCartQty = this.state.cartQty
 	}
 
-setCart = () =>{
-	if(this.props.cart){
-		/*this.setState({
-			inCart:true,
-			cartQty:this.props.cart.cartQty
-		})*/
-	}
+updateFromOffer = (props) =>{
+
+	this.setState({
+		cartQty:	props.offer.cartQty,
+		toCartQty:	props.offer.toCartQty,
+		inCart:		props.offer.inCart,
+		actualCartQty: props.offer.actualCartQty,
+		actualPrice: props.offer.actualPrice
+	})
 }
-
-
 
 componentWillReceiveProps(props){
-	this.setCart()
+	console.log('pp')
+	InteractionManager.runAfterInteractions(() => {
+		this.updateFromOffer(props)
+	})
 }
-componentDidMount(){
-	this.setCart()
+
+closeBtn=()=>{
+
+	Animated.timing(this.state.carMarginLeft, {
+		toValue: 0 ,
+		duration: 250,
+		easing:Easing.elastic()
+	}).start();
+	
+	this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
+		InteractionManager.runAfterInteractions(() => {
+			this.changeQty1(this.state.toCartQty)
+		})
+	})
+
 }
+checkBtn=()=>{
+	Animated.timing(this.state.carMarginLeft, {
+		toValue: 0 ,
+		duration: 250,
+		easing:Easing.elastic()
+	}).start();
+	this.setState({cartQty:null, inCart:false},()=>{
+		InteractionManager.runAfterInteractions(() => {
+			this.props.deleteFromCart(this.state)
+		})
+	})
+}
+
+
 
 renderSrok=srok=>{
 	return <SrokText srok={srok}></SrokText>
 }
 
-renderCart=offer=>{
+renderPencil=offer=>{
 	return(
 			<TouchableOpacity
 			onPress={(e)=>{
@@ -53,7 +82,6 @@ renderCart=offer=>{
 				Animated.timing(this.state.carMarginLeft, {
 					toValue: 1 ,
 					duration: 250,
-		  
 					easing:Easing.elastic()
 				  }).start();
 				})
@@ -76,12 +104,26 @@ changeQty=(znak)=>{
 }
 
 changeQty1=(val)=>{
-	console.log(val);
-	let ins = this.state;
 	this.setState({cartQty:val, toCartQty:val},()=>{
 		this.props.changeQty(this.state)
 	});
 	
+}
+
+renderActualQty=offer=>{
+	if(offer.actualCartQty){
+		return <Text style={{marginLeft:10, fontSize:14, color:'#999',textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{offer.actualCartQty} шт</Text>
+	}else{
+		return null;
+	}
+}
+
+renderActualPrice=offer=>{
+	if(offer.actualCartQty){
+		return <Text style={{marginLeft:10, fontSize:14, color:'#999' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{ prettyNumber(offer.actualPrice)} ₽</Text>
+	}else{
+		return null;
+	}
 }
 
 render=()=>{
@@ -91,14 +133,9 @@ render=()=>{
 		inputRange: [0, 1],
 		outputRange: [0, -410]
 	});
-
-	let bg =  this.state.carMarginLeft.interpolate({
-        inputRange: [0, 1],
-        outputRange: ['rgba(255, 255, 255,1)', 'rgba(245, 251, 255,1)']
-    });
-
+	
 	const offer = this.state;
-
+	//console.log(offer)
 		return(
 			<Animated.View key={offer.id} style={{width:'300%', flexDirection:'row', marginLeft:carMarginLeft,backgroundColor:'#fff'}}>
 				<View  style={styles.row1}>
@@ -113,19 +150,20 @@ render=()=>{
 					</View>
 					<View  style={styles.column2}>
 						<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.cartQty} шт</Text>
-						<Text style={{marginLeft:10, fontSize:14, color:'#999',textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{offer.cartQty} шт</Text>
+						{this.renderActualQty(offer)}
+						
 					</View>
 
 					
 
 					<View  style={styles.column4}>
 						<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{ prettyNumber(offer.price)} ₽</Text>
-						<Text style={{marginLeft:10, fontSize:14, color:'#999' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{ prettyNumber(offer.price)} ₽</Text>
+						{this.renderActualPrice(offer)}
 					</View>
 					<View style={styles.column5}>
 
 						<View  style={styles.cartBtn}>
-							{this.renderCart(offer)}
+							{this.renderPencil(offer)}
 						</View>
 					</View>
 					
@@ -154,46 +192,14 @@ render=()=>{
 					</View>
 					<View style={{flexDirection:'row', alignContent:'flex-end', justifyContent:'center', width:'20%'}}>
 						<TouchableOpacity
-							onPress={(e)=>{
-
-								Animated.timing(this.state.carMarginLeft, {
-									toValue: 0 ,
-									duration: 250,
-						
-									easing:Easing.elastic()
-								}).start();
-								
-								
-								this.setState({cartQty:null, inCart:false},
-									()=>{
-										this.props.deleteFromCart(this.state)
-									})
-								
-							
-								
-							}}
+							onPress={this.checkBtn}
 						>
 							<View style={styles.iconClose}>
 								<MaterialIcons name="close" size={22} color="#f44336" style={{}} />
 							</View>
 						</TouchableOpacity>
 						<TouchableOpacity
-							onPress={(e)=>{
-
-
-								Animated.timing(this.state.carMarginLeft, {
-									toValue: 0 ,
-									duration: 250,
-						
-									easing:Easing.elastic()
-								}).start();
-								
-								
-								this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
-									this.changeQty1(this.state.toCartQty)
-								})
-								
-							}}
+							onPress={this.closeBtn}
 						>
 							<View style={styles.iconCheck}>
 								<Feather name="check" size={22} color="#4CAF50" style={{}} />

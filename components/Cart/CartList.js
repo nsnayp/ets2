@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {  View, FlatList, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import {toggleSearchPanel} from '../../actions';
+import {toggleSearchPanel,fetchActualCart} from '../../actions';
 import CartItem from './CartItem';
 import {prettyNumber} from '../../helpers/helpers';
 class CartList extends React.Component {
@@ -10,58 +10,24 @@ class CartList extends React.Component {
     }
 
     componentWillMount=()=>{
-        var needRefresh = false
+        offerIds = [];
         for(var k in this.props.cart){
-            var item = this.props.cart[k]
-            if(item.dc>new Date()){
-                needRefresh = true;
-            }
+            offerIds.push(this.props.cart[k].id)
         }
-
-        if(needRefresh){
-            /*
-                fetch
-            */
-        }
-
-
-
-        /*
-        CARTITEM
-        oem
-        brand,
-        hit_id
-        offer_id
-        name
-        cartQty
-        qty
-        price
-        srok
-        cartDate
-        actualQty
-        actualPrice
-        actualItem
-        prob_title / вероятность поставки
-
-
-        OFFERITEM
-        oem
-        brand,
-        hit_id
-        offer_id
-        name
-        cartQty
-        qty
-        price
-        srok
-
-        
-        */
+        this.props.fetchActualCart(offerIds)
     }
 
-    renderRow =offer=>{
+    componentWillReceiveProps=props=>{
+        offerIds = [];
+        for(var k in props.cart){
+            offerIds.push(props.cart[k].id)
+        }
+        this.props.fetchActualCart(offerIds)
+    }
+
+    renderRow =cartItem=>{
         return (
-            <CartItem key={offer.id} offer={offer} qty={offer.cartQty}></CartItem>
+            <CartItem key={cartItem.id} offer={cartItem} actualCartQty={cartItem.actualCartQty} actualPrice={cartItem.actualPrice} ></CartItem>
         )
     }
     cartTotal = () =>{
@@ -102,6 +68,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, payload) => {
     return{
         toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
+        fetchActualCart: (payload) => dispatch(fetchActualCart(payload)),
+        
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CartList)

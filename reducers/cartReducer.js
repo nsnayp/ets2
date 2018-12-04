@@ -27,6 +27,26 @@ export default (state = INITIAL_STATE, action)=>{
                 cartRefreshDate: new Date()
             }
         
+        
+        case 'CHANGE_CART_ITEM':
+            var cart = {...state.cart}    
+
+            for(var k in action.payload){
+                if(action.payload[k].price!=cart[k].price){
+                    cart[k].actualPrice = cart[k].price
+                    cart[k].price = action.payload[k].price;
+                }
+                if(action.payload[k].rest<cart[k].cartQty){
+                    cart[k].actualCartQty = cart[k].cartQty
+                    cart[k].cartQty = action.payload[k].cartQty;
+                }
+
+            }
+            return{
+                cart: cart
+            }
+
+
         case 'DELETE_CART':
 
         const { [action.payload.id.toString()]: removedItem, ...newCart } = state.cart;

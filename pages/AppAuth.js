@@ -58,8 +58,7 @@ const Navigator = createStackNavigator(
 
 
 class AppAuth extends React.Component {
-
-    
+   
 
 
 
