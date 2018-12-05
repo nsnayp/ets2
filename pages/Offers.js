@@ -47,6 +47,13 @@ render() {
                 <Text>Возможно, номер введен неверно</Text>
             </View>
         )
+    }else if(!this.props.isLoading&&!this.props.offers){
+        return(
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                <Text style={{fontSize:20}}>Что-то пошло не так!</Text>
+                <Text>Возможно, вы не подключены к интернету</Text>
+            </View>
+        )
     }else{
         return (
             <View style={{flex:1}}>
