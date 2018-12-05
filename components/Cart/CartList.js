@@ -45,6 +45,8 @@ class CartList extends React.Component {
         return total.toString()
     }
     render() {
+
+        if(this.props.cart&& Object.values(this.props.cart).length>0 ){
          return (
             <View>
 
@@ -59,6 +61,12 @@ class CartList extends React.Component {
                 </FlatList>
             </View>
         )
+        }else{
+            <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:8, paddingVertical:8,backgroundColor:'#fff'}}>
+                <Text style={{color:'#37474F', fontSize:18, marginTop:42, marginBottom:4}}>Корзина пуста</Text>
+                <Text style={{color:'#607D8B'}}>Положите товар в корзину</Text>
+            </View>
+        }
     }
 }
 
