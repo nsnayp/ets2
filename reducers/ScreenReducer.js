@@ -20,6 +20,10 @@ const INITIAL_STATE = {
         ,
         Settings: {
 			headerText:'ETS.Настройки',
+        }
+        ,
+        SuccessOrder: {
+			headerText:'ETS.Заказ',
 		}
        
     }

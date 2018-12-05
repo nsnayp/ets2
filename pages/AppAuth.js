@@ -14,6 +14,7 @@ import Offers from '../pages/Offers';
 import Orders from '../pages/Orders';
 import Cart from '../pages/Cart';
 import Settings from '../pages/Settings';
+import SuccessOrder from '../pages/SuccessOrder';
 
 import Header from '../components/Header/Header';
 import BottomMenu from '../components/Footer/BottomMenu';
@@ -24,14 +25,11 @@ const Navigator = createStackNavigator(
 	{   
         
         
-		Dashboard: {
-			screen: Dashboard,
+		SearchResult: {
+			screen: SearchResult,
         },
         Offers: {
 			screen: Offers,
-        },
-        SearchResult: {
-			screen: SearchResult,
         }
         ,
         Orders: {
@@ -44,7 +42,13 @@ const Navigator = createStackNavigator(
         ,
         Settings: {
 			screen: Settings,
-		}
+        },
+        Dashboard: {
+			screen: Dashboard,
+        },
+        SuccessOrder: {
+			screen: SuccessOrder,
+        }
 		
     },
     {
@@ -71,7 +75,7 @@ class AppAuth extends React.Component {
         .then((cart)=>{
             this.props.setCart(cart)
 		}).catch((error)=>{
-            this.props.setCart({})  
+            this.props.setCart("{}")  
 		})
     }
 

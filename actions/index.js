@@ -144,6 +144,50 @@ const changeCartItem = (payload) =>{
     }
 }
 
+
+
+const toggleLoadingO = () =>{
+    return {
+        type:'TOGGLE_LOADING_O',
+    }
+}
+const togglErrorO = () =>{
+    return {
+        type:'TOGGLE_ERROR_O',
+    }
+}
+const toggleSuccesO = () =>{
+    return {
+        type:'TOGGLE_SUCCESS_O',
+    }
+}
+export const toggleCommentO = (payload) =>{
+    console.log(payload)
+    return {
+        type:'TOGGLE_COMMENT_O',
+        payload:payload
+    }
+}
+
+
+export const createOrder = payload =>{
+    return (dispatch) => {
+
+        dispatch(toggleLoadingO());
+
+        fetch('http://etsgroup.ru')
+        .then(data => data.json())
+        .then(data =>  {
+            dispatch(toggleSuccesO());
+        })
+        .catch((err) => {
+            dispatch(togglErrorO());
+        })
+        
+    }
+ }
+
+
 export const fetchActualCart = payload =>{
    return (dispatch) => {
     fetch('http://etsgroup.ru/offer/api2?k=Ght59Jfesksef324&user_id=4225&offerIds='+JSON.stringify(payload))

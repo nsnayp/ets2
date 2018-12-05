@@ -75,20 +75,17 @@ class SearchResult extends React.Component {
             )
         }else{
             return(
-                <View style={{padding:32}}>
-                    <Text style={{fontSize:23,marginTop:24, marginBottom:3}}>Быстрый поиск!</Text>
-                    <Text>Введи намер запчасти oem или аналоги и получи предложения с нашего склада прямо в своем смартфоне!</Text>
+                <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:8, paddingVertical:8,backgroundColor:'#fff'}}>
+                    <Text style={{fontSize:17, marginTop:42, marginBottom:16}}>Etsgroup теперь в твоем смартфоне!</Text>
+                    <TouchableOpacity 
+                        onPress={()=>this.props.toggleSearchPanel(true)}
+                    >
+                        <View style={{backgroundColor:'#1976D2', paddingHorizontal:16, paddingVertical:8}}>
+                            <Text style={{color:'#fff'}}>Начать поиск</Text>
+                        </View>
+                    </TouchableOpacity>
+                    <Image source={{uri:'http://1024x.net/wallpapers/45t/Worn-Out_Engine_Heart.jpg'}} style={{width:'70%', height:'70%' }}></Image>
 
-                    <Text style={{fontSize:23,marginTop:24, marginBottom:3}}>Удобная корзина!</Text>
-                    <Text>Покупать легче обычного - просто ищите номера, нажмайте на корзину и оформляй заказ</Text>
-
-                    <Text style={{fontSize:23,marginTop:24, marginBottom:3}}>Мы с Вами!</Text>
-                    <Text>Мы всегда на связи и готовы стараться ради Вас!</Text>
-
-                    <Text style={{fontSize:23,marginTop:24, marginBottom:3}}>Начните сейчас!</Text>
-                    <Text>Нажмите на кнопку поиска и введите искомый номер. У нас есть, что Вам предложить</Text>
-
-                    
                 </View>
             )
         }

@@ -28,11 +28,8 @@ componentWillReceiveProps(props){
 
 renderOffer=offers=>{
     return offers.offers.map(offer =>{
-        console.log('render offer')
-
-
         var cartItem = this.props.cart[offer.id.toString()];
-        
+
         if(cartItem){
             offer.inCart = cartItem.inCart
             offer.cartQty = cartItem.cartQty

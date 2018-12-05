@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {  View, FlatList, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import {toggleSearchPanel,fetchActualCart} from '../../actions';
+import {toggleSearchPanel,fetchActualCart,navigate} from '../../actions';
 import CartItem from './CartItem';
 import {prettyNumber} from '../../helpers/helpers';
 class CartList extends React.Component {
@@ -9,7 +9,7 @@ class CartList extends React.Component {
         super(props)
     }
 
-    componentWillMount=()=>{
+    componentDidMount=()=>{
         offerIds = [];
         for(var k in this.props.cart){
             offerIds.push(this.props.cart[k].id)
@@ -19,10 +19,12 @@ class CartList extends React.Component {
 
     renderListHeader =()=>{
         return(
-            <View style={{width:'100%',  justifyContent:'center', alignItems:'flex-start', paddingVertical:8, paddingHorizontal:16}}>
-                <Text style={{color:'#546E7A'}}>Отказ от заказываемого товара не возможен, возврат производится только при наступлении гарантийного случая. Все кроссировки и наименования носят информативный характер и требуют дополнительной проверки клиентом.</Text>
-                <TouchableOpacity>
-                        <View style={{backgroundColor:'#f44336', padding:8}}>
+            <View style={{width:'100%',  justifyContent:'center', alignItems:'center', paddingVertical:8, paddingHorizontal:16}}>
+                
+                <TouchableOpacity
+                     onPress={() => requestAnimationFrame(() => this.props.navigate('Orders', {headerText:'ETS.Заказ'}))}
+                >
+                        <View style={{backgroundColor:'#3F51B5', paddingVertical:8, paddingHorizontal:16, borderRadius:3, elevation:1}}>
                             <Text style={{color:'#fff'}}>Оформить заказ на сумму {prettyNumber(this.cartTotal())} ₽</Text>
                         </View>
                 </TouchableOpacity>
@@ -69,7 +71,7 @@ const mapDispatchToProps = (dispatch, payload) => {
     return{
         toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
         fetchActualCart: (payload) => dispatch(fetchActualCart(payload)),
-        
+        navigate : (payload,params) => dispatch(navigate(payload,params)),
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CartList)

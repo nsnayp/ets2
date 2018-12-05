@@ -57,7 +57,6 @@ render() {
     }else{
         return (
             <View style={{flex:1}}>
-                
                 <OffersList offers={this.props.offers}></OffersList>
                 <ModalOfferDetail/>
             </View>
