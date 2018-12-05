@@ -173,7 +173,7 @@ export const createOrder = (cart,comment='') =>{
     return (dispatch) => {
         //console.log(comment)
         dispatch(toggleLoadingO());
-
+        comment += '[из приложения]';
         fetch('http://etsgroup.ru/offer/api3?k=Ght59Jfesksef324&cart='+JSON.stringify(cart)+'&user_id=4225&comment='+comment)
         .then(data => data.json())
         .then(data =>  {

@@ -135,9 +135,13 @@ render=()=>{
 	});
 
 	const offer = this.state;
+
+	const bg = (offer.srok==0)? '#E8F5E9':'#fff';
+	const color = (offer.srok==0)? '#2E7D32':'#999';
+
 	if(this.props.visible){
 		return(
-			<Animated.View key={offer.id} style={{width:'300%', flexDirection:'row', marginLeft:carMarginLeft,}}>
+			<Animated.View key={offer.id} style={{width:'300%', flexDirection:'row', marginLeft:carMarginLeft,backgroundColor:'#fff'}}>
 				<View  style={styles.row1}>
 		
 					<View style={styles.column1}>
@@ -151,7 +155,7 @@ render=()=>{
 					</View>
 
 					<View  style={styles.column4}>
-						<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{ prettyNumber(offer.price)} ₽</Text>
+						<Text style={{marginLeft:10, fontSize:14, color:color,backgroundColor:bg,  paddingVertical:2, paddingHorizontal:4, borderRadius:3}}>{ prettyNumber(offer.price)} ₽</Text>
 					</View>
 					<View style={styles.column5}>
 						<View  style={styles.infoIcon}>
@@ -236,10 +240,10 @@ const styles = StyleSheet.create({
 	iconMinusWrap:{paddingVertical:8, paddingRight:10,paddingLeft:10,  marginRight:14, borderRadius:2, backgroundColor:'#eee'},
 	iconPlusWrap:{paddingVertical:8, paddingRight:10,paddingLeft:10,  marginRight:14, borderRadius:2, backgroundColor:'#eee'},
 	qtyText:{paddingVertical:8, paddingRight:10,paddingLeft:8,  marginRight:14, borderRadius:2, backgroundColor:'#fff'},
-	cartBtnFalse:{paddingVertical:8, paddingRight:10,paddingLeft:8,borderRadius:2, backgroundColor:'#fff'},
-	cartBtnTrue:{paddingVertical:8, paddingRight:10,paddingLeft:8, borderRadius:2, backgroundColor:'#fff'},
-	iconClose:{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2, backgroundColor:'#fff'},
-	iconCheck:{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2, backgroundColor:'#fff'},
+	cartBtnFalse:{paddingVertical:8, paddingRight:10,paddingLeft:8,borderRadius:2},
+	cartBtnTrue:{paddingVertical:8, paddingRight:10,paddingLeft:8, borderRadius:2},
+	iconClose:{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2},
+	iconCheck:{paddingVertical:8, paddingRight:10,paddingLeft:8,  borderRadius:2},
 	
   });
 
