@@ -11,7 +11,7 @@ import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
 
 
 import { connect } from 'react-redux';
-import {addToCart,deleteFromCart, toggleModalVisible, changeQty} from '../../actions';
+import {addToCart,deleteFromCart, toggleModalVisible, changeQty, navigate,  offersSetProductId, fetchOffers,setOffers} from '../../actions';
 import SrokText from '../Offers/SrokText';
 import {prettyNumber} from '../../helpers/helpers';
 
@@ -158,8 +158,26 @@ render=()=>{
 
 
 					<View  style={styles.column3}>
-					<Text style={{color:"#1976D2"}}>{offer.brand}</Text>
-					<Text style={{color:"#1976D2"}}>{offer.oem}</Text>
+					<TouchableOpacity
+						onPress={
+							()=>{
+
+								this.props.offersSetProductId(null);
+                                this.props.setOffers(null);
+
+								this.props.fetchOffers(offer.product_id)
+                                this.props.offersSetProductId(offer.product_id);
+                                this.props.navigate('Offers', {headerText:offer.brand+' '+offer.oem,backButtonVisible:true})
+                                    
+							}
+						}
+					>
+						<View>
+							<Text style={{color:"#1976D2"}}>{offer.brand}</Text>
+							<Text style={{color:"#1976D2"}}>{offer.oem}</Text>
+						</View>
+					</TouchableOpacity>
+					
 					</View>
 					<View style={styles.column1}>
 						{this.renderSrok(offer.srok)}	
@@ -268,6 +286,10 @@ const mapDispatchToProps = (dispatch, payload) => {
 		deleteFromCart: (payload) => dispatch(deleteFromCart(payload)),
 		toggleModalVisible: (payload) => dispatch(toggleModalVisible(payload)),
 		changeQty: (payload) => dispatch(changeQty(payload)),
+		navigate : (payload,params) => dispatch(navigate(payload,params)),
+        offersSetProductId: (payload) => dispatch(offersSetProductId(payload)),
+		fetchOffers : (payload) => dispatch(fetchOffers(payload)),
+		setOffers : (payload) => dispatch(setOffers(payload)),
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem)
