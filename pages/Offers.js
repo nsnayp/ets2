@@ -40,6 +40,13 @@ render() {
                 <ActivityIndicator size="large"></ActivityIndicator>
             </View>
         )
+    }else if(!this.props.isLoading&&this.props.offers&&this.props.offers.length==0){
+        return(
+            <View style={{flex:1, flexDirection:'column', justifyContent:'center', alignItems:'center'}}>
+                <Text style={{fontSize:20}}>Нет предложений!</Text>
+                <Text>Возможно, номер введен неверно</Text>
+            </View>
+        )
     }else{
         return (
             <View style={{flex:1}}>

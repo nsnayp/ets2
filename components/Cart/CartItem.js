@@ -158,8 +158,8 @@ render=()=>{
 
 
 					<View  style={styles.column3}>
-					<Text>{offer.brand}</Text>
-					<Text>{offer.oem}</Text>
+					<Text style={{color:"#1976D2"}}>{offer.brand}</Text>
+					<Text style={{color:"#1976D2"}}>{offer.oem}</Text>
 					</View>
 					<View style={styles.column1}>
 						{this.renderSrok(offer.srok)}	

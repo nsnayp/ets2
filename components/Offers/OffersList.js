@@ -28,7 +28,7 @@ componentWillReceiveProps(props){
 
 renderOffer=offers=>{
     return offers.offers.map(offer =>{
-
+        console.log('render offer')
 
 
         var cartItem = this.props.cart[offer.id.toString()];
@@ -43,7 +43,7 @@ renderOffer=offers=>{
             offer.toCartQty = 1
         }
 
-        return <OfferItem key={offer.id} offer={offer} cartItem={cartItem} visible={offer.visible}></OfferItem>
+        return <OfferItem key={offer.id} offer={offer} cartItem={cartItem} rest={offer.rest} cartQty={offer.cartQty} visible={offer.visible}></OfferItem>
 
 
 

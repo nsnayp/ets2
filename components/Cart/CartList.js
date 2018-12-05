@@ -17,6 +17,18 @@ class CartList extends React.Component {
         this.props.fetchActualCart(offerIds)
     }
 
+    renderListHeader =()=>{
+        return(
+            <View style={{width:'100%',  justifyContent:'center', alignItems:'flex-start', paddingVertical:8, paddingHorizontal:16}}>
+                <Text style={{color:'#546E7A'}}>Отказ от заказываемого товара не возможен, возврат производится только при наступлении гарантийного случая. Все кроссировки и наименования носят информативный характер и требуют дополнительной проверки клиентом.</Text>
+                <TouchableOpacity>
+                        <View style={{backgroundColor:'#f44336', padding:8}}>
+                            <Text style={{color:'#fff'}}>Оформить заказ на сумму {prettyNumber(this.cartTotal())} ₽</Text>
+                        </View>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     renderRow =cartItem=>{
         return (
@@ -33,19 +45,14 @@ class CartList extends React.Component {
     render() {
          return (
             <View>
-                <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:16, justifyContent:'space-between', alignItems:'center'}}>
-                    <TouchableOpacity>
-                        <View style={{backgroundColor:'#ff4444', padding:8}}>
-                            <Text style={{color:'#fff'}}>Оформить заказ на сумму {prettyNumber(this.cartTotal())} ₽</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
+
                 <FlatList
                     data={Object.values(this.props.cart)}
                     renderItem={({item}) =>  this.renderRow(item) }  
                     keyExtractor={(item, index) => index.toString()} 
                     initialNumToRender={15}
                     refreshing={true}
+                    ListHeaderComponent={this.renderListHeader}
                 >
                 </FlatList>
             </View>
