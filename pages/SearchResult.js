@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text, View,  Image, TouchableOpacity, ScrollView,BackHandler } from 'react-native';
+import { Text, View,  Image, TouchableOpacity, ScrollView,BackHandler,ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 import {toggleSearchPanel, addSearchResult,  navigate,  offersSetProductId, fetchOffers,setOffers} from '../actions';
 
@@ -25,21 +25,23 @@ class SearchResult extends React.Component {
     render() {
         if(this.props.loadingSearch){
             return (
-                <View style={{paddingHorizontal:16, paddingVertical:24}}>
-                        <Text style={{fontSize:16, color:'#999'}}>Ищу...</Text>
+                <View style={{flex:1, justifyContent:'center',alignItems:'center'}}>
+                    <ActivityIndicator size="large"></ActivityIndicator>
                 </View>
             )
         }
         else if(this.props.loadingError){
             return(
-                <View style={{paddingHorizontal:16, paddingVertical:24}}>
-                        <Text style={{fontSize:16, color:'#999'}}>Не могу подключиться, походу интрента нет</Text>
+                <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:8, paddingVertical:8,backgroundColor:'#fff'}}>
+                    <Text style={{color:'#37474F', fontSize:18, marginTop:42, marginBottom:4}}>Ошибка</Text>
+                    <Text style={{color:'#607D8B'}}>Возможно, нет подключения к интернету</Text>
                 </View>
             )
         }else if(this.props.searchResult.length==0&&this.props.loaded){
             return(
-                <View style={{paddingHorizontal:16, paddingVertical:24}}>
-                        <Text style={{fontSize:16, color:'#999'}}>Я не смог найти номер. Или его у меня нет, или введен некорректно</Text>
+                <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:8, paddingVertical:8,backgroundColor:'#fff'}}>
+                    <Text style={{color:'#37474F', fontSize:18, marginTop:42, marginBottom:4}}>Нет результатов</Text>
+                    <Text style={{color:'#607D8B'}}>Возможно, номер указан неправильно</Text>
                 </View>
             )
         }
@@ -47,9 +49,7 @@ class SearchResult extends React.Component {
 
             return (
                 <View>
-                    <View style={{paddingHorizontal:16, paddingVertical:24}}>
-                        <Text style={{fontSize:16, color:'#999'}}>Вот, что я нашел:</Text>
-                    </View>
+                    
                     <ScrollView>
                     { 
                         (this.props.searchResult)?this.props.searchResult.map((item,index) =>
