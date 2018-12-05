@@ -162,7 +162,6 @@ const toggleSuccesO = () =>{
     }
 }
 export const toggleCommentO = (payload) =>{
-    console.log(payload)
     return {
         type:'TOGGLE_COMMENT_O',
         payload:payload
@@ -170,17 +169,20 @@ export const toggleCommentO = (payload) =>{
 }
 
 
-export const createOrder = payload =>{
+export const createOrder = (cart,comment='') =>{
     return (dispatch) => {
-
+        //console.log(comment)
         dispatch(toggleLoadingO());
 
-        fetch('http://etsgroup.ru')
+        fetch('http://etsgroup.ru/offer/api3?k=Ght59Jfesksef324&cart='+JSON.stringify(cart)+'&user_id=4225&comment='+comment)
         .then(data => data.json())
         .then(data =>  {
+            console.log(data)
+            dispatch(setCart("{}"));
             dispatch(toggleSuccesO());
         })
         .catch((err) => {
+            console.log(err)
             dispatch(togglErrorO());
         })
         

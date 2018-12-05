@@ -14,7 +14,7 @@ class SuccessOrder extends React.Component {
     }
 
     createOrder=()=>{
-        this.props.createOrder(this.props.cart)
+        this.props.createOrder(this.props.cart, this.props.comment)
     }
 
     reNavigate=()=>{
@@ -87,15 +87,16 @@ const mapStateToProps = state => {
         cart: state.cart.cart,
         loading: state.order.loading,
         success: state.order.success,
-        error: state.order.error
+        error: state.order.error,
+        comment:state.order.comment
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {
     return{
         toggleSearchPanel: (payload) => dispatch(toggleSearchPanel(payload)),
         setCart: (payload) => dispatch(setCart(payload)),
-        createOrder: (payload) => dispatch(createOrder(payload)),
-        navigate: (payload) => dispatch(navigate(payload)),
+        createOrder: (payload, comment) => dispatch(createOrder(payload,comment)),
+        navigate: (payload,params) => dispatch(navigate(payload,params)),
         
     } 
 }
