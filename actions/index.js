@@ -170,11 +170,12 @@ export const toggleCommentO = (payload) =>{
 
 
 export const createOrder = (cart,comment='') =>{
-    return (dispatch) => {
+    return (dispatch, getState) => {
+        const {customer_id} = getState().appwrap;
         //console.log(comment)
         dispatch(toggleLoadingO());
         comment += '[из приложения]';
-        fetch('http://etsgroup.ru/offer/api3?k=Ght59Jfesksef324&cart='+JSON.stringify(cart)+'&user_id=4225&comment='+comment)
+        fetch('http://etsgroup.ru/offer/api3?k=Ght59Jfesksef324&cart='+JSON.stringify(cart)+'&user_id='+customer_id+'&comment='+comment)
         .then(data => data.json())
         .then(data =>  {
             console.log(data)
@@ -191,8 +192,9 @@ export const createOrder = (cart,comment='') =>{
 
 
 export const fetchActualCart = payload =>{
-   return (dispatch) => {
-    fetch('http://etsgroup.ru/offer/api2?k=Ght59Jfesksef324&user_id=4225&offerIds='+JSON.stringify(payload))
+   return (dispatch, getState) => {
+    const {customer_id} = getState().appwrap;
+    fetch('http://etsgroup.ru/offer/api2?k=Ght59Jfesksef324&user_id='+customer_id+'&offerIds='+JSON.stringify(payload))
     .then(data => data.json())
     .then(data =>  {
         dispatch(changeCartItem(data))
@@ -204,9 +206,14 @@ export const fetchActualCart = payload =>{
 }
 
 export const fetchOffers = (payload) =>{
-    return (dispatch) => {
+    return (dispatch,getState) => {
+
+
+        const {customer_id} = getState().appwrap;
+        const url = 'http:/etsgroup.ru/offer/api1/'+payload+'?k=Ght59Jfesksef324&user_id='+customer_id
+        console.log(url)
         dispatch(setIsLoading(true))
-        fetch('http:/etsgroup.ru/offer/api1/'+payload+'?k=Ght59Jfesksef324&user_id=4225')
+        fetch(url)
         .then(data => data.json())
         .then(data =>  {
             

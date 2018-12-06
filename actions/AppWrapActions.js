@@ -15,7 +15,7 @@ export const auth = (login,password) =>{
     return (dispatch) => {
 
         fetch(
-            "http://etsgroup.ru/call/test?email=" +login +"&password=" +password
+            "http://etsgroup.ru/offer/api4?email=" +login +"&password=" +password
         )
         .then(response => response.json())
         .then(responseJson => {
