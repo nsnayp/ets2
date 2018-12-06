@@ -9,7 +9,8 @@ const INITIAL_STATE = {
     loaded:false,
     productId:null,
     modalVisible:false,
-    modalData:null
+    modalData:null,
+
 }
 
 export default (state = INITIAL_STATE, action)=>{

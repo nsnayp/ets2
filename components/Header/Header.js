@@ -76,6 +76,19 @@ class Header extends React.Component {
             <View style={{width:16, height:HEADER_HEIGHT}}></View>
         )
     }
+
+    findNumber=()=>{
+        requestAnimationFrame(() => {
+            this.props.offersSetProductId(null);
+            this.props.setOffers(null);
+            this.props.fetchSearchResult(this.props.text);
+
+            this.props.removeText();
+            this.props.toggleSearchPanel(false);
+            this.props.navigate('SearchResult', {headerText:'Поиск '+this.props.text})
+        })
+    }
+
     render() {
         
         let searchWidth = this.state.widthSP.interpolate({
@@ -131,7 +144,7 @@ class Header extends React.Component {
                     <View style={styles.rightPanel}>
 
                         <View style={{ width: '100%', position: 'relative', alignItems: 'flex-end', justifyContent: 'center', height: HEADER_HEIGHT, }}>
-                            <Animated.View style={[styles.searchPanelWrap, { opacity: searchWrapOpacity, width: searchWidth, borderRadius: borderRadiusWrap, transform:[{scale:scale}] }]}>
+                            <Animated.View style={[styles.searchPanelWrap, { opacity: searchWrapOpacity, width: searchWidth, borderRadius: borderRadiusWrap, transform:[{scale:scale}], overflow:'hidden' }]}>
 
                                 <Animated.View style={{ backgroundColor: '#fff', borderRadius: 4, opacity: searchOpacity }}>
                                     <TextInput
@@ -140,16 +153,7 @@ class Header extends React.Component {
                                         value={this.props.text}
                                         onChangeText={(text) => { this.props.onInput(text) }}
                                         onSubmitEditing={(event) => {
-                                            //requestAnimationFrame(() => {
-                                                this.props.offersSetProductId(null);
-                                                this.props.setOffers(null);
-                                                this.props.fetchSearchResult(this.props.text);
-
-
-                                                this.props.removeText();
-                                                this.props.toggleSearchPanel(false);
-                                                this.props.navigate('SearchResult', {headerText:'Поиск '+this.props.text})
-                                            //})
+                                            this.findNumber()
                                         }}
                                         ref={el => { this.searchPanel = el; }}
                                         underlineColorAndroid='rgba(0,0,0,0)'
@@ -157,7 +161,7 @@ class Header extends React.Component {
                                         style={styles.textInput}></TextInput>
                                 </Animated.View>
 
-                                <Animated.View style={{ position: 'absolute', left: 0, opacity: searchOpacity }}>
+                                <Animated.View style={{ position: 'absolute', left: 0, opacity: searchOpacity}}>
                                     <TouchableOpacity onPress={() => { this.props.toggleSearchPanel(false) }}>
                                         <View style={styles.iconWrap}>
                                             <Feather name="arrow-left" size={20} color="#999" style={{}} />
@@ -165,10 +169,18 @@ class Header extends React.Component {
                                     </TouchableOpacity>
                                 </Animated.View>
 
-                                <Animated.View style={{ position: 'absolute', right: 0, zIndex: 10 ,opacity: searchOpacity}}>
+                                <Animated.View style={{ position: 'absolute', right: HEADER_HEIGHT, zIndex: 10 ,opacity: searchOpacity}}>
                                     <TouchableOpacity onPress={this.props.removeText}>
                                         <View style={styles.iconWrap}>
                                             <Feather name="x" size={20} color="#999" style={{}} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </Animated.View>
+
+                                <Animated.View style={{ position: 'absolute', right: 0, zIndex: 10 ,opacity: searchOpacity,backgroundColor:'#eee'}}>
+                                    <TouchableOpacity onPress={this.findNumber}>
+                                        <View style={styles.iconWrap}>
+                                            <Feather name="search" size={20} color="#999" style={{}} />
                                         </View>
                                     </TouchableOpacity>
                                 </Animated.View>
