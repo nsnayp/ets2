@@ -5,7 +5,7 @@ import {
 	TouchableOpacity,
 	Animated,
 	Easing,
-	StyleSheet,InteractionManager
+	StyleSheet,InteractionManager, Dimensions
 } from 'react-native';
 import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
 
@@ -15,6 +15,7 @@ import {addToCart,deleteFromCart, toggleModalVisible, changeQty, navigate,  offe
 import SrokText from '../Offers/SrokText';
 import {prettyNumber} from '../../helpers/helpers';
 
+const w = Dimensions.get("window").width;
 export class CartItem extends React.Component {
 	constructor(props) {
 		super(props)
@@ -147,7 +148,7 @@ render=()=>{
 
 	let carMarginLeft = this.state.carMarginLeft.interpolate({
 		inputRange: [0, 1],
-		outputRange: [0, -410]
+		outputRange: [0, -w]
 	});
 	
 	const offer = this.state;

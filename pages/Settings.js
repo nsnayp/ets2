@@ -11,8 +11,10 @@ class Settings extends React.Component {
 
     render() {
          return (
-            <View>
-                <Text>Hello, its Settings</Text>
+
+            <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:8, paddingVertical:8,backgroundColor:'#fff'}}>
+                <Text style={{color:'#37474F', fontSize:18, marginTop:42, marginBottom:4}}>Настройки</Text>
+                <Text style={{color:'#607D8B'}}>Пока что можно только выйти.</Text>
 
                 <TouchableOpacity
                     onPress={()=>{
@@ -20,11 +22,11 @@ class Settings extends React.Component {
                     }}
                 >
                         <View style={{backgroundColor:'#3F51B5', paddingVertical:16, paddingHorizontal:32, borderRadius:3, elevation:1}}>
-                            <Text style={{color:'#fff', textAlign:'center'}}>Выйти</Text>
+                            <Text style={{color:'#fff', textAlign:'center'}}>Выйти из аккаунта</Text>
                         </View>
                 </TouchableOpacity>
-                
             </View>
+
         )
     }
 }
