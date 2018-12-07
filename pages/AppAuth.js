@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import {navigate,setCart, changeScreenParams} from '../actions';
-
+import {fetchCarts} from '../actions/CartListActions';
 
 import { createStackNavigator,NavigationActions  } from 'react-navigation';
 
@@ -77,7 +77,10 @@ class AppAuth extends React.Component {
             this.props.setCart(cart)
 		}).catch((error)=>{
             this.props.setCart("{}")  
-		})
+        })
+        
+        this.props.fetchCarts()
+
     }
 
     componentWillReceiveProps(props) {
@@ -129,6 +132,7 @@ const mapDispatchToProps = (dispatch, payload) => {
         navigate : (payload) => dispatch(navigate(payload)),
         setCart :  (payload) => dispatch(setCart(payload)),
         changeScreenParams: (payload)=>dispatch(changeScreenParams(payload)),
+        fetchCarts: (payload)=>dispatch(fetchCarts(payload)),
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(AppAuth)

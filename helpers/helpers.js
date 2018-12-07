@@ -1,6 +1,6 @@
 export const prettyNumber = (number)=>{
-
-    number = (isNaN(number))? 0:parseInt(number)
+    //console.log(number)
+    number = (isNaN(number)||!number)? 0:parseInt(number)
     //console.log(number)
     thousand_separator = ' ';
     var	reverse   = number.toString().split('').reverse().join(''),

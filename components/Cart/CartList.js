@@ -14,7 +14,7 @@ class CartList extends React.Component {
         for(var k in this.props.cart){
             offerIds.push(this.props.cart[k].id)
         }
-        this.props.fetchActualCart(offerIds)
+        //this.props.fetchActualCart(offerIds)
     }
 
     renderListHeader =()=>{
