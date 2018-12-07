@@ -73,6 +73,7 @@ class AppAuth extends React.Component {
         }
         AsyncStorage.getItem('cart')
         .then((cart)=>{
+            cart = (!cart)? "{}":cart;
             this.props.setCart(cart)
 		}).catch((error)=>{
             this.props.setCart("{}")  

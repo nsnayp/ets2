@@ -153,9 +153,6 @@ render=()=>{
 						<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.qty} шт</Text>
 					</View>
 
-					<View  style={styles.column3}>
-					</View>
-
 					<View  style={styles.column4}>
 						<Text style={{marginLeft:10, fontSize:14, color:color,backgroundColor:bg,  paddingVertical:2, paddingHorizontal:4, borderRadius:3}}>{ prettyNumber(offer.price)} ₽</Text>
 					</View>
@@ -231,7 +228,7 @@ const styles = StyleSheet.create({
 	column1: {flexDirection:'row', alignItems:'center', justifyContent:'flex-start', width:'20%'},
 	column2: {width:'20%', alignItems:'flex-end', alignContent:'center', justifyContent:'center'},
 	column3: {width:'15%', alignItems:'center', justifyContent:'center', alignContent:'center', flexDirection:'row'},
-	column4: {width:'20%',alignItems:'center',  justifyContent:'center', alignContent:'center'},
+	column4: {width:'35%',alignItems:'center',  justifyContent:'center', alignContent:'center'},
 	column5:{width:'25%', flexDirection:'row', alignItems:'flex-end',justifyContent:'flex-end'},
 	infoIcon:{ alignItems:'flex-end', justifyContent:'center'},
 	cartBtn:{ alignItems:'flex-end',  justifyContent:'center'},

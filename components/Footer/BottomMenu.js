@@ -62,7 +62,7 @@ class BottomMenu extends React.Component {
 					</TouchableNativeFeedback>
 				</View> */}
 
-				<View style={{ width: '20%' , position:'relative'}}>
+				<View style={{ width: 80 , position:'relative'}}>
 					<TouchableNativeFeedback onPress={() => requestAnimationFrame(()=>this.props.navigate('Cart', {headerText:'ETS.Корзина'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="shopping-cart" size={23} color={ (this.props.currentScreen=='Cart'||this.props.currentScreen=='Orders')?'#3F51B5':'#9E9E9E' } />
@@ -89,7 +89,7 @@ class BottomMenu extends React.Component {
 					</View> }
 				</View> */}
 
-				<View style={{ width: '20%' }}>
+				<View style={{ width: 80 }}>
 					<TouchableNativeFeedback onPress={() =>this.navigateSearchScreen() }>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' ,backgroundColor:'#fff'}}>
 							<Feather name="search" size={23} color={ (this.props.currentScreen=='SearchResult'||this.props.currentScreen=='Offers'||this.props.currentScreen=='Dashboard')?'#3F51B5':'#9E9E9E' } />
@@ -97,7 +97,7 @@ class BottomMenu extends React.Component {
 					</TouchableNativeFeedback>
 				</View>
 				
-				<View style={{ width: '20%' }}>
+				<View style={{ width: 80 }}>
 					<TouchableNativeFeedback onPress={() => requestAnimationFrame(() => this.props.navigate('Settings', {headerText:'ETS.Настройки'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="settings" size={23} color={ (this.props.currentScreen=='Settings')?'#3F51B5':'#9E9E9E' } />

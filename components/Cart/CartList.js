@@ -45,8 +45,8 @@ class CartList extends React.Component {
         return total.toString()
     }
     render() {
-
-        if(this.props.cart&& Object.values(this.props.cart).length>0 ){
+        const len = (this.props.cart&&Object.values(this.props.cart)) ? Object.values(this.props.cart).length : 0;
+        if(this.props.cart&&len>0 ){
          return (
             <View>
 
