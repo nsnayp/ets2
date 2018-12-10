@@ -172,10 +172,14 @@ export const toggleCommentO = (payload) =>{
 export const createOrder = (cart,comment='') =>{
     return (dispatch, getState) => {
         const {customer_id} = getState().appwrap;
+        const {activeCartId} = getState().carts;
+        
         //console.log(comment)
         dispatch(toggleLoadingO());
-        comment += '[из приложения]';
-        fetch('http://etsgroup.ru/offer/api3?k=Ght59Jfesksef324&cart='+JSON.stringify(cart)+'&user_id='+customer_id+'&comment='+comment)
+        comment += ' [из приложения]';
+        const url = 'http://etsgroup.ru/cart/orderApi?basket_id='+activeCartId+'&customer_id='+customer_id+'&comment='+comment
+        console.log(url)
+        fetch(url)
         .then(data => data.json())
         .then(data =>  {
             console.log(data)

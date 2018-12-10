@@ -28,8 +28,10 @@ export const fetchCarts=()=>{
             for(var k in data){
                 if(data[k].active===true){
 
+                    var items = (data[k].items)? data[k].items: {}
+
                     dispatch(setActive(k));
-                    dispatch(setCart(JSON.stringify(data[k].items) ))
+                    dispatch(setCart(JSON.stringify(items) ))
                 }
             }
         }).catch((err)=>{
