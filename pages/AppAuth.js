@@ -12,6 +12,7 @@ import Dashboard from '../pages/Dashboard';
 import SearchResult from '../pages/SearchResult';
 import Offers from '../pages/Offers';
 import Orders from '../pages/Orders';
+import OrderPage from '../pages/OrderPage';
 import Cart from '../pages/Cart';
 import Settings from '../pages/Settings';
 import SuccessOrder from '../pages/SuccessOrder';
@@ -34,6 +35,10 @@ const Navigator = createStackNavigator(
         ,
         Orders: {
 			screen: Orders,
+        }
+        ,
+        OrderPage: {
+			screen: OrderPage,
         }
         ,
         Cart: {

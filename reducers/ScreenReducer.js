@@ -24,7 +24,10 @@ const INITIAL_STATE = {
         ,
         SuccessOrder: {
 			headerText:'ETS.Заказ',
-		}
+        },
+        OrderPage:{
+            headerText:'ETS.Заказы',
+        }
        
     }
 }

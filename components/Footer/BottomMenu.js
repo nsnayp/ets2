@@ -51,14 +51,14 @@ class BottomMenu extends React.Component {
 		return (
 			
 			<View style={{ backgroundColor: '#fff', width: '100%', justifyContent: 'space-evenly', alignItems: 'stretch', flexDirection: 'row', paddingHorizontal: 10, borderTopColor:'#eee', borderTopWidth:1, elevation: 10  }}>
-				{/* <View style={{ width: '20%' }}>
+				<View style={{ width: 80 }}>
 					<TouchableNativeFeedback  onPress={() => requestAnimationFrame(() =>this.props.navigate('Dashboard') )} >
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="home" size={23} color={ (this.props.currentScreen=='Dashboard')?'#3F51B5':'#9E9E9E' }  />
 
 						</View>
 					</TouchableNativeFeedback>
-				</View> */}
+				</View>
 
 				<View style={{ width: 80 , position:'relative'}}>
 					<TouchableNativeFeedback onPress={() => requestAnimationFrame(()=>this.props.navigate('Cart', {headerText:'ETS.Корзина'}))}>
@@ -71,29 +71,29 @@ class BottomMenu extends React.Component {
 					}
 
 				</View>
-
-
-				{/* <View style={{ width: '20%', position:'relative' }}>
-					<TouchableNativeFeedback onPress={() => this.props.navigate('Orders', {headerText:'ETS.Заказы'})}>
-						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="clipboard" size={23} color={ (this.props.currentScreen=='Orders')?'#3F51B5':'#9E9E9E' } />
-							
-						</View>
-					</TouchableNativeFeedback>
-					{ <View style={{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', right:16, top:4}}>
-						<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>
-						<Feather name="bell" size={10} color={ '#fff' } />
-						</Text>
-					</View> }
-				</View> */}
-
 				<View style={{ width: 80 }}>
 					<TouchableNativeFeedback onPress={() =>this.navigateSearchScreen() }>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' ,backgroundColor:'#fff'}}>
-							<Feather name="search" size={23} color={ (this.props.currentScreen=='SearchResult'||this.props.currentScreen=='Offers'||this.props.currentScreen=='Dashboard')?'#3F51B5':'#9E9E9E' } />
+							<Feather name="search" size={23} color={ (this.props.currentScreen=='SearchResult'||this.props.currentScreen=='Offers')?'#3F51B5':'#9E9E9E' } />
 						</View>
 					</TouchableNativeFeedback>
 				</View>
+
+				<View style={{ width: 80, position:'relative' }}>
+					<TouchableNativeFeedback onPress={() => this.props.navigate('OrderPage', {headerText:'ETS.Заказы'})}>
+						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
+							<Feather name="clipboard" size={23} color={ (this.props.currentScreen=='OrderPage')?'#3F51B5':'#9E9E9E' } />
+							
+						</View>
+					</TouchableNativeFeedback>
+					{/* <View style={{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', right:16, top:4}}>
+						<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>
+						<Feather name="bell" size={10} color={ '#fff' } />
+						</Text>
+					</View> */}
+				</View>
+
+				
 				
 				<View style={{ width: 80 }}>
 					<TouchableNativeFeedback onPress={() => requestAnimationFrame(() => this.props.navigate('Settings', {headerText:'ETS.Настройки'}))}>

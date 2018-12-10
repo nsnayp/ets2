@@ -6,6 +6,7 @@ import CartListReducer from './CartListReducer';
 import ScreenReducer from './ScreenReducer';
 import PhotoViewerReducer from './PhotoViewerReducer';
 import OrderReducer from './OrderReducer';
+import OrdersReducer from './OrdersReducer';
 import AppWrapReducer from './AppWrapReducer';
 
 export default combineReducers({
@@ -16,6 +17,7 @@ export default combineReducers({
     screens: ScreenReducer,
     photo: PhotoViewerReducer,
     order: OrderReducer,
+    orders: OrdersReducer,
     appwrap: AppWrapReducer
 
 })
