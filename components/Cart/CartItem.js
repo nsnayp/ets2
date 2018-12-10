@@ -34,6 +34,8 @@ updateFromOffer = (props) =>{
 	this.setState({
 		cartQty:	props.offer.cartQty,
 		toCartQty:	props.offer.toCartQty,
+		cartQty_first:	props.offer.cartQty_first,
+		price_first:	props.offer.price_first,
 		inCart:		props.offer.inCart,
 		price: props.offer.price,
 		rest:props.offer.rest
@@ -54,7 +56,7 @@ closeBtn=()=>{
 		easing:Easing.elastic()
 	}).start();
 	
-	this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
+	this.setState({cartQty:this.state.toCartQty, cartQty_first:this.state.toCartQty,price_first:this.state.price, inCart:true},()=>{
 		InteractionManager.runAfterInteractions(() => {
 			this.changeQty1(this.state.toCartQty)
 		})

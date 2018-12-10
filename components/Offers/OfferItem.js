@@ -59,7 +59,7 @@ checkBtn=()=>{
 		duration: 250,
 		easing:Easing.elastic()
 	}).start();
-	this.setState({cartQty:this.state.toCartQty, inCart:true},()=>{
+	this.setState({cartQty:this.state.toCartQty,  price_first:this.state.price,   cartQty_first:this.state.toCartQty, inCart:true},()=>{
 		InteractionManager.runAfterInteractions(() => {
 			this.props.addToCart(this.state)
 		})

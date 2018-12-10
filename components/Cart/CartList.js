@@ -56,7 +56,7 @@ class CartList extends React.Component {
                     keyExtractor={(item, index) => index.toString()} 
                     initialNumToRender={15}
                     refreshing={true}
-                    ListHeaderComponent={this.renderListHeader}
+                    ListFooterComponent={this.renderListHeader}
                 >
                 </FlatList>
             </View>

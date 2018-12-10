@@ -179,7 +179,7 @@ export const createOrder = (cart,comment='') =>{
         .then(data => data.json())
         .then(data =>  {
             console.log(data)
-            dispatch(setCart("{}"));
+            dispatch(setCart({}));
             dispatch(toggleSuccesO());
         })
         .catch((err) => {
@@ -267,24 +267,21 @@ export const fetchOffers = (payload) =>{
 /* CART PAGE ACTIONS */
 
 /*export const setStorageCart=(payload)=>{
-    AsyncStorage.setItem('cart', payload)
+    
     return (dispatch) =>  dispatch(setCart(payload))
 }*/
 
-export const setCart=(payload)=>{
-    AsyncStorage.setItem('cart', payload)
-    return {
-        type:'SET_CART',
-        payload: JSON.parse(payload)
+export const saveCart = (payload)=>{
+    //console.log('save cart async')
+    return (dispatch,getState) => {
+        const payloadStr = (typeof payload === "object")? JSON.stringify(payload) : payload;
+        AsyncStorage.setItem('cart', payloadStr);
     }
 }
 
-export const changeCartQty = (payload) =>{
-    return {
-        type:'CHANGE_QTY',
-        payload:payload
-    }
-}
+
+
+
 
 
 
@@ -294,18 +291,84 @@ export const changeQty = (payload) =>{
     }
 }
 
-export const addToCart = (payload) =>{
+
+export const addToCartD = (payload) =>{
     return {
         type:'ADD_CART',
         payload:payload
     }
 }
+
+export const changeCartQty = (payload) =>{
+    return (dispatch,getState) => {
+        dispatch(addToCart(payload))
+    }
+}
+
+export const addToCart = (payload) =>{
+
+    return (dispatch,getState) => {
+        dispatch(addToCartD(payload))
+
+        const activeCartId = getState().carts.activeCartId
+        const customerId = getState().appwrap.customer_id
+        const url = 'http://etsgroup.ru/offer/api2?customer_id='+customerId+'&item='+JSON.stringify(payload)+'&basket_id='+activeCartId+'&action=add'
+        fetch(url)
+        .then(data=>data.text())
+        .then(data=>{
+            console.log(data)
+        }).catch((err)=>{
+            console.log(err)
+        });
+    }
+
+}
+
+
 export const deleteFromCart = (payload) =>{
+
+    return (dispatch,getState) => {
+        dispatch(deleteFromCartD(payload))
+        const activeCartId = getState().carts.activeCartId
+        const customerId = getState().appwrap.customer_id
+
+        const url = 'http://etsgroup.ru/offer/api2?customer_id='+customerId+'&item='+JSON.stringify(payload)+'&basket_id='+activeCartId+'&action=remove'
+        fetch(url)
+        .then(data=>data.text())
+        .then(data=>{
+            console.log(data)
+        }).catch((err)=>{
+            console.log(err)
+        });
+    }
+
+}
+
+
+export const deleteFromCartD = (payload) =>{
     return {
         type:'DELETE_CART',
         payload:payload
     }
 }
+
+
+export const setCart=(payload)=>{
+    //console.log(typeof payload)
+    return (dispatch,getState) => {
+        saveCart(payload)
+        dispatch(setCartToStore(payload))
+    }
+}
+
+export const setCartToStore = (payload) =>{
+    payload = (typeof payload === "object")?  payload: JSON.parse(payload);
+    return {
+        type:'SET_CART',
+        payload: payload
+    }
+}
+
 
 /* CART PAGE ACTIONS END*/
 

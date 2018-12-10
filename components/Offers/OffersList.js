@@ -29,8 +29,9 @@ componentWillReceiveProps(props){
 renderOffer=offers=>{
     return offers.offers.map(offer =>{
         var cartItem = this.props.cart[offer.id.toString()];
-
+        
         if(cartItem){
+            //console.log('has in cart')
             offer.inCart = cartItem.inCart
             offer.cartQty = cartItem.cartQty
             offer.toCartQty = cartItem.cartQty
@@ -126,6 +127,7 @@ renderListHeader=()=>{
 }
 
 render() {
+    //console.log(this.props.cart)
         return (
             <View style={{flex:1, backgroundColor:'#fff'}}>
                 

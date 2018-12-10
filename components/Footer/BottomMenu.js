@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { MaterialIcons,Feather } from '@expo/vector-icons';
 import { connect } from 'react-redux';
-import { toggleSearchPanel, navigate,changeScreenParams } from '../../actions/index';
+import { toggleSearchPanel, navigate,saveCart } from '../../actions/index';
 
 
 class BottomMenu extends React.Component {
@@ -17,9 +17,7 @@ class BottomMenu extends React.Component {
 
 	componentWillReceiveProps(props){
 		if( JSON.stringify(this.props.cart)!=JSON.stringify(props.cart) && Object.values(this.props.cart).length>0){
-			AsyncStorage.setItem('cart', JSON.stringify(props.cart)).catch((error)=>{
-        	    console.log('error cart from storage',error)
-			})
+			this.props.saveCart(props.cart)
 		}
 	}
 
@@ -124,7 +122,7 @@ const mapDispatchToProps = (dispatch, payload) => {
     return {
 		navigate : (payload,params) => dispatch(navigate(payload,params)),
 		toggleSearchPanel:(payload)=> dispatch(toggleSearchPanel(payload)),
-		/*changeScreenParams: (payload) => dispatch(changeScreenParams(payload)),*/
+		saveCart: (payload) => dispatch(saveCart(payload)),
     }
 }
 

@@ -6,14 +6,12 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action)=>{
  
     switch (action.type) {
+        
         case 'SET_CART':
             return {
                 cart: action.payload
               }
         case 'ADD_CART':
-
-            action.payload.price_first = action.payload.price
-            action.payload.cartQty_first = action.payload.cartQty
 
             return {
                 cart: {
@@ -33,7 +31,7 @@ export default (state = INITIAL_STATE, action)=>{
         
         
         case 'CHANGE_CART_ITEM':
-            //console.log('get actual cart')
+
             var cart = {...state.cart}    
 
             for(var k in action.payload){
