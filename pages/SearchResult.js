@@ -76,7 +76,9 @@ class SearchResult extends React.Component {
         }else{
             return(
                 <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:0, paddingVertical:8,backgroundColor:'#fff'}}>
-                <Text style={{color:'#37474F', fontSize:18, marginTop:42, marginBottom:4}}>ETS GROUP в твоем смартфоне!</Text>
+                <Image source={{uri:'http://etsgroup.ru/old1.jpg'}} style={{width:'100%', height:'50%'}}></Image>
+                <View style={{flexDirection:'column', justifyContent:'space-between', alignItems:'center', marginTop:24}}>
+                <Text style={{color:'#37474F', fontSize:18,  marginBottom:4}}>ETS GROUP в твоем смартфоне!</Text>
                 <Text style={{color:'#607D8B'}}>Мы рады Вас видеть!</Text>
 
                 <TouchableOpacity
@@ -86,8 +88,8 @@ class SearchResult extends React.Component {
                             <Text style={{color:'#fff', textAlign:'center'}}>Начать поиск</Text>
                         </View>
                 </TouchableOpacity>
-
-                <Image source={{uri:'http://etsgroup.ru/old1.jpg'}} style={{width:'100%', height:'50%', marginTop:32}}></Image>
+                </View>
+                
             </View>
             )
         }
