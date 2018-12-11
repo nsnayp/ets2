@@ -2,6 +2,9 @@ import * as React from 'react';
 import {
     View ,ActivityIndicator,AsyncStorage, AppState
 } from 'react-native';
+
+import { Notifications } from 'expo';
+
 import { connect } from 'react-redux';
 import {navigate,setCart, changeScreenParams} from '../actions';
 import {fetchCarts} from '../actions/CartListActions';
@@ -17,7 +20,7 @@ import Cart from '../pages/Cart';
 import Settings from '../pages/Settings';
 import SuccessOrder from '../pages/SuccessOrder';
 import OrderOnePage from '../pages/OrderOnePage';
-
+import registerForPushNotificationsAsync from '../helpers/notify';
 
 import Header from '../components/Header/Header';
 import BottomMenu from '../components/Footer/BottomMenu';
@@ -90,7 +93,14 @@ class AppAuth extends React.Component {
         })
     }
 
+    _handleNotification=()=>{
+        console.log('get notify')
+    }
+
     componentDidMount=()=>{
+        registerForPushNotificationsAsync();
+        this._notificationSubscription = Notifications.addListener(this._handleNotification);
+        //console.log(this._notificationSubscription)
         this.props.fetchCarts()
     }
 
