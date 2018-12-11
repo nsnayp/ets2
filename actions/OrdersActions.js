@@ -17,6 +17,13 @@ const setOrders=(payload)=>{
     }
 }
 
+export const setActiveOrder=(payload)=>{
+    return {
+        type:'SET_ACTIVE_ORDER',
+        payload:payload
+    }
+}
+
 export const fetchOrders=()=>{
     
     return (dispatch,getState) => {

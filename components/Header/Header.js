@@ -54,13 +54,18 @@ class Header extends React.Component {
     }
 
     renderBackButton=()=>{
+
+        
+
+        const backButtonScreen = (this.props.screens[this.props.currentScreen].backButtonScreen)? this.props.screens[this.props.currentScreen].backButtonScreen : 'SearchResult';
+        console.log(this.props.screens[this.props.currentScreen])
         if(this.props.screens[this.props.currentScreen].backButtonVisible){
             return(
             <Animated.View style={{  }}>
                 <TouchableOpacity onPress={() => { 
                         
                         this.props.toggleSearchPanel(false); 
-                        this.props.navigate('SearchResult') ;
+                        this.props.navigate(backButtonScreen) ;
                         this.props.offersSetProductId(null);
                         this.props.setOffers(null);
                     

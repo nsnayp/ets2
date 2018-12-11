@@ -16,6 +16,8 @@ import OrderPage from '../pages/OrderPage';
 import Cart from '../pages/Cart';
 import Settings from '../pages/Settings';
 import SuccessOrder from '../pages/SuccessOrder';
+import OrderOnePage from '../pages/OrderOnePage';
+
 
 import Header from '../components/Header/Header';
 import BottomMenu from '../components/Footer/BottomMenu';
@@ -39,6 +41,9 @@ const Navigator = createStackNavigator(
         ,
         OrderPage: {
 			screen: OrderPage,
+        },
+        OrderOnePage: {
+			screen: OrderOnePage,
         }
         ,
         Cart: {
@@ -97,7 +102,7 @@ class AppAuth extends React.Component {
 
     navigate = (screen,params = null) => {
 
-        this.props.changeScreenParams({screen:screen, headerText: params.headerText, backButtonVisible: params.backButtonVisible})
+        this.props.changeScreenParams({screen:screen, headerText: params.headerText, backButtonVisible: params.backButtonVisible, backButtonScreen: params.backButtonScreen})
 		this.navig.dispatch(NavigationActions.navigate( {routeName:screen} ))
 	}
 

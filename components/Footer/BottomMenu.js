@@ -82,7 +82,7 @@ class BottomMenu extends React.Component {
 				<View style={{ width: 80, position:'relative' }}>
 					<TouchableNativeFeedback onPress={() => this.props.navigate('OrderPage', {headerText:'ETS.Заказы'})}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
-							<Feather name="clipboard" size={23} color={ (this.props.currentScreen=='OrderPage')?'#3F51B5':'#9E9E9E' } />
+							<Feather name="clipboard" size={23} color={ (this.props.currentScreen=='OrderPage'||this.props.currentScreen=='OrderOnePage')?'#3F51B5':'#9E9E9E' } />
 							
 						</View>
 					</TouchableNativeFeedback>

@@ -1,7 +1,8 @@
 const INITIAL_STATE = {
     loading:true,
     error:false,
-    orders:null
+    orders:null,
+    activeOrder:null
  }
  
 export default (state = INITIAL_STATE, action)=>{
@@ -16,7 +17,12 @@ export default (state = INITIAL_STATE, action)=>{
             return {
                 ...state, error: true, success:false,loading:false
             }
-    
+            
+        case 'SET_ACTIVE_ORDER':
+            return {
+                ...state, activeOrder: action.payload
+            }
+
         case 'SET_ORDERS':
             return {
                 ...state, orders: action.payload,loading:false, error: false

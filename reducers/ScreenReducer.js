@@ -27,6 +27,9 @@ const INITIAL_STATE = {
         },
         OrderPage:{
             headerText:'ETS.Заказы',
+        },
+        OrderOnePage:{
+            headerText:'ETS.Заказ',
         }
        
     }
@@ -47,6 +50,10 @@ export default (state = INITIAL_STATE, action)=>{
             }
             if(action.payload.backButtonVisible){
                 nState.screens[screen].backButtonVisible = action.payload.backButtonVisible
+            }
+
+            if(action.payload.backButtonScreen){
+                nState.screens[screen].backButtonScreen = action.payload.backButtonScreen
             }
 
             return nState

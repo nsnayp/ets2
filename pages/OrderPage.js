@@ -1,7 +1,10 @@
 import * as React from 'react';
-import { Text, View, ActivityIndicator,FlatList } from 'react-native';
+import { Text, View, ActivityIndicator,FlatList,TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
-import {fetchOrders} from '../actions/OrdersActions';
+
+
+import {navigate} from '../actions';
+import {fetchOrders,setActiveOrder} from '../actions/OrdersActions';
 import {prettyNumber} from '../helpers/helpers';
 
 class OrderPage extends React.Component {
@@ -22,11 +25,18 @@ class OrderPage extends React.Component {
         }
 
         return(
-            <View key={index} style={{paddingHorizontal:16, paddingVertical:8, backgroundColor:'#fff', borderBottomColor:'#eee', borderBottomWidth:1}}>
-                <Text>Заказ от {item.date} на сумму {prettyNumber(sum)} ₽</Text>
-                <Text>Кол-во позиций: {item.orderList.length}</Text>
-                <Text>Комментарий: {item.comment}</Text>
-            </View>
+            <TouchableOpacity
+                onPress={()=>{
+                    this.props.setActiveOrder(item);
+                    this.props.navigate('OrderOnePage', {headerText:'Заказ #'+item.id,backButtonVisible:true,backButtonScreen:'OrderPage'})
+                }}
+            >
+                <View key={index} style={{paddingHorizontal:16, paddingVertical:8, backgroundColor:'#fff', borderBottomColor:'#eee', borderBottomWidth:1}}>
+                    <Text style={{color:'#37474F'}}>Заказ от {item.date} на сумму {prettyNumber(sum)} ₽</Text>
+                    <Text style={{color:'#607D8B'}}>Кол-во позиций: {item.orderList.length}</Text>
+                    <Text style={{color:'#607D8B'}}>Комментарий: {item.comment}</Text>
+                </View>
+            </TouchableOpacity>
         )
     }
 
@@ -46,7 +56,7 @@ class OrderPage extends React.Component {
                         data={orders}
                         renderItem={({item, index}) =>  this.renderItem(item,index) }  
                         keyExtractor={(item, index) => index.toString()} 
-                        initialNumToRender={6}
+                        initialNumToRender={15}
                         refreshing={false}
                     >
                     
@@ -76,6 +86,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, payload) => {
     return{
         fetchOrders: () => dispatch(fetchOrders()),
+        setActiveOrder: (payload) => dispatch(setActiveOrder(payload)),
+        navigate : (payload,params) => dispatch(navigate(payload,params)),
     } 
 }
 export default connect(mapStateToProps, mapDispatchToProps)(OrderPage)
