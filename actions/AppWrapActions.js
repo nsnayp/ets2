@@ -10,6 +10,13 @@ const payloadAsync = (!payload)? "":payload.toString();
     }
 }
 
+export const setError = (payload) =>{
+    return {
+        type:'SET_ERR',
+        payload:payload
+    }
+}
+
 
 export const auth = (login,password) =>{
     return (dispatch) => {
@@ -20,7 +27,10 @@ export const auth = (login,password) =>{
         .then(response => response.json())
         .then(responseJson => {
             if (responseJson.response.error == 0&& responseJson.response.userKey) {
+                dispatch(setError(null));
                 dispatch(setCustomerId( responseJson.response.userKey));
+            }else{
+                dispatch(setError( responseJson.response.text));
             }
             console.log(responseJson.response);
         })

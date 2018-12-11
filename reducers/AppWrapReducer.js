@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
     customer_id:null,
+    error:''
 }
 
 export default (state = INITIAL_STATE, action)=>{
@@ -11,7 +12,11 @@ export default (state = INITIAL_STATE, action)=>{
                 ...state,
                 customer_id: action.payload
             }
-       
+        case 'SET_ERR':
+            return {
+                ...state,
+                error: action.payload
+            }
         default: return state
     }
 }

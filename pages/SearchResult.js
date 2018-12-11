@@ -75,18 +75,20 @@ class SearchResult extends React.Component {
             )
         }else{
             return(
-                <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:8, paddingVertical:8,backgroundColor:'#fff'}}>
-                    <Text style={{fontSize:17, marginTop:42, marginBottom:16}}>Etsgroup теперь в твоем смартфоне!</Text>
-                    <TouchableOpacity 
-                        onPress={()=>this.props.toggleSearchPanel(true)}
-                    >
-                        <View style={{backgroundColor:'#1976D2', paddingHorizontal:16, paddingVertical:8}}>
-                            <Text style={{color:'#fff'}}>Начать поиск</Text>
-                        </View>
-                    </TouchableOpacity>
-                    <Image source={{uri:'http://1024x.net/wallpapers/45t/Worn-Out_Engine_Heart.jpg'}} style={{width:'70%', height:'70%' }}></Image>
+                <View style={{flexDirection:'column', justifyContent:'flex-start', alignItems:'center', flex:1, paddingHorizontal:0, paddingVertical:8,backgroundColor:'#fff'}}>
+                <Text style={{color:'#37474F', fontSize:18, marginTop:42, marginBottom:4}}>ETS GROUP в твоем смартфоне!</Text>
+                <Text style={{color:'#607D8B'}}>Мы рады Вас видеть!</Text>
 
-                </View>
+                <TouchableOpacity
+                   onPress={()=>this.props.toggleSearchPanel(true)}
+                >
+                        <View style={{backgroundColor:'#3F51B5', paddingVertical:8, paddingHorizontal:16, borderRadius:3, elevation:1, marginTop:16}}>
+                            <Text style={{color:'#fff', textAlign:'center'}}>Начать поиск</Text>
+                        </View>
+                </TouchableOpacity>
+
+                <Image source={{uri:'http://etsgroup.ru/old1.jpg'}} style={{width:'100%', height:'50%', marginTop:32}}></Image>
+            </View>
             )
         }
     }

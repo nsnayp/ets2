@@ -74,6 +74,7 @@ class AppNoAuth extends React.Component {
           }}
         >
 
+          <Text style={{color:'red', paddingBottom:8, textAlign:'center'}}>{this.props.error}</Text>
 
             <TouchableOpacity
                 onPress={this.btnPressed}
@@ -97,6 +98,7 @@ class AppNoAuth extends React.Component {
 const mapStateToProps = state => {
     return {
         customer_id : state.appwrap.customer_id,
+        error: state.appwrap.error
     }
 }
 const mapDispatchToProps = (dispatch, payload) => {
