@@ -22,7 +22,8 @@
       ]
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ets.nsnaypIos"
     },
     "android": {
      "package": "com.ets.nsnayp",

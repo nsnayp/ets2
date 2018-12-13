@@ -1,10 +1,10 @@
 import React, { Component, } from "react";
 import { connect } from 'react-redux';
 
-import {   Dimensions,Modal, Animated} from 'react-native';
+import {   Dimensions,Modal, Animated,Text,TouchableOpacity, View} from 'react-native';
 
 import {setVisible} from '../actions/PhotoViewer';
-
+import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
 import PhotoViewer from './PhotoViewer';
 import ImageViewer from 'react-native-image-zoom-viewer';
 
@@ -36,7 +36,24 @@ render=()=>{
             
             > 
             {/*  <PhotoViewer  images={this.props.images} activeImage={this.props.activeImage}></PhotoViewer> */}
-             <ImageViewer imageUrls={this.props.images} index={this.props.activeImage}/>
+             <ImageViewer 
+             imageUrls={this.props.images} 
+             index={this.props.activeImage}
+             enableSwipeDown
+             onSwipeDown={()=>{  this.props.setVisible(false)} }
+             swipeDownThreshold={20}
+             renderHeader={
+                 ()=>{
+                     return(
+                        <TouchableOpacity onPress={() => {this.props.setVisible(false)}}>
+                            <View style={[ {width: 56, height: 56, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }]}>
+                                <Feather name="arrow-left" size={20} color="#fff" style={{}} />
+                            </View>
+                        </TouchableOpacity>
+                     )
+                 }
+             }
+            />
         </Modal>
     )
 }

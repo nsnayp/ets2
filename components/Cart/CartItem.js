@@ -123,12 +123,12 @@ renderActualQty=offer=>{
 		
 		return (
 			<View>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.cartQty} шт</Text>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999',textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{offer.cartQty_first} шт</Text>
+				<Text style={{marginLeft:10, fontSize:13, color:'#999'}}>{offer.cartQty} шт</Text>
+				<Text style={{marginLeft:10, fontSize:13, color:'#999',textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{offer.cartQty_first} шт</Text>
 			</View>
 		)
 	}else{
-		return <Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{offer.cartQty} шт</Text>;
+		return <Text style={{marginLeft:10, fontSize:13, color:'#999'}}>{offer.cartQty} шт</Text>;
 	}
 }
 
@@ -136,12 +136,12 @@ renderActualPrice=offer=>{
 	if(offer.price!=offer.price_first){
 		return (
 			<View>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{ prettyNumber(offer.price)} ₽</Text>
-				<Text style={{marginLeft:10, fontSize:14, color:'#999' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{ prettyNumber(offer.price_first)} ₽</Text>
+				<Text style={{marginLeft:10, fontSize:13, color:'#999'}}>{ prettyNumber(offer.price)} ₽</Text>
+				<Text style={{marginLeft:10, fontSize:13, color:'#999' ,textDecorationLine: 'line-through', textDecorationStyle: 'solid',color:'#ff4444'}}>{ prettyNumber(offer.price_first)} ₽</Text>
 			</View>
 		)
 	}else{
-		return <Text style={{marginLeft:10, fontSize:14, color:'#999'}}>{ prettyNumber(offer.price)} ₽</Text>;
+		return <Text style={{marginLeft:10, fontSize:13, color:'#999'}}>{ prettyNumber(offer.price)} ₽</Text>;
 	}
 }
 
@@ -176,8 +176,8 @@ render=()=>{
 						}
 					>
 						<View>
-							<Text style={{color:"#1976D2"}}>{offer.brand}</Text>
-							<Text style={{color:"#1976D2"}}>{offer.oem}</Text>
+							<Text style={{color:"#1976D2", fontSize:13}}>{offer.brand}</Text>
+							<Text style={{color:"#1976D2", fontSize:13}}>{offer.oem}</Text>
 						</View>
 					</TouchableOpacity>
 					
@@ -257,9 +257,9 @@ const styles = StyleSheet.create({
 	row2:{width:'33.3333%', flexDirection:'row', justifyContent:'space-between', alignItems:'center', paddingLeft:16, paddingRight:8,   paddingVertical:0,  borderTopColor:'#fafafa', borderTopWidth:1},
 
 	column1: {flexDirection:'row', backgroundColor:'#fff', alignItems:'center', justifyContent:'flex-start', width:'20%'},
-	column2: {width:'15%', backgroundColor:'#fff', alignItems:'flex-end', alignContent:'center', justifyContent:'center'},
+	column2: {width:'12%', backgroundColor:'#fff', alignItems:'flex-end', alignContent:'center', justifyContent:'center'},
 	column3: {width:'30%', backgroundColor:'#fff', flexDirection:'column'},
-	column4: {width:'22%', backgroundColor:'#fff',alignItems:'flex-end',  justifyContent:'center', alignContent:'center'},
+	column4: {width:'25%', backgroundColor:'#fff',alignItems:'flex-end',  justifyContent:'center', alignContent:'center'},
 	column5:{width:'13%', backgroundColor:'#fff', flexDirection:'row', alignItems:'flex-end',justifyContent:'flex-end'},
 	infoIcon:{ alignItems:'flex-end', justifyContent:'center'},
 	cartBtn:{ alignItems:'flex-end',  justifyContent:'center'},
