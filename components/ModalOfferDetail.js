@@ -2,11 +2,11 @@ import * as React from 'react';
 import {
 	Text,
     View,Modal,
-    StyleSheet
+    StyleSheet,TouchableOpacity
 } from 'react-native';
 import { connect } from 'react-redux';
 import { toggleModalVisible} from '../actions';
-
+import { Feather,MaterialIcons,FontAwesome } from '@expo/vector-icons';
 
 class ModalOfferDetail extends React.Component {
 	constructor(props) {
@@ -28,7 +28,16 @@ class ModalOfferDetail extends React.Component {
                 animationType ="fade"
             >
                 <View style={{backgroundColor:'#00000085', paddingHorizontal:24, paddingVertical:60, flex:1, flexDirection:'row', alignItems:'flex-start'}}>
-                    <View style={{backgroundColor:"#fff", width:'100%', elevation:5, borderRadius:5, padding:24}}>
+                    <View style={{backgroundColor:"#fff", width:'100%', elevation:5, borderRadius:5, padding:24, position:'relative'}}>
+
+                        <View style={{position:'absolute', right:0, top:0}}>
+                        <TouchableOpacity onPress={() => {this.props.toggleModalVisible({modalVisible:false,modalData:null})}}>
+                            <View style={[ {width: 56, height: 56, justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }]}>
+                                <Feather name="x" size={20} color="#999" style={{}} />
+                            </View>
+                        </TouchableOpacity>
+                        </View>
+
 
 
                         <View style={{marginBottom:24}}>
