@@ -265,7 +265,7 @@ styles = StyleSheet.create({
     titleText: { color: '#fff', fontSize: 16 },
     rightPanel: { position: 'relative', width: HEADER_HEIGHT, height: HEADER_HEIGHT, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: HEADER_HEIGHT },
     searchPanelWrap: { position: 'relative', backgroundColor: '#fff' },
-    textInput: { width: '100%', backgroundColor: 'transparent', fontSize: 15, paddingVertical: 6, borderBottomWidth: 0, borderRadius: 4, borderWidth: 0, paddingHorizontal: 16, paddingHorizontal: HEADER_HEIGHT },
+    textInput: { width: '100%', backgroundColor: 'transparent', fontSize: 15, paddingVertical: 6, borderBottomWidth: 0, borderRadius: 4, height:40, borderWidth: 0, paddingHorizontal: 16, paddingHorizontal: HEADER_HEIGHT },
     iconWrap: { padding: 10, flexDirection: 'column', alignItems: 'center', width: HEADER_HEIGHT }
 })
 

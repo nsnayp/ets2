@@ -2,6 +2,7 @@ import * as React from 'react';
 import {
 	View,
 	TouchableNativeFeedback,
+	TouchableOpacity,
 	Text,
 	AsyncStorage
 } from 'react-native';
@@ -52,55 +53,54 @@ class BottomMenu extends React.Component {
 			
 			<View style={{ backgroundColor: '#fff', width: '100%', justifyContent: 'space-evenly', alignItems: 'stretch', flexDirection: 'row', paddingHorizontal: 10, borderTopColor:'#eee', borderTopWidth:1, elevation: 10  }}>
 				<View style={{ width: 80 }}>
-					<TouchableNativeFeedback  onPress={() => requestAnimationFrame(() =>this.props.navigate('Dashboard') )} >
+					<TouchableOpacity  onPress={() => requestAnimationFrame(() =>this.props.navigate('Dashboard') )} >
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="home" size={23} color={ (this.props.currentScreen=='Dashboard')?'#3F51B5':'#9E9E9E' }  />
 
 						</View>
-					</TouchableNativeFeedback>
+					</TouchableOpacity>
 				</View>
 
 				<View style={{ width: 80 , position:'relative'}}>
-					<TouchableNativeFeedback onPress={() => requestAnimationFrame(()=>this.props.navigate('Cart', {headerText:'ETS.Корзина'}))}>
+					<TouchableOpacity onPress={() => requestAnimationFrame(()=>this.props.navigate('Cart', {headerText:'ETS.Корзина'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="shopping-cart" size={23} color={ (this.props.currentScreen=='Cart'||this.props.currentScreen=='Orders')?'#3F51B5':'#9E9E9E' } />
 						</View>
-					</TouchableNativeFeedback>
+					</TouchableOpacity>
 					{ 
 						this.renderNotify()
 					}
 
 				</View>
 				<View style={{ width: 80 }}>
-					<TouchableNativeFeedback onPress={() =>this.navigateSearchScreen() }>
+					<TouchableOpacity onPress={() =>this.navigateSearchScreen() }>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' ,backgroundColor:'#fff'}}>
 							<Feather name="search" size={23} color={ (this.props.currentScreen=='SearchResult'||this.props.currentScreen=='Offers')?'#3F51B5':'#9E9E9E' } />
 						</View>
-					</TouchableNativeFeedback>
+					</TouchableOpacity>
 				</View>
 
 				<View style={{ width: 80, position:'relative' }}>
-					<TouchableNativeFeedback onPress={() => this.props.navigate('OrderPage', {headerText:'ETS.Заказы'})}>
+					<TouchableOpacity onPress={() => this.props.navigate('OrderPage', {headerText:'ETS.Заказы'})}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="clipboard" size={23} color={ (this.props.currentScreen=='OrderPage'||this.props.currentScreen=='OrderOnePage')?'#3F51B5':'#9E9E9E' } />
 							
 						</View>
-					</TouchableNativeFeedback>
+					</TouchableOpacity>
 					{/* <View style={{position:'absolute', width:19, height:19, borderRadius:18, elevation:2, backgroundColor:'#f44336', padding:0, justifyContent:'center', right:16, top:4}}>
 						<Text style={{color:'#fff', fontSize:10, alignSelf:'center'}}>
 						<Feather name="bell" size={10} color={ '#fff' } />
 						</Text>
 					</View> */}
 				</View>
-
-				
+			
 				
 				<View style={{ width: 80 }}>
-					<TouchableNativeFeedback onPress={() => requestAnimationFrame(() => this.props.navigate('Settings', {headerText:'ETS.Настройки'}))}>
+					<TouchableOpacity onPress={() => requestAnimationFrame(() => this.props.navigate('Settings', {headerText:'ETS.Настройки'}))}>
 						<View style={{ padding: 12, flexDirection: 'column', alignItems: 'center' }}>
 							<Feather name="settings" size={23} color={ (this.props.currentScreen=='Settings')?'#3F51B5':'#9E9E9E' } />
 						</View>
-					</TouchableNativeFeedback>
+					</TouchableOpacity>
 				</View>
 			</View>
 			
